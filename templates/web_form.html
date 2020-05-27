@@ -1,0 +1,145 @@
+<html>
+    <head>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <title>{{ title }}</title>
+    </head>
+    <body><center>
+    <h2>Lookup your data</h2>
+    <form class="form-horizontal" action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.email.label }} {{ form.email(size=32,value="") }}
+        </p>
+        <p>{{ form.submit(class="btn btn-primary") }}</p>
+    </form>
+
+    {% if error %}
+    <H4>Email address {{ error.email }} has not been found in the database. Please try again</H4>
+        {{ error.message }}
+
+    {% else %}
+
+        {% if user.attendee_name %}
+        <P>Please find hereby your information for you variables that are needed for the various labs that you are running.</P>
+            <table class="table-bordered table">
+                <tr>
+                    <td colspan="2" bgcolor="#ff4455"><center><B>General information</B></center></td>
+                </tr>
+                <tr>
+                    <th >Title</th>
+                    <th >Value</th>
+                </tr>
+                <tr>
+                    <td>Attendee Name</td>
+                    <td>{{ user.attendee_name }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2" bgcolor="#ff4455"><center><B>Cluster Information - all Modules</B></center></td>
+                </tr>
+                <tr>
+                    <td>Cluster Name</td>
+                    <td>{{ user.cluster_name }}</td>
+                </tr>
+                <tr>
+                    <td >Prism Element VIP</td>
+                    <td >{{ user.pe_vip }}</td>
+                </tr>
+                <TR>
+                    <td>Cluster username</td>
+                    <td><b>admin</b></td>
+                </TR>
+                <tr>
+                    <td >Password</td>
+                    <td ><B>{{ user.password }}</B></td>
+                </tr>
+                <tr>
+                    <td colspan="2" bgcolor="#ff4455"><center><B>Exra IP information - Modules 9 and 11</B></center></td>
+                </tr>
+                <tr>
+                    <td>Prism Central VIP</td>
+                    <td>{{ user.pc_vip }}</td>
+                </tr>
+                <tr>
+                    <td>Data Services</td>
+                    <td>{{ user.data_service_ip }}</td>
+                </tr>
+                <TR>
+                    <td colspan="2" bgcolor="#ff4455"><center><B>CVM information - Modules 2,4,6,10,12,13,14</B></center></td>
+                </tr>
+                <tr>
+                    <td >CVM 1</td>
+                    <td >{{ user.cvm1 }}</td>
+                </tr>
+                <tr>
+                    <td >CVM 2</td>
+                    <td >{{ user.cvm2 }}</td>
+                </tr>
+                <tr>
+                    <td >CVM 3</td>
+                    <td >{{ user.cvm3 }}</td>
+                </tr>
+                <tr>
+                    <td >CVM 4</td>
+                    <td >{{ user.cvm4 }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2" bgcolor="#ff4455"><center><B>Network information - Module 4</B></center></td>
+                </tr>
+                <tr>
+                    <td>VLAN ID User Network</td>
+                    <td>{{ user.vlan_id }}</td>
+                </tr>
+                <tr>
+                    <td >Gateway IP User Network</td>
+                    <td >{{ user.gw_ip }}</td>
+                </tr>
+                <tr>
+                    <td>User Network Address/Prefix</td>
+                    <td>{{ user.user_nw_sub }}</td>
+                </tr>
+                <tr>
+                    <td>DHCP Start</td>
+                    <td>{{ user.dhcp_strt }}</td>
+                </tr>
+                <tr>
+                    <td >DHCP End</td>
+                    <td >{{ user.dhcp_end }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2" bgcolor="#ff4455"><center><B>Move - Module 8 Information</B></center></td>
+                </tr>
+                <tr>
+                    <td>Move VM</td>
+                    <td>{{ user.move_vm }}</td>
+                </tr>
+                <TR>
+                    <td colspan="2" bgcolor="#ff4455"><center><B>IPMI information - Module 10</B></center></td>
+                </tr>
+                <tr>
+                    <td >IPMI 1</td>
+                    <td >{{ user.ipmi1 }}</td>
+                </tr>
+                <tr>
+                    <td >IPMI 2</td>
+                    <td >{{ user.ipmi2 }}</td>
+                </tr>
+                <tr>
+                    <td >IPMI 3</td>
+                    <td >{{ user.ipmi3 }}</td>
+                </tr>
+                <tr>
+                    <td >IPMI 4</td>
+                    <td >{{ user.ipmi4 }}</td>
+                </tr>
+            </table>
+        {% else %}
+         <P>Please use this form to search for your information
+         </P>
+
+        {% endif %}
+
+    {% endif %}
+    </center>
+    </body>
+</html>
