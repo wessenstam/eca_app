@@ -43,7 +43,7 @@ def update_df():
     headers = data.pop(0)
     # Drop all data in a dataframe
     df.update(pd.DataFrame(data, columns=headers))
-    return render_template('web_update.html', title='HP Nutanix Field Day - Cluster lookup')
+    return render_template('web_update.html', title='vECA training - Cluster lookup')
 
 @app.route("/", methods=['GET', 'POST'])
 def show_form_data():
@@ -90,7 +90,7 @@ def show_form_data():
                 error = {'message' : 'Unknown email address', 'email' : form.email.data }
 
     # Send the output to the webbrowser
-    return render_template('web_form.html', title='HP Nutanix Field Day - Cluster lookup', user=user_data, form=form, error=error)
+    return render_template('web_form.html', title='vECA training - Cluster lookup', user=user_data, form=form, error=error)
 
 
 if __name__ == "main":
