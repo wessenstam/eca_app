@@ -35,7 +35,11 @@
                     <td>{{ user.attendee_name }}</td>
                 </tr>
                 <tr>
-                    <td colspan="2" bgcolor="#ff4455"><center><B>Cluster Information - all Modules</B></center></td>
+                    <td>User Name for the labs</td>
+                    <td>User{{ user.user_x }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2" bgcolor="#ff4455"><center><B>Cluster Information</B></center></td>
                 </tr>
                 <tr>
                     <td>Cluster Name</td>
@@ -54,95 +58,27 @@
                     <td ><B>{{ user.password }}</B></td>
                 </tr>
                 <tr>
-                    <td colspan="2" bgcolor="#ff4455"><center><B>Exra IP information - Modules 9 and 11</B></center></td>
-                </tr>
-                <tr>
                     <td>Prism Central VIP</td>
                     <td>{{ user.pc_vip }}</td>
                 </tr>
-                <tr>
-                    <td>Data Services</td>
-                    <td>{{ user.data_service_ip }}</td>
-                </tr>
                 <TR>
-                    <td colspan="2" bgcolor="#ff4455"><center><B>CVM information - Modules 2,4,6,10,12,13,14</B></center></td>
+                    <td colspan="2" bgcolor="#ff4455"><center><B>Network information</B></center></td>
                 </tr>
                 <tr>
-                    <td >CVM 1</td>
-                    <td >{{ user.cvm1 }}</td>
+                    <td >Primary Network</td>
+                    <td >{{ user.prim_network }}</td>
                 </tr>
                 <tr>
-                    <td >CVM 2</td>
-                    <td >{{ user.cvm2 }}</td>
+                    <td>Secondary Network</td>
+                    <td>{{ user.sec_network }}</td>
                 </tr>
                 <tr>
-                    <td >CVM 3</td>
-                    <td >{{ user.cvm3 }}</td>
+                    <td>Era Managed Network</td>
+                    <td>{{ user.era_network }}</td>
                 </tr>
                 <tr>
-                    <td >CVM 4</td>
-                    <td >{{ user.cvm4 }}</td>
-                </tr>
-                <tr>
-                    <td colspan="2" bgcolor="#ff4455"><center><B>Network information - Module 4</B></center></td>
-                </tr>
-                <tr>
-                    <td>VLAN ID User Network</td>
-                    <td>{{ user.vlan_id }}</td>
-                </tr>
-                <tr>
-                    <td >Gateway IP User Network</td>
-                    <td >{{ user.gw_ip }}</td>
-                </tr>
-                <tr>
-                    <td>User Network Address/Prefix</td>
-                    <td>{{ user.user_nw_sub }}</td>
-                </tr>
-                <tr>
-                    <td>DHCP Start</td>
-                    <td>{{ user.dhcp_strt }}</td>
-                </tr>
-                <tr>
-                    <td >DHCP End</td>
-                    <td >{{ user.dhcp_end }}</td>
-                </tr>
-                <tr>
-                    <td colspan="2" bgcolor="#ff4455"><center><B>Move - Module 8 Information</B></center></td>
-                </tr>
-		<tr>
-                    <td>vCenter IP</td>
-                    <td>10.42.11.40</td>
-                </tr>
-		<tr>
-                    <td>User name</td>
-                    <td>administrator@vsphere.local</td>
-                </tr>
-		<tr>
-                    <td>Password</td>
-                    <td>nx2Tech289!</td>
-                </tr>
-                <tr>
-                    <td>Move VM</td>
-                    <td>{{ user.move_vm }}</td>
-                </tr>
-                <TR>
-                    <td colspan="2" bgcolor="#ff4455"><center><B>IPMI information - Module 10</B></center></td>
-                </tr>
-                <tr>
-                    <td >IPMI 1</td>
-                    <td >{{ user.ipmi1 }}</td>
-                </tr>
-                <tr>
-                    <td >IPMI 2</td>
-                    <td >{{ user.ipmi2 }}</td>
-                </tr>
-                <tr>
-                    <td >IPMI 3</td>
-                    <td >{{ user.ipmi3 }}</td>
-                </tr>
-                <tr>
-                    <td >IPMI 4</td>
-                    <td >{{ user.ipmi4 }}</td>
+                    <td>Karbon Network for MetalLB</td>
+                    <td>{{ user.karbon_start }} - {{ user.karbon_stop }}</td>
                 </tr>
             </table>
         {% else %}

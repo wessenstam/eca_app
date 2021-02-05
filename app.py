@@ -26,7 +26,7 @@ class LoginForm(FlaskForm):
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 credentials = ServiceAccountCredentials.from_json_keyfile_name('json/gts-gsheet-pandas-flask.json',scope)  # Change location as soon as it comes into prod
 gc = gspread.authorize(credentials)
-wks = gc.open("ECA-Athena - EMEA").sheet1  # get the Gsheet
+wks = gc.open("GTS Clusters-Assignments").sheet1  # get the Gsheet
 data = wks.get_all_values()
 headers = data.pop(0)
 # Drop all data in a dataframe
@@ -38,12 +38,12 @@ def update_df():
     scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
     credentials = ServiceAccountCredentials.from_json_keyfile_name('json/gts-gsheet-pandas-flask.json', scope)  # Change location as soon as it comes into prod
     gc = gspread.authorize(credentials)
-    wks = gc.open("ECA-Athena - EMEA").sheet1  # get the Gsheet
+    wks = gc.open("GTS Clusters-Assignments").sheet1  # get the Gsheet
     data = wks.get_all_values()
     headers = data.pop(0)
     # Drop all data in a dataframe
     df.update(pd.DataFrame(data, columns=headers))
-    return render_template('web_update.html', title='vECA training - Cluster lookup')
+    return render_template('web_update.html', title='vGTS2021 - Cluster lookup')
 
 @app.route("/", methods=['GET', 'POST'])
 def show_form_data():
@@ -65,24 +65,14 @@ def show_form_data():
                 user_data = {'attendee_name': user_info[0]['First Name'] + ' ' + user_info[0]['Last Name'],
                              'password': user_info[0]['Password'],
                              'cluster_name': user_info[0]['Cluster Name'],
-                             'pe_vip': user_info[0]['Prism Element VIP'],
-                             'pc_vip': user_info[0]['Prism Central IP'],
-                             'data_service_ip': user_info[0]['Data Services IP'],
-                             'cvm1':user_info[0]['CVM 1'],
-                             'cvm2': user_info[0]['CVM 2'],
-                             'cvm3': user_info[0]['CVM 3'],
-                             'cvm4': user_info[0]['CVM 4'],
-                             'ipmi1':user_info[0]['IPMI 1'],
-                             'ipmi2': user_info[0]['IPMI 2'],
-                             'ipmi3': user_info[0]['IPMI 3'],
-                             'ipmi4': user_info[0]['IPMI 4'],
-                             'vlan_id': user_info[0]['VLAN ID'],
-                             'user_nw_sub': user_info[0]['Network Address/Prefix'],
-                             'gw_ip': user_info[0]['Gateway IP'],
-                             'dhcp_strt': user_info[0]['DHCP Start'],
-                             'dhcp_end': user_info[0]['DHCP End'],
-                             'move_vm': user_info[0]['Move VM'],
-                             'frame_user': user_info[0]['Frame Username']
+                             'pe_vip': user_info[0]['IP address VIP'],
+                             'pc_vip': user_info[0]['IP address PC'],
+                             'prim_network': user_info[0]['Primary Network'],
+                             'sec_network':user_info[0]['Secondary Network'],
+                             'era_network': user_info[0]['Era Managed network'],
+                             'karbon_start': user_info[0]['Karbon IP - Start'],
+                             'karbon_stop': user_info[0]['Karbon IP - Stop'],
+                             'user_x': user_info[0]['UserX']
                              }
 
                 form.email.data=""
@@ -90,7 +80,7 @@ def show_form_data():
                 error = {'message' : 'Unknown email address', 'email' : form.email.data }
 
     # Send the output to the webbrowser
-    return render_template('web_form.html', title='vECA training - Cluster lookup', user=user_data, form=form, error=error)
+    return render_template('web_form.html', title='vGTS 2021 - Cluster lookup', user=user_data, form=form, error=error)
 
 
 if __name__ == "main":
