@@ -1,9 +1,6 @@
 #!/usr/bin/env sh
 
 # Script to pull the latest of the web_server into the container on start
-mkdir -p /github
-cd /github
-git clone https://github.com/wessenstam/eca_app
 
 ln -s /json /code/json
 cd /code
