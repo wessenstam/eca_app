@@ -2,6 +2,7 @@
     <head>
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <meta http-equiv="refresh" content="60; URL=/">
         <title>{{ title }}</title>
     </head>
     <body><center>
@@ -21,6 +22,28 @@
     {% else %}
 
         {% if user.attendee_name %}
+        <hr>
+        <h3>Validation</h3>
+        <P>
+        If you want to be validated, make you lab selection from the below dropbox and click the <B>Validate me</B> button<BR>
+        <form class="form-horizontal" action="/validation" method="post" novalidate>
+            <P>
+                <input type="hidden" name="username" value="{{ user.attendee_name }}">
+                <input type="hidden" name="clustername" value="{{ user.cluster_name }}">
+                <input type="hidden" name="clusterip" value="{{ user.pe_vip }}">
+                <input type="hidden" name="usernr" value="{{ user.uniq_nr }}">
+                <input type="hidden" name="pcip" value="{{ user.pc_vip }}">
+                <select id="lab" name="lab" size="1">
+                    <option value="euc">EUC</option>
+                    <option value="cloudnative">Cloud Native</option>
+                    <option value="cicd">CI/CD</option>
+                </select>
+                <input type="Submit" class="btn btn-primary" value="Validate me">
+            </P>
+        </form>
+        </P>
+        <hr>
+        <h3>Lab information</h3>
         <P>Please find hereby your information for you variables that are needed for the various labs that you are running.</P>
             <table class="table-bordered table">
                 <tr>
@@ -79,6 +102,21 @@
                 <tr>
                     <td>Karbon Network for MetalLB</td>
                     <td>{{ user.karbon_start }} - {{ user.karbon_stop }}</td>
+                </tr>
+                <TR>
+                    <td colspan="2" bgcolor="#ff4455"><center><B>Validation status</B></center></td>
+                </tr>
+                <tr>
+                    <td >EUC Lab</td>
+                    <td >{{ user.val_euc }}</td>
+                </tr>
+                <tr>
+                    <td>Cloud Native Lab</td>
+                    <td>{{ user.val_cloud }}</td>
+                </tr>
+                <tr>
+                    <td>CI/CD Lab</td>
+                    <td>{{ user.val_cicd }}</td>
                 </tr>
             </table>
         {% else %}

@@ -1,0 +1,58 @@
+<!doctype html>
+<HTML>
+<title>Validation dashboard</title>
+<BODY>
+<div class=page>
+  <h1>Validation dashboard</h1>
+  <h3>EUC</h3>
+  <table border="1">
+    <TR>
+      <th>First Name</th><th>Last Name</th><th>EUC</th>
+    </TR>
+    <TR>
+      {% for value in euclist %}
+      <TD>{{ value.split(',')[1] }}</TD><TD>{{ value.split(',')[2] }}</TD>
+        {% if "Pending" in value.split(',')[3] %}
+          <TD><A HREF="/validator?lab=euc&usernr={{ value.split(',')[0] }}">{{ value.split(',')[3] }} </A></TD>
+        {% else %}
+          <TD>{{ value.split(',')[3] }}</TD>
+        {% endif %}
+
+      {% endfor %}
+    </TR>
+  </table>
+  <h3>Cloud Native</h3>
+  <table border="1">
+    <TR>
+      <th>First Name</th><th>Last Name</th><th>EUC</th>
+    </TR>
+    <TR>
+      {% for value in cloudlist %}
+        <TD>{{ value.split(',')[1] }}</TD><TD>{{ value.split(',')[2] }}</TD>
+        {% if "Pending" in value.split(',')[3] %}
+          <TD><A HREF="/validator?lab=cloud&usernr={{ value.split(',')[0] }}">{{ value.split(',')[3] }} </A></TD>
+        {% else %}
+          <TD>{{ value.split(',')[3] }}</TD>
+        {% endif %}
+      {% endfor %}
+    </TR>
+  </table>
+  <h3>CI/CD</h3>
+  <table border="1">
+    <TR>
+      <th>First Name</th><th>Last Name</th><th>EUC</th>
+    </TR>
+    <TR>
+      {% for value in cicdlist %}
+      <TD>{{ value.split(',')[1] }}</TD><TD>{{ value.split(',')[2] }}</TD>
+      {% if "Pending" in value.split(',')[3] %}
+          <TD><A HREF="/validator?lab=cicd&usernr={{ value.split(',')[0] }}">{{ value.split(',')[3] }} </A></TD>
+        {% else %}
+          <TD>{{ value.split(',')[3] }}</TD>
+        {% endif %}
+      {% endfor %}
+    </TR>
+  </table>
+</div>
+</BODY>
+</html>

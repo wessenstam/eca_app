@@ -1,0 +1,19 @@
+<html>
+<head>
+    <title>Validation Request for {{ info.username }} for lab {{ info.lab.upper() }}</title>
+        <script language="JavaScript" type="text/javascript">
+            setTimeout("window.history.go(-1)",5000);
+        </script>
+</head>
+<body>
+    <h3>Validation request...</h3>
+    Hi {{ info.username }}!<BR><BR>
+    We have received your request to validate your lab <B>{{ info.lab.upper() }}</B><BR>
+    In your Cluster information you can keep track of the validation. It will be now at the status <B>In progress</B>.<BR>
+    After the validation has been accepted and completed, the status will read <B>Validated</B>...<BR><BR><BR>
+
+    You will be redirected back to your cluster information page in 5 seconds...
+
+
+</body>
+</html>
