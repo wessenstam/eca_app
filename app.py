@@ -23,10 +23,31 @@ app.config['SECRET_KEY'] = 'you-will-never-guess'
 class LoginForm(FlaskForm):
     email = StringField('Email Address', validators=[DataRequired()])
     submit = SubmitField('Find me...')
+def update_gsheet_df(usernr, labname,progress):
+    # Based o the information we got we need to set some variables to the correct values.
+    row = int(usernr) + 1
+    if "euc" in labname.lower():
+        col = 16  # Column AA
+        df_col = "EUC"
+        web_templ = "web_euc_form.html"
 
-class ValidateForm(FlaskForm):
-    # email = StringField('Email Address', validators=[DataRequired()])
-    submit = SubmitField('Validate me...')
+    elif "cloud" in labname.lower():
+        col = 17  # Column AB
+        df_col = "CloudNative"
+        web_templ = "web_cloud_form.html"
+
+    else:
+        col = 18  # Column AC
+        df_col = "CICD"
+        web_templ = "web_cicd_form.html"
+
+    # Updating the Row to In progress in Gsheet AND the main DataFrame, so we have the right info if we update the data from the GSheet1
+    # update GSheet
+    wks.update_cell(row, col, progress)
+    # Update the DF
+    df.iat[int(usernr) - 1, int(col) - 1] = progress
+    if progress=="In progress":
+        return web_templ
 
 # Grabbing the initial data from gsheet
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
@@ -117,80 +138,98 @@ def show_form_validation():
                 'pcip': pcip
                }
 
-    # Update the Gsheet in the correct location
-    # Write pending in the cell of the workshop vs the usernr
+    # Update the DF in the correct column and row
     row=int(usernr)+1
     if "euc" in lab:
-        col=27 # Column AA
-        df_col="EUC"
+        col=16 # Column AA
     elif "native" in lab:
-        col=28 # Column AB
-        df_col="Cloud Native"
+        col=17 # Column AB
     else:
-        col=29 # Column AC
-        df_col="CICD"
+        col=18 # Column AC
+
     # Update Gsheet
     wks.update_cell(row,col,"Pending")
-    # Update the Dataframe, so reread is not needed
-    df.at[usernr,df_col]="Pending"
+    # Update the DF
+    df.iat[int(usernr)-1,int(col)-1]="Pending"
+
 
     return render_template('web_validation.html', title='vGTS 2021 - Validation', info=info_data)
 
 @app.route("/validator", methods=['GET','POST'])
 def show_form_validator():
-    # Do we have a get or a usernr??
-    if str(request.args.get('lab')) != 'None':
-        usernr=str(request.args.get('usernr'))
-        lab=str(request.args.get('lab'))
-        if str(request.args.get('validation')) == 'None':
-            # Updating the Row to In progress
-            row = int(usernr) + 1
-            if "euc" in lab:
-                col = 27  # Column AA
-            elif "native" in lab:
-                col = 28  # Column AB
-            else:
-                col = 29  # Column AC
-            wks.update_cell(row, col, "In progress")
-            df.at[usernr,'EUC']="In progress"
-        return "<H2>" + lab + " validation for usernr "+usernr+"</H2>"
+    if request.method =="POST":
+        reply_post = request.form
+        webdata={'username':reply_post['username'],
+                 'validator':reply_post['validator'],
+                 'labname':reply_post['labname']
+                 }
 
+        # Have the data updated
+        update_gsheet_df(int(reply_post['usernr']),reply_post['labname'],"Validated")
+
+        return render_template('web_validation_received.html',info=webdata, title='vGTS2021 - Cluster lookup')
     else:
-        # Get all users info: usernr, First Name, Last Name and not completed lab validation, but they must not be empty!
-        # Make copies of the existing big DF
-        df_val_euc=df[['Nr','First Name','Last Name','EUC']].copy()
-        df_val_cloud=df[['Nr','First Name','Last Name','CloudNative']].copy()
-        df_val_cicd=df[['Nr','First Name','Last Name','CICD']].copy()
+        # Do we have a usernr where we need to get the correct info from??
+        if str(request.args.get('lab')) != 'None':
+            usernr=str(request.args.get('usernr'))
+            labname=str(request.args.get('lab'))
 
-        # Reset the index for the DFs
-        df_val_euc=df_val_euc.set_index('Nr')
-        df_val_cloud = df_val_cloud.set_index('Nr')
-        df_val_cicd = df_val_cicd.set_index('Nr')
+            # Have the data updated and get the returned info for the webpage
+            web_templ=update_gsheet_df(int(usernr), labname, "In progress")
 
-        # Clean out the unneeded rows
-        df_val_euc=df_val_euc[(df_val_euc.EUC !="")]
-        df_val_cloud=df_val_cloud[(df_val_cloud.CloudNative != "")]
-        df_val_cicd=df_val_cicd[(df_val_cicd.CICD != "")]
+            # Get all information from the DF for the user
+            dict_user = df.iloc[int(usernr)-1].to_dict()
+            user_values={'username':dict_user['First Name']+" "+dict_user['Last Name'],
+                         'clustername': dict_user['Cluster Name'],
+                         'clusterip': dict_user['IP address VIP'],
+                         'pc_ip':dict_user['IP address PC'],
+                         'usernr':dict_user['Nr']
+                        }
 
-        # Create the data into a list so we can forward them to the renderer
-        euc_lst=[]
-        for key in df_val_euc.to_dict()['First Name']:
-            euc_lst.append(str(key)+","+df_val_euc.to_dict()['First Name'][key]+","+df_val_euc.to_dict()['Last Name'][key]+","+df_val_euc.to_dict()['EUC'][key])
+            return render_template(web_templ, title='vGTS 2021 - Cluster lookup', user=user_values)
 
-        cloud_lst=[]
-        for key in df_val_cloud.to_dict()['First Name']:
-            cloud_lst.append(str(key)+","+df_val_cloud.to_dict()['First Name'][key]+","+df_val_cloud.to_dict()['Last Name'][key]+","+df_val_cloud.to_dict()['CloudNative'][key])
+        else:
+            # Get all users info: usernr, First Name, Last Name and Pending status lab validation, but they must not be empty!
+            # Make copies of the existing big DF
+            df_val_euc=df[['Nr','First Name','Last Name','EUC']].copy()
+            df_val_cloud=df[['Nr','First Name','Last Name','CloudNative']].copy()
+            df_val_cicd=df[['Nr','First Name','Last Name','CICD']].copy()
 
-        cicd_lst = []
-        for key in df_val_cloud.to_dict()['First Name']:
-            cicd_lst.append(
-                str(key) + "," + df_val_cicd.to_dict()['First Name'][key] + "," + df_val_cicd.to_dict()['Last Name'][
-                    key] + "," + df_val_cicd.to_dict()['CICD'][key])
+            # Reset the index for the DFs
+            df_val_euc=df_val_euc.set_index('Nr')
+            df_val_cloud = df_val_cloud.set_index('Nr')
+            df_val_cicd = df_val_cicd.set_index('Nr')
 
-        return render_template('web_validator.html', euclist=euc_lst,cloudlist=cloud_lst,cicdlist=cicd_lst)
+            # Clean out the unneeded rows
+            df_val_euc=df_val_euc[(df_val_euc.EUC !="")]
+            df_val_cloud=df_val_cloud[(df_val_cloud.CloudNative != "")]
+            df_val_cicd=df_val_cicd[(df_val_cicd.CICD != "")]
 
+            # Create the data into a list so we can forward them to the renderer per lab
+            euc_lst=[]
+            if len(df_val_euc.to_dict()['First Name']) > 1:
+                euc_lst = [" , , , "]
+            else:
+                for key in df_val_euc.to_dict()['First Name']:
+                    euc_lst.append(str(key)+","+str(df_val_euc.to_dict()['First Name'][key])+","+str(df_val_euc.to_dict()['Last Name'][key])+","+str(df_val_euc.to_dict()['EUC'][key]))
 
+            cloud_lst=[]
+            if len(df_val_cloud.to_dict()['First Name']) > 1:
+                cloud_lst=[" , , , "]
+            else:
+                for key in df_val_cloud.to_dict()['First Name']:
+                    cloud_lst.append(str(key)+","+str(df_val_cloud.to_dict()['First Name'][key])+","+str(df_val_cloud.to_dict()['Last Name'][key])+","+str(df_val_cloud.to_dict()['CloudNative'][key]))
 
+            cicd_lst = []
+            if len(df_val_cicd.to_dict()['First Name']) > 1:
+                cicd_lst=[" , , , "]
+            else:
+                for key in df_val_cicd.to_dict()['First Name']:
+                    cicd_lst.append(
+                        str(key) + "," + str(df_val_cicd.to_dict()['First Name'][key]) + "," + str(df_val_cicd.to_dict()['Last Name'][
+                            key]) + "," + str(df_val_cicd.to_dict()['CICD'][key]))
+
+            return render_template('web_validator.html', euclist=euc_lst,cloudlist=cloud_lst,cicdlist=cicd_lst)
 
 if __name__ == "main":
     # start the app

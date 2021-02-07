@@ -1,11 +1,15 @@
 <!doctype html>
 <HTML>
-<title>Validation dashboard</title>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <meta http-equiv="refresh" content="60; URL=/validator">
+  <title>Validation dashboard</title>
+</head>
 <BODY>
 <div class=page>
   <h1>Validation dashboard</h1>
   <h3>EUC</h3>
-  <table border="1">
+  <table class="table-bordered table">
     <TR>
       <th>First Name</th><th>Last Name</th><th>EUC</th>
     </TR>
@@ -21,10 +25,13 @@
       {% endfor %}
     </TR>
   </table>
+
+  <HR>
+
   <h3>Cloud Native</h3>
-  <table border="1">
+  <table class="table-bordered table">
     <TR>
-      <th>First Name</th><th>Last Name</th><th>EUC</th>
+      <th>First Name</th><th>Last Name</th><th>Cloud Native</th>
     </TR>
     <TR>
       {% for value in cloudlist %}
@@ -37,10 +44,13 @@
       {% endfor %}
     </TR>
   </table>
+
+  <HR>
+
   <h3>CI/CD</h3>
-  <table border="1">
+  <table class="table-bordered table">
     <TR>
-      <th>First Name</th><th>Last Name</th><th>EUC</th>
+      <th>First Name</th><th>Last Name</th><th>CICD</th>
     </TR>
     <TR>
       {% for value in cicdlist %}

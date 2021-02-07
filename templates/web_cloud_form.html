@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <title>{{ title }}</title>
+    </head>
+    <body>
+    <center>
+    <h2>Validator page for lab Cloud Native...</h2>
+    <P>
+    Below is the information for user <B>{{ user.username }} </B>that has asked validation.<BR><BR>
+    <table class="table-bordered table">
+        <tr>
+            <td><B>Full name</B></td>
+            <TD>{{ user.username }}</TD>
+        </tr>
+        <tr>
+            <td><B>Cluster name</B></td>
+            <TD>{{ user.clustername }}</TD>
+        </tr>
+        <tr>
+            <td><B>Cluster IP</B></td>
+            <TD>{{ user.clusterip }}</TD>
+        </tr>
+        <TR>
+            <td><B>Prism Central IP</B></td>
+            <TD>{{ user.pc_ip }}</TD>
+        </TR>
+    </table>
+    <HR>
+    <P>Please make sure the user has the following created for the validation</P>
+
+    IMAGE 1,2,3<BR>
+    Text<BR>
+    <HR>
+        <P>If you agree that the user can be validated, please click the <B>I validate</B> button<BR><BR></P>
+    <form class="form-horizontal" action="/validator" method="post" novalidate>
+        <P>
+           <input type="hidden" name="username" value="{{ user.username }}">
+            <input type="hidden" name="usernr" value="{{ user.usernr }}">
+            <input type="hidden" name="labname" value="CloudNative">
+            <input type="text" size="20" name="validator" value="Your name">
+            <input type="Submit" class="btn btn-primary" value="I Validate">
+        </P>
+    </form>
+    </center>
+    </body>
+</html>
