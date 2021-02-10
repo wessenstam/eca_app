@@ -6,7 +6,24 @@
     </head>
     <body>
     <center>
-    <h2>Validator page for lab EUC...</h2>
+
+    {% if user.labname == "hc-iaas-snow" %}
+        {% set labname = "Self-Service with ServiceNow" %}
+        {% set val_name = "SNOW" %}
+    {% elif user.labname == "hc-iaas-leap" %}
+        {% set labname = "Cross-Cluster Migration with Leap" %}
+        {% set val_name = "LEAP" %}
+    {% elif user.labname == "hc-iaas-leap" %}
+        {% set labname = "ServiceNOW Alert & CMDB Integration" %}
+        {% set val_name = "CMDB" %}
+    {% else %}
+        {% set labname = "ServiceNOW and X-Play" %}
+        {% set val_name = "XPlay" %}
+    {% endif %}
+
+
+    <h2>Validator page for Hybrid Cloud IaaS - {{ labname }} lab</h2>
+
     <P>
     Below is the information for user <B>{{ user.username }} </B>that has asked validation.<BR><BR>
     <table class="table-bordered table">
@@ -14,6 +31,11 @@
             <td><B>Full name</B></td>
             <TD>{{ user.username }}</TD>
         </tr>
+        <TR>
+            <td><B>User number (UserX)</B></td>
+            <TD>{{ user.userx }}</TD>
+        </TR>
+
         <tr>
             <td><B>Cluster name</B></td>
             <TD>{{ user.clustername }}</TD>
@@ -26,19 +48,33 @@
             <td><B>Prism Central IP</B></td>
             <TD>{{ user.pc_ip }}</TD>
         </TR>
+
     </table>
     <HR>
     <P>Please make sure the user has the following created for the validation</P>
 
-    IMAGE 1,2,3<BR>
-    Text<BR>
+    {% if val_name=="SNOW" %}
+        <P> Show the validation information for the ServiceNOW lab</P>
+
+    {% elif val_name=="LEAP" %}
+        <P> Show the validation information for the Leap lab</P>
+
+    {% elif val_name=="CMDB" %}
+        <P> Show the validation information for the CMDB lab</P>
+
+    {% else %}
+        <P> Show the validation information for the X-Play lab</P>
+
+    {% endif %}
+
+
     <HR>
         <P>If you agree that the user can be validated, please click the <B>I validate</B> button<BR><BR></P>
     <form class="form-horizontal" action="/validator" method="post" novalidate>
         <P>
             <input type="hidden" name="username" value="{{ user.username }}">
             <input type="hidden" name="usernr" value="{{ user.usernr }}">
-            <input type="hidden" name="labname" value="EUC">
+            <input type="hidden" name="labname" value="{{ user.labname }}">
             <input type="text" size="20" name="validator" value="Your name">
             <input type="Submit" class="btn btn-primary" value="I Validate">
         </P>

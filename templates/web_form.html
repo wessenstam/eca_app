@@ -2,10 +2,11 @@
     <head>
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-        <meta http-equiv="refresh" content="60; URL=/">
+        <meta http-equiv="refresh" content="300; URL=/">
         <title>{{ title }}</title>
     </head>
     <body><center>
+        {% if not user.attendee_name %}
     <h2>Lookup your data</h2>
     <form class="form-horizontal" action="" method="post" novalidate>
         {{ form.hidden_tag() }}
@@ -14,7 +15,7 @@
         </p>
         <p>{{ form.submit(class="btn btn-primary") }}</p>
     </form>
-
+    {% endif %}
     {% if error %}
     <H4>Email address {{ error.email }} has not been found in the database. Please try again</H4>
         {{ error.message }}
@@ -34,9 +35,24 @@
                 <input type="hidden" name="usernr" value="{{ user.uniq_nr }}">
                 <input type="hidden" name="pcip" value="{{ user.pc_vip }}">
                 <select id="lab" name="lab" size="1">
-                    <option value="euc">EUC</option>
-                    <option value="cloudnative">Cloud Native</option>
-                    <option value="cicd">CI/CD</option>
+                    <option value="hc-iaas-snow">Hybrid Cloud IaaS - SNOW</option>
+                    <option value="hc-iaas-leap">Hybrid Cloud IaaS - LEAP</option>
+                    <option value="hc-iaas-cmdb">Hybrid Cloud IaaS - SNOW & CMDB</option>
+                    <option value="hc-iaas-xplay">Hybrid Cloud IaaS - SNOW & XPlay</option>
+                    <option value="hc-db-aav">Hybrid Cloud DB - Multi-Cloud Application Availability</option>
+                    <option value="hc-db-dam">Hybrid Cloud DB - Multi-Cloud Data Access Management</option>
+                    <option value="hc-db-mssql">Hybrid Cloud DB - Patch MSSQL</option>
+                    <option value="hc-db-ultimate">Hybrid Cloud DB - Prism Ultimate</option>
+                    <option value="hc-euc-prov">Hybrid Cloud EUC - Provision and Expand</option>
+                    <option value="hc-euc-calm">Hybrid Cloud EUC - Calm Runbooks</option>
+                    <option value="hc-euc-flow">Hybrid Cloud EUC - Securing Desktops with Flow</option>
+                    <option value="cicd-cont">Containerize App & CICD - Containerize</option>
+                    <option value="cicd-use">Containerize App & CICD - Using CICD</option>
+                    <option value="cicd-era">Containerize App & CICD - Development and Era</option>
+                    <option value="cloud-k8s">Cloud Native - Kubernetes configuration</option>
+                    <option value="cloud-fiesta">Cloud Native - Fiesta Application</option>
+                    <option value="cloud-day2">Cloud Native - Day 2 Operations</option>
+
                 </select>
                 <input type="Submit" class="btn btn-primary" value="Validate me">
             </P>
@@ -104,19 +120,87 @@
                     <td>{{ user.karbon_start }} - {{ user.karbon_stop }}</td>
                 </tr>
                 <TR>
-                    <td colspan="2" bgcolor="#ff4455"><center><B>Validation status</B></center></td>
+                    <td colspan="2" bgcolor="#B0D235"><center><B>Validation status - Hybrid Cloud IaaS labs</B></center></td>
                 </tr>
                 <tr>
-                    <td >EUC Lab</td>
-                    <td >{{ user.val_euc }}</td>
+                    <td >Self Service with ServiceNOW</td>
+                    <td >{{ user.val_hc_snow }}</td>
                 </tr>
                 <tr>
-                    <td>Cloud Native Lab</td>
-                    <td>{{ user.val_cloud }}</td>
+                    <td>Cross-Cluster Migration with Leap</td>
+                    <td>{{ user.val_hc_leap }}</td>
                 </tr>
                 <tr>
-                    <td>CI/CD Lab</td>
-                    <td>{{ user.val_cicd }}</td>
+                    <td>ServiceNOW Alert & CMDB Integration</td>
+                    <td>{{ user.val_hc_cmdb }}</td>
+                </tr>
+                <tr>
+                    <td>Automated remediation with ServiceNOW and X-Play</td>
+                    <td>{{ user.val_hc_xplay }}</td>
+                </tr>
+                <TR>
+                    <td colspan="2" bgcolor="#B0D235"><center><B>Validation status - Hybrid Cloud Database Management</B></center></td>
+                </tr>
+                <tr>
+                    <td >Multi-Cloud Application Avalability</td>
+                    <td >{{ user.val_hc_db_aav }}</td>
+                </tr>
+                <tr>
+                    <td >Multi-Cloud Data Access Management</td>
+                    <td >{{ user.val_hc_db_dam }}</td>
+                </tr>
+                <tr>
+                    <td >Patching SQL Server with Era</td>
+                    <td >{{ user.val_hc_db_mssql }}</td>
+                </tr>
+                <tr>
+                    <td >Prism Ultimate</td>
+                    <td >{{ user.val_hc_db_ultimate }}</td>
+                </tr>
+                <TR>
+                    <td colspan="2" bgcolor="#B0D235"><center><B>Validation status - Hybrid Cloud EUC</B></center></td>
+                </tr>
+                <tr>
+                    <td >Provision & Expand</td>
+                    <td >{{ user.val_hc_euc_prov }}</td>
+                </tr>
+                <tr>
+                    <td >Dynamic Expansion with Calm Runbooks</td>
+                    <td >{{ user.val_hc_euc_calm }}</td>
+                </tr>
+                <tr>
+                    <td >Securing Desktops with Flow</td>
+                    <td >{{ user.val_hc_euc_flow }}</td>
+                </tr>
+                <TR>
+                    <td colspan="2" bgcolor="#B0D235"><center><B>Validation status - Containerizg Apps and CI/CD</B></center></td>
+                </tr>
+                <tr>
+                    <td >Containerize the Fiesta App</td>
+                    <td >{{ user.val_cicd_cont }}</td>
+                </tr>
+                <tr>
+                    <td >Using the CI/CD infrastructure</td>
+                    <td >{{ user.val_cicd_use }}</td>
+                </tr>
+                <tr>
+                    <td >Getting a development environment with Era</td>
+                    <td >{{ user.val_cicd_era }}</td>
+                </tr>
+                <TR>
+                    <td colspan="2" bgcolor="#B0D235"><center><B>Validation status - Cloud Native Apps on Nutanix</B></center></td>
+                </tr>
+                <tr>
+                    <td >Kubernetes configuration</td>
+                    <td >{{ user.val_cloud_k8s }}</td>
+                </tr>
+                <tr>
+                    <td >Fiesta Application</td>
+                    <td >{{ user.val_cloud_fiesta }}</td>
+                </tr>
+                <tr>
+                    <td >Day 2 Operations</td>
+                    <td >{{ user.val_cloud_day2 }}</td>
                 </tr>
             </table>
         {% else %}

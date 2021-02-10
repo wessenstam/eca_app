@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <title>{{ title }}</title>
+    </head>
+    <body>
+    <center>
+
+    {% if user.labname == "cloud-k8s" %}
+        {% set labname = "Kubernetes configuration" %}
+        {% set val_name = "k8s" %}
+    {% elif user.labname == "cloud-fiesta" %}
+        {% set labname = "Fiesta Application" %}
+        {% set val_name = "fiesta" %}
+    {% else %}
+        {% set labname = "Day 2 Operations" %}
+        {% set val_name = "day2" %}
+    {% endif %}
+
+
+    <h2>Validator page for Cloud Native Apps on Nutanix - {{ labname }} lab</h2>
+
+    <P>
+    Below is the information for user <B>{{ user.username }} </B>that has asked validation.<BR><BR>
+    <table class="table-bordered table">
+        <tr>
+            <td><B>Full name</B></td>
+            <TD>{{ user.username }}</TD>
+        </tr>
+        <TR>
+            <td><B>User number (UserX)</B></td>
+            <TD>{{ user.userx }}</TD>
+        </TR>
+
+        <tr>
+            <td><B>Cluster name</B></td>
+            <TD>{{ user.clustername }}</TD>
+        </tr>
+        <tr>
+            <td><B>Cluster IP</B></td>
+            <TD>{{ user.clusterip }}</TD>
+        </tr>
+        <TR>
+            <td><B>Prism Central IP</B></td>
+            <TD>{{ user.pc_ip }}</TD>
+        </TR>
+
+    </table>
+    <HR>
+    <P>Please make sure the user has the following created for the validation</P>
+
+    {% if val_name=="k8s" %}
+        <P> Show the validation information for the Kubernetes configuration lab</P>
+
+    {% elif val_name=="fiesta" %}
+        <P> Show the validation information for the Fiesta app running on k8s lab</P>
+
+    {% else %}
+        <P> Show the validation information for the Day 2 operations lab</P>
+
+    {% endif %}
+
+
+    <HR>
+        <P>If you agree that the user can be validated, please click the <B>I validate</B> button<BR><BR></P>
+    <form class="form-horizontal" action="/validator" method="post" novalidate>
+        <P>
+            <input type="hidden" name="username" value="{{ user.username }}">
+            <input type="hidden" name="usernr" value="{{ user.usernr }}">
+            <input type="hidden" name="labname" value="{{ user.labname }}">
+            <input type="text" size="20" name="validator" value="Your name">
+            <input type="Submit" class="btn btn-primary" value="I Validate">
+        </P>
+    </form>
+    </center>
+    </body>
+</html>
