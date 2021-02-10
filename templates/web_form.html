@@ -6,15 +6,15 @@
         <title>{{ title }}</title>
     </head>
     <body><center>
-        {% if not user.attendee_name %}
-    <h2>Lookup your data</h2>
-    <form class="form-horizontal" action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.email.label }} {{ form.email(size=32,value="") }}
-        </p>
-        <p>{{ form.submit(class="btn btn-primary") }}</p>
-    </form>
+    {% if not user.attendee_name %}
+        <h2>Lookup your data</h2>
+        <form class="form-horizontal" action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.email.label }} {{ form.email(size=32,value="") }}
+            </p>
+            <p>{{ form.submit(class="btn btn-primary") }}</p>
+        </form>
     {% endif %}
     {% if error %}
     <H4>Email address {{ error.email }} has not been found in the database. Please try again</H4>
