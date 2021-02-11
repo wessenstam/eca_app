@@ -319,8 +319,6 @@ def show_form_validator():
 
                     )
 
-            print(iaas_lst)
-
             # Render the pages
             return render_template('web_validator.html', iaaslist=iaas_lst,dblist=db_lst,euclist=euc_lst,cicdlist=cicd_lst,cloudlist=cloud_lst)
 
