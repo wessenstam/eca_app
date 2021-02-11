@@ -203,7 +203,6 @@ def show_form_validator():
     if request.method =="POST":
         reply_post = request.form
         webdata={'username':reply_post['username'],
-                 'validator':reply_post['validator'],
                  'labname':reply_post['labname']
                  }
 
