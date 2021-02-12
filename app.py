@@ -14,6 +14,9 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired
 import gspread
 import pandas as pd
+import os
+
+validator_password=os.environ('validator_password')
 
 # Geting the Forms ready to be used
 class LoginForm(FlaskForm):
@@ -200,126 +203,149 @@ def show_form_validation():
 
 @app.route("/validator", methods=['GET','POST'])
 def show_form_validator():
-    if request.method =="POST":
+
+    if "validated" in session:
+
+        if request.method =="POST":
+            reply_post = request.form
+            webdata={'username':reply_post['username'],
+                     'labname':reply_post['labname']
+                     }
+
+            # Have the data updated
+            update_gsheet_df(int(reply_post['usernr']),reply_post['labname'],"Validated")
+
+            return render_template('web_validation_received.html',info=webdata, title='vGTS2021 - Validator area')
+        else:
+            # Do we have a usernr where we need to get the correct info from??
+            if str(request.args.get('lab')) != 'None':
+                usernr=str(request.args.get('usernr'))
+                labname=str(request.args.get('lab'))
+
+                # Have the data updated and get the returned info for the webpage
+                web_templ=update_gsheet_df(int(usernr), labname, "In progress")
+
+                # Get all information from the DF for the user
+                dict_user = df.iloc[int(usernr)-1].to_dict()
+                user_values={'username':dict_user['First Name']+" "+dict_user['Last Name'],
+                             'clustername': dict_user['Cluster Name'],
+                             'clusterip': dict_user['IP address VIP'],
+                             'pc_ip':dict_user['IP address PC'],
+                             'usernr':dict_user['Nr'],
+                             'userx': dict_user['UserX'],
+                             'labname': labname
+                            }
+
+                return render_template(web_templ, title='vGTS 2021 - Cluster lookup', user=user_values)
+
+            else:
+                # Get all users info: usernr, First Name, Last Name and Pending status lab validation, but they must not be empty!
+                # Make copies of the existing big DF
+                df_val_hc_iaas=df[['Nr','UserX','First Name','Last Name','hc-iaas-snow','hc-iaas-leap','hc-iaas-cmdb','hc-iaas-xplay']].copy()
+                df_val_db=df[['Nr','UserX','First Name','Last Name','hc-db-aav','hc-db-dam','hc-db-mssql','hc-db-ultimate']].copy()
+                df_val_euc=df[['Nr','UserX','First Name','Last Name','hc-euc-prov','hc-euc-calm','hc-euc-flow']].copy()
+                df_val_cicd = df[['Nr','UserX', 'First Name', 'Last Name', 'cicd-cont', 'cicd-use', 'cicd-era']].copy()
+                df_val_cloud=df[['Nr','UserX','First Name','Last Name','cloud-k8s','cloud-fiesta','cloud-day2']].copy()
+
+
+                # Clean out the unneeded rows
+                df_val_hc_iaas=df_val_hc_iaas[(df_val_hc_iaas['hc-iaas-snow'] !="") | (df_val_hc_iaas['hc-iaas-leap'] !="") | (df_val_hc_iaas['hc-iaas-cmdb'] !="") | (df_val_hc_iaas['hc-iaas-xplay'] !="")]
+                df_val_db=df_val_db[(df_val_db['hc-db-aav'] != "")| (df_val_db['hc-db-dam'] != "") | (df_val_db['hc-db-mssql'] != "") | (df_val_db['hc-db-ultimate'] != "")]
+                df_val_euc=df_val_euc[(df_val_euc['hc-euc-prov']!="") | (df_val_euc['hc-euc-calm']!="") | (df_val_euc['hc-euc-flow']!="")]
+                df_val_cicd=df_val_cicd[(df_val_cicd['cicd-cont'] != "") | (df_val_cicd['cicd-use'] != "") | (df_val_cicd['cicd-era'] != "")]
+                df_val_cloud = df_val_cloud[(df_val_cloud['cloud-k8s'] != "") | (df_val_cloud['cloud-fiesta'] != "") | (df_val_cloud['cloud-day2'] != "")]
+
+                # Set new indexes on the temp DFs
+                df_val_hc_iaas=df_val_hc_iaas.set_index('Nr')
+                df_val_db=df_val_db.set_index('Nr')
+                df_val_euc=df_val_euc.set_index('Nr')
+                df_val_cicd=df_val_cicd.set_index('Nr')
+                df_val_cloud=df_val_cloud.set_index('Nr')
+
+                # Create the data into a list so we can forward them to the renderer per lab
+
+                iaas_lst=[]
+                if len(df_val_hc_iaas.to_dict()['First Name']) < 1:
+                    iaas_lst=[" , , , , , , , "]
+                else:
+                    for key in df_val_hc_iaas.to_dict()['First Name']:
+                        iaas_lst.append(
+                                 str(key)+","+str(df_val_hc_iaas.to_dict()['UserX'][key])+","+str(df_val_hc_iaas.to_dict()['First Name'][key])+","+
+                                 str(df_val_hc_iaas.to_dict()['Last Name'][key])+","+str(df_val_hc_iaas.to_dict()['hc-iaas-snow'][key])+","+
+                                 str(df_val_hc_iaas.to_dict()['hc-iaas-leap'][key])+","+str(df_val_hc_iaas.to_dict()['hc-iaas-cmdb'][key])+","+
+                                 str(df_val_hc_iaas.to_dict()['hc-iaas-xplay'][key])
+                        )
+
+                db_lst=[]
+                if len(df_val_db.to_dict()['First Name']) < 1:
+                    db_lst=[" , , , , , , , "]
+                else:
+                    for key in df_val_db.to_dict()['First Name']:
+                        db_lst.append(
+                            str(key)+","+str(df_val_db.to_dict()['UserX'][key])+","+str(df_val_db.to_dict()['First Name'][key])+","+
+                            str(df_val_db.to_dict()['Last Name'][key])+","+str(df_val_db.to_dict()['hc-db-aav'][key])+","+
+                            str(df_val_db.to_dict()['hc-db-dam'][key])+","+str(df_val_db.to_dict()['hc-db-mssql'][key])+","+
+                            str(df_val_db.to_dict()['hc-db-ultimate'][key])
+                        )
+
+                euc_lst=[]
+                if len(df_val_euc.to_dict()['First Name']) < 1:
+                    euc_lst = [" , , , , , , , "]
+                else:
+                    for key in df_val_euc.to_dict()['First Name']:
+                        euc_lst.append(
+                            str(key)+","+str(df_val_euc.to_dict()['UserX'][key])+","+str(df_val_euc.to_dict()['First Name'][key])+","+
+                            str(df_val_euc.to_dict()['Last Name'][key])+","+str(df_val_euc.to_dict()['hc-euc-prov'][key])+","+
+                            str(df_val_euc.to_dict()['hc-euc-calm'][key])+","+str(df_val_euc.to_dict()['hc-euc-flow'][key])
+                        )
+
+
+                cicd_lst = []
+                if len(df_val_cicd.to_dict()['First Name']) < 1:
+                    cicd_lst=[" , , , , , , "]
+                else:
+                    for key in df_val_cicd.to_dict()['First Name']:
+                        cicd_lst.append(
+                            str(key) + "," + str(df_val_cicd.to_dict()['UserX'][key])+","+
+                            str(df_val_cicd.to_dict()['First Name'][key]) + "," + str(df_val_cicd.to_dict()['Last Name'][key])+","+
+                            str(df_val_cicd.to_dict()['cicd-cont'][key])+","+ str(df_val_cicd.to_dict()['cicd-use'][key])+","+
+                            str(df_val_cicd.to_dict()['cicd-era'][key])
+                        )
+
+                cloud_lst=[]
+                if len(df_val_cloud.to_dict()['First Name']) < 1:
+                    cloud_lst=[" , , , , , "]
+                else:
+                    for key in df_val_cloud.to_dict()['First Name']:
+                        cloud_lst.append(
+                            str(key)+","+str(df_val_cloud['UserX'][key])+","+str(df_val_cloud.to_dict()['First Name'][key])+","+
+                            str(df_val_cloud.to_dict()['Last Name'][key])+","+str(df_val_cloud.to_dict()['cloud-k8s'][key])+","+
+                            str(df_val_cloud.to_dict()['cloud-fiesta'][key])+","+str(df_val_cloud.to_dict()['cloud-day2'][key])
+
+                        )
+
+                # Render the pages
+                return render_template('web_validator.html', iaaslist=iaas_lst,dblist=db_lst,euclist=euc_lst,cicdlist=cicd_lst,cloudlist=cloud_lst)
+    else: # We don;t have a validated user
+        return render_template('web_validateme.html', info="No", title='vGTS2021 - Validator area')
+
+
+@app.route("/validateme", methods=['GET','POST'])
+def show_form_validateme():
+    if request.method == "POST":
         reply_post = request.form
-        webdata={'username':reply_post['username'],
-                 'labname':reply_post['labname']
-                 }
-
-        # Have the data updated
-        update_gsheet_df(int(reply_post['usernr']),reply_post['labname'],"Validated")
-
-        return render_template('web_validation_received.html',info=webdata, title='vGTS2021 - Cluster lookup')
-    else:
-        # Do we have a usernr where we need to get the correct info from??
-        if str(request.args.get('lab')) != 'None':
-            usernr=str(request.args.get('usernr'))
-            labname=str(request.args.get('lab'))
-
-            # Have the data updated and get the returned info for the webpage
-            web_templ=update_gsheet_df(int(usernr), labname, "In progress")
-
-            # Get all information from the DF for the user
-            dict_user = df.iloc[int(usernr)-1].to_dict()
-            user_values={'username':dict_user['First Name']+" "+dict_user['Last Name'],
-                         'clustername': dict_user['Cluster Name'],
-                         'clusterip': dict_user['IP address VIP'],
-                         'pc_ip':dict_user['IP address PC'],
-                         'usernr':dict_user['Nr'],
-                         'userx': dict_user['UserX'],
-                         'labname': labname
-                        }
-
-            return render_template(web_templ, title='vGTS 2021 - Cluster lookup', user=user_values)
+        print(reply_post['val_password'])
+        if reply_post['val_password'] == validator_password:
+            session['validated'] = "Yes"
+            return render_template('web_validateme.html', info="Yes", title='vGTS2021 - Validator area')
 
         else:
-            # Get all users info: usernr, First Name, Last Name and Pending status lab validation, but they must not be empty!
-            # Make copies of the existing big DF
-            df_val_hc_iaas=df[['Nr','UserX','First Name','Last Name','hc-iaas-snow','hc-iaas-leap','hc-iaas-cmdb','hc-iaas-xplay']].copy()
-            df_val_db=df[['Nr','UserX','First Name','Last Name','hc-db-aav','hc-db-dam','hc-db-mssql','hc-db-ultimate']].copy()
-            df_val_euc=df[['Nr','UserX','First Name','Last Name','hc-euc-prov','hc-euc-calm','hc-euc-flow']].copy()
-            df_val_cicd = df[['Nr','UserX', 'First Name', 'Last Name', 'cicd-cont', 'cicd-use', 'cicd-era']].copy()
-            df_val_cloud=df[['Nr','UserX','First Name','Last Name','cloud-k8s','cloud-fiesta','cloud-day2']].copy()
+            return render_template('web_validateme.html', info="No", title='vGTS2021 - Validator area')
+
+    else:
+        return render_template('web_validateme.html', info="No", title='vGTS2021 - Validator area')
 
 
-            # Clean out the unneeded rows
-            df_val_hc_iaas=df_val_hc_iaas[(df_val_hc_iaas['hc-iaas-snow'] !="") | (df_val_hc_iaas['hc-iaas-leap'] !="") | (df_val_hc_iaas['hc-iaas-cmdb'] !="") | (df_val_hc_iaas['hc-iaas-xplay'] !="")]
-            df_val_db=df_val_db[(df_val_db['hc-db-aav'] != "")| (df_val_db['hc-db-dam'] != "") | (df_val_db['hc-db-mssql'] != "") | (df_val_db['hc-db-ultimate'] != "")]
-            df_val_euc=df_val_euc[(df_val_euc['hc-euc-prov']!="") | (df_val_euc['hc-euc-calm']!="") | (df_val_euc['hc-euc-flow']!="")]
-            df_val_cicd=df_val_cicd[(df_val_cicd['cicd-cont'] != "") | (df_val_cicd['cicd-use'] != "") | (df_val_cicd['cicd-era'] != "")]
-            df_val_cloud = df_val_cloud[(df_val_cloud['cloud-k8s'] != "") | (df_val_cloud['cloud-fiesta'] != "") | (df_val_cloud['cloud-day2'] != "")]
-
-            # Set new indexes on the temp DFs
-            df_val_hc_iaas=df_val_hc_iaas.set_index('Nr')
-            df_val_db=df_val_db.set_index('Nr')
-            df_val_euc=df_val_euc.set_index('Nr')
-            df_val_cicd=df_val_cicd.set_index('Nr')
-            df_val_cloud=df_val_cloud.set_index('Nr')
-
-            # Create the data into a list so we can forward them to the renderer per lab
-
-            iaas_lst=[]
-            if len(df_val_hc_iaas.to_dict()['First Name']) < 1:
-                iaas_lst=[" , , , , , , , "]
-            else:
-                for key in df_val_hc_iaas.to_dict()['First Name']:
-                    iaas_lst.append(
-                             str(key)+","+str(df_val_hc_iaas.to_dict()['UserX'][key])+","+str(df_val_hc_iaas.to_dict()['First Name'][key])+","+
-                             str(df_val_hc_iaas.to_dict()['Last Name'][key])+","+str(df_val_hc_iaas.to_dict()['hc-iaas-snow'][key])+","+
-                             str(df_val_hc_iaas.to_dict()['hc-iaas-leap'][key])+","+str(df_val_hc_iaas.to_dict()['hc-iaas-cmdb'][key])+","+
-                             str(df_val_hc_iaas.to_dict()['hc-iaas-xplay'][key])
-                    )
-
-            db_lst=[]
-            if len(df_val_db.to_dict()['First Name']) < 1:
-                db_lst=[" , , , , , , , "]
-            else:
-                for key in df_val_db.to_dict()['First Name']:
-                    db_lst.append(
-                        str(key)+","+str(df_val_db.to_dict()['UserX'][key])+","+str(df_val_db.to_dict()['First Name'][key])+","+
-                        str(df_val_db.to_dict()['Last Name'][key])+","+str(df_val_db.to_dict()['hc-db-aav'][key])+","+
-                        str(df_val_db.to_dict()['hc-db-dam'][key])+","+str(df_val_db.to_dict()['hc-db-mssql'][key])+","+
-                        str(df_val_db.to_dict()['hc-db-ultimate'][key])
-                    )
-
-            euc_lst=[]
-            if len(df_val_euc.to_dict()['First Name']) < 1:
-                euc_lst = [" , , , , , , , "]
-            else:
-                for key in df_val_euc.to_dict()['First Name']:
-                    euc_lst.append(
-                        str(key)+","+str(df_val_euc.to_dict()['UserX'][key])+","+str(df_val_euc.to_dict()['First Name'][key])+","+
-                        str(df_val_euc.to_dict()['Last Name'][key])+","+str(df_val_euc.to_dict()['hc-euc-prov'][key])+","+
-                        str(df_val_euc.to_dict()['hc-euc-calm'][key])+","+str(df_val_euc.to_dict()['hc-euc-flow'][key])
-                    )
-
-
-            cicd_lst = []
-            if len(df_val_cicd.to_dict()['First Name']) < 1:
-                cicd_lst=[" , , , , , , "]
-            else:
-                for key in df_val_cicd.to_dict()['First Name']:
-                    cicd_lst.append(
-                        str(key) + "," + str(df_val_cicd.to_dict()['UserX'][key])+","+
-                        str(df_val_cicd.to_dict()['First Name'][key]) + "," + str(df_val_cicd.to_dict()['Last Name'][key])+","+
-                        str(df_val_cicd.to_dict()['cicd-cont'][key])+","+ str(df_val_cicd.to_dict()['cicd-use'][key])+","+
-                        str(df_val_cicd.to_dict()['cicd-era'][key])
-                    )
-
-            cloud_lst=[]
-            if len(df_val_cloud.to_dict()['First Name']) < 1:
-                cloud_lst=[" , , , , , "]
-            else:
-                for key in df_val_cloud.to_dict()['First Name']:
-                    cloud_lst.append(
-                        str(key)+","+str(df_val_cloud['UserX'][key])+","+str(df_val_cloud.to_dict()['First Name'][key])+","+
-                        str(df_val_cloud.to_dict()['Last Name'][key])+","+str(df_val_cloud.to_dict()['cloud-k8s'][key])+","+
-                        str(df_val_cloud.to_dict()['cloud-fiesta'][key])+","+str(df_val_cloud.to_dict()['cloud-day2'][key])
-
-                    )
-
-            # Render the pages
-            return render_template('web_validator.html', iaaslist=iaas_lst,dblist=db_lst,euclist=euc_lst,cicdlist=cicd_lst,cloudlist=cloud_lst)
 
 if __name__ == "main":
     # start the app

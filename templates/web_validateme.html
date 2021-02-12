@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        {% if info == "Yes" %}
+            <meta http-equiv="refresh" content="2; URL=/validator">
+        {% endif %}
+        <title>{{ title }}</title>
+    </head>
+    <body>
+    <center>
+    <h2>Validator page for login...</h2>
+    {% if info != "Yes" %}
+        <P>Welcome to the login page for the validator</P>
+        <br><br>
+        <P>Please provide the password in the below text field</P>
+        <form class="form-horizontal" action="/validateme" method="POST" novalidate>
+            <P>
+                <input type="password" size="20" name="val_password" value="">
+                <input type="Submit" class="btn btn-primary" value="I Validate">
+            </P>
+        </form>
+    {% else %}
+        <P>You have been validated.. We will redirect you in 2 seconds to the validator page</P>
+    {% endif %}
+    </center>
+    </body>
+</html>
