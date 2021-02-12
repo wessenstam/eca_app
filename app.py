@@ -16,7 +16,7 @@ import gspread
 import pandas as pd
 import os
 
-validator_password=os.environ('validator_password')
+validator_password=os.environ['validator_password']
 
 # Geting the Forms ready to be used
 class LoginForm(FlaskForm):
