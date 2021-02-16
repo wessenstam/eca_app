@@ -92,6 +92,10 @@
                     {% endif %}
                 </tr>
                 <tr>
+                    <td>HPOC Frame/VPN password</td>
+                    <td>ntnxGTS2021!</td>
+                </tr>
+                <tr>
                     <td colspan="2" bgcolor="#ff4455"><center><B>Cluster Information</B></center></td>
                 </tr>
                 <tr>
@@ -113,6 +117,15 @@
                 <tr>
                     <td>Prism Central VIP</td>
                     <td>{{ user.pc_vip }}</td>
+                </tr>
+                <TR>
+                    <td colspan="2" bgcolor="#ff4455">
+                        <center><B>Active Directory information</B></center>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Domain Controller</td>
+                    <td>{{ user.pc_vip[:-2] }}.41</td>
                 </tr>
                 <TR>
                     <td colspan="2" bgcolor="#ff4455"><center><B>Network information</B></center></td>
