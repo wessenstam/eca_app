@@ -90,9 +90,9 @@ def logout():
     user_data = ""
     if 'email' in session:  
         session.pop('email',None)  
-        return render_template('web_form.html', title='vGTS 2021 - Cluster lookup', user=user_data, form=form, error=error)
+        return render_template('web_loged_out.html')
     else:  
-        return render_template('web_form.html', title='vGTS 2021 - Cluster lookup', user=user_data, form=form, error=error)
+        return render_template('web_loged_out.html')
 
 @app.route("/update")
 def update_df():
