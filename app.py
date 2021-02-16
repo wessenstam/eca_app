@@ -86,7 +86,7 @@ def before_request():
 @app.route('/logout')  
 def logout():  
     error = ""
-    form = ""
+    form = LoginForm()
     user_data = ""
     if 'email' in session:  
         session.pop('email',None)  
