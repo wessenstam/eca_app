@@ -82,7 +82,7 @@
                     <td>{{ user.attendee_name }}</td>
                 </tr>
                 <tr>
-                    <td>User Name for the labs</td>
+                    <td>USER## ID (Used as a common prefix throughout the lab, ex. USER01)</td>
                     {% if user.user_x | int < 10 %} 
                         <td>USER0{{ user.user_x }}</td>
                     {% else %}
@@ -105,24 +105,25 @@
                     <td colspan="2" bgcolor="#ff4455"><center><B>Cluster Information</B></center></td>
                 </tr>
                 <tr>
-                    <td>Cluster Name</td>
-                    <td>{{ user.cluster_name }}</td>
+                    <td>Prism Central IP</td>
+                    <td>{{ user.pc_vip }}</td>
                 </tr>
                 <tr>
-                    <td >Prism Element VIP/Cluster External IP Address</td>
-                    <td >{{ user.pe_vip }}</td>
+                    <td>On-premises (HPOC) Prism Element Cluster/Virtual IP</td>
+                    <td>{{ user.pe_vip }}</td>
                 </tr>
+                <tr>
+                    <td>AWS-Cluster Prism Element Cluster/Virtual IP</td>
+                    <td>TBD</td>
+                </tr>
+                
                 <TR>
-                    <td>Cluster username</td>
+                    <td>Prism Element/Prism Central Username</td>
                     <td><b>admin</b></td>
                 </TR>
                 <tr>
-                    <td >Password</td>
+                    <td >Prism Element/Prism Central Password</td>
                     <td ><B>{{ user.password }}</B></td>
-                </tr>
-                <tr>
-                    <td>Prism Central VIP</td>
-                    <td>{{ user.pc_vip }}</td>
                 </tr>
                 <TR>
                     <td colspan="2" bgcolor="#ff4455">
@@ -130,11 +131,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Domain Controller</td>
+                    <td>Domain Controller IP (DNS Server)</td>
                     <td>{{ user.pc_vip[:-2] }}41</td>
                 </tr>
                 <tr>
-                    <td>Full Qualified Domain Name</td>
+                    <td>Fully Qualified Domain Name</td>
                     <td>ntnxlab.local</td>
                 </tr>
                 <tr>
@@ -142,16 +143,20 @@
                     <td>Administrator</td>
                 </tr>
                 <tr>
-                    <td>Administrator password</td>
+                    <td>Admin Password</td>
                     <td>nutanix/4u</td>
                 </tr>
                 <tr>
-                    <td>User username</td>
+                    <td>User Username</td>
                     {% if user.user_x | int < 10 %} 
                         <td>user0{{ user.user_x }}</td>
                     {% else %}
                         <td>user{{ user.user_x }}</td>
                     {% endif %}
+                </tr>
+                <TR>
+                    <td>User Password</td>
+                    <td>nutanix/4u</td>
                 </tr>
                 <TR>
                     <td>Developer username</td>
@@ -162,6 +167,10 @@
                     {% endif %}
                 </tr>
                 <TR>
+                    <td>Developer Password</td>
+                    <td>nutanix/4u</td>
+                </tr>
+                <TR>
                     <td>Operator username</td>
                     {% if user.user_x | int < 10 %} 
                         <td>operator0{{ user.user_x }}</td>
@@ -170,7 +179,7 @@
                     {% endif %}
                 </tr>
                 <TR>
-                    <td>User, Developer and operator password</td>
+                    <td>Operator Password</td>
                     <td>nutanix/4u</td>
                 </tr>
                 <tr>
@@ -182,11 +191,11 @@
                 </tr>
                 <tr>
                     <td>Era Username</td>
-                    <td>admin</td>
+                    <td>admin (will be same as PC creds)</td>
                 </tr>
                 <tr>
-                    <td>Era password</td>
-                    <td>ntnxGTS2021!</td>
+                    <td>Era Password</td>
+                    <td>ntnxGTS2021!(will be same as PC creds)</td>
                 </tr>
                 <tr>
                     <td colspan="2" bgcolor="#ff4455"><center><B>ServiceNow information</B></center>
@@ -202,11 +211,11 @@
                 </tr>
                 <tr>
                     <td>ServiceNow Username</td>
-                    <td>admin</td>
+                    <td>admin(will be same as PC creds)</td>
                 </tr>
                 <tr>
                     <td>ServiceNow password</td>
-                    <td>ntnxGTS2021!</td>
+                    <td>ntnxGTS2021!(will be same as PC creds)</td>
                 </tr>
 
                 <tr>
