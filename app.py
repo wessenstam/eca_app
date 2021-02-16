@@ -87,7 +87,7 @@ def before_request():
 def logout():  
     error = ""
     form = ""
-    user = ""
+    user_data = ""
     if 'email' in session:  
         session.pop('email',None)  
         return render_template('web_form.html', title='vGTS 2021 - Cluster lookup', user=user_data, form=form, error=error)
