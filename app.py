@@ -15,6 +15,7 @@ from wtforms.validators import DataRequired
 import gspread
 import pandas as pd
 import os
+from datetime import timedelta
 
 validator_password=os.environ['validator_password']
 
@@ -76,6 +77,10 @@ df = pd.DataFrame(data, columns=headers)
 # Area for definition of variables
 lab_type_lst=["snow","leap","cmdb","xplay","aav","dam","mssql","ultimate","prov","calm","flow","cont","use","era","k8s","fiesta","day2"]
 
+@app.before_request
+def before_request():
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(minutes=60)
 
 @app.route("/update")
 def update_df():
