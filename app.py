@@ -9,7 +9,6 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 import json
 from flask import *
-from flask_login import logout_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired
@@ -24,7 +23,7 @@ validator_password=os.environ['validator_password']
 class LoginForm(FlaskForm):
     email = StringField('Email Address', validators=[DataRequired()])
     submit = SubmitField('Find me...')
-    
+
 def update_gsheet_df(usernr, lab,progress):
     # Based o the information we got we need to set some variables to the correct values.
     row = int(usernr) + 1
@@ -84,11 +83,6 @@ def before_request():
     session.permanent = True
     app.permanent_session_lifetime = timedelta(hours=8)
 
-
-@app.route('/logout')
-def logout():
-    logout_user()
-    return redirect(url_for('web_form.html'))
 
 @app.route("/update")
 def update_df():
