@@ -88,7 +88,7 @@
                     {% if user.user_x | int < 10 %}
                         <td>{{ user.cluster_name }}-User0{{ user.user_x }}</td>
                     {% else %}
-                        <td>{{ user.cluster_name }}-User0{{ user.user_x }}</td>
+                        <td>{{ user.cluster_name }}-User{{ user.user_x }}</td>
                     {% endif %}
                 </tr>
                 <tr>
@@ -125,9 +125,49 @@
                 </tr>
                 <tr>
                     <td>Domain Controller</td>
-                    <td>{{ user.pc_vip[:-2] }}.41</td>
+                    <td>{{ user.pc_vip[:-2] }}41</td>
+                </tr>
+                <tr>
+                    <td>Full Qualified Domain Name</td>
+                    <td>ntnxlab.local</td>
+                </tr>
+                <tr>
+                    <td>Admin Username</td>
+                    <td>Administrator</td>
+                </tr>
+                <tr>
+                    <td>Administrator password</td>
+                    <td>nutanix/4u</td>
+                </tr>
+                <tr>
+                    <td>User username</td>
+                    {% if user.user_x | int < 10 %} 
+                        <td>user0{{ user.user_x }}</td>
+                    {% else %}
+                        <td>user{{ user.user_x }}</td>
+                    {% endif %}
                 </tr>
                 <TR>
+                    <td>Developer username</td>
+                    {% if user.user_x | int < 10 %} 
+                        <td>devuser0{{ user.user_x }}</td>
+                    {% else %}
+                        <td>devuser{{ user.user_x }}</td>
+                    {% endif %}
+                </tr>
+                <TR>
+                    <td>Operator username</td>
+                    {% if user.user_x | int < 10 %} 
+                        <td>operator0{{ user.user_x }}</td>
+                    {% else %}
+                        <td>operator{{ user.user_x }}</td>
+                    {% endif %}
+                </tr>
+                <TR>
+                    <td>User, Developer and operator password</td>
+                    <td>nutanix/4u</td>
+                </tr>
+                <tr>
                     <td colspan="2" bgcolor="#ff4455"><center><B>Network information</B></center></td>
                 </tr>
                 <tr>
