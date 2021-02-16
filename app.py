@@ -83,6 +83,13 @@ def before_request():
     session.permanent = True
     app.permanent_session_lifetime = timedelta(hours=8)
 
+@app.route('/logout')  
+def logout():  
+    if 'email' in session:  
+        session.pop('email',None)  
+        return render_template('web_form.html');  
+    else:  
+        return render_template('web_form.html')
 
 @app.route("/update")
 def update_df():
