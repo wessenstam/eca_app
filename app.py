@@ -22,7 +22,7 @@ validator_password=os.environ['validator_password']
 # Geting the Forms ready to be used
 class LoginForm(FlaskForm):
     email = StringField('Email Address', validators=[DataRequired()])
-    submit = SubmitField('Find me...')
+    submit = SubmitField('Lookup...')
 
 def update_gsheet_df(usernr, lab,progress):
     # Based o the information we got we need to set some variables to the correct values.
