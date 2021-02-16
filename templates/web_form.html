@@ -26,9 +26,11 @@
 
         {% if user.attendee_name %}
         <hr>
-        <h3>Validation</h3>
+        <h3>Self Service Lab Validation</h3>
         <P>
-        If you want to be validated, make your lab selection from the below dropbox and click the <B>Validate me</B> button<BR>
+        Once you have completed a lab exercise, select the specific exercise from the dropdown menu below and click Validate. A
+        proctor will remotely connect to your cluster and verify the exercise has been completed. The status of which labs are
+        pending
         <form class="form-horizontal" action="/validation" method="post" novalidate>
             <P>
                 <input type="hidden" name="username" value="{{ user.attendee_name }}">
