@@ -84,6 +84,14 @@
                     {% endif %}
                 </tr>
                 <tr>
+                    <td>HPOC Frame/VPN Username</td>
+                    {% if user.user_x | int < 10 %}
+                        <td>{{ user.cluster_name }}-User0{{ user.user_x }}</td>
+                    {% else %}
+                        <td>{{ user.cluster_name }}-User0{{ user.user_x }}</td>
+                    {% enfid %}
+                </tr>
+                <tr>
                     <td colspan="2" bgcolor="#ff4455"><center><B>Cluster Information</B></center></td>
                 </tr>
                 <tr>
