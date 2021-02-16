@@ -77,7 +77,11 @@
                 </tr>
                 <tr>
                     <td>User Name for the labs</td>
-                    <td>User{{ user.user_x }}</td>
+                    {% if user.user_x < 10 %} 
+                        <td>USER0{{ user.user_x }}</td>
+                    {% else %}
+                        <td>USER{{ user.user_x }}</td>
+                    {% endif %}
                 </tr>
                 <tr>
                     <td colspan="2" bgcolor="#ff4455"><center><B>Cluster Information</B></center></td>
