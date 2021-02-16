@@ -82,6 +82,12 @@ def before_request():
     session.permanent = True
     app.permanent_session_lifetime = timedelta(hours=8)
 
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('web_form.html'))
+
 @app.route("/update")
 def update_df():
     # Reload the data from the Gsheet
