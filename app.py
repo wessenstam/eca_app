@@ -80,7 +80,7 @@ lab_type_lst=["snow","leap","cmdb","xplay","aav","dam","mssql","ultimate","prov"
 @app.before_request
 def before_request():
     session.permanent = True
-    app.permanent_session_lifetime = timedelta(minutes=60)
+    app.permanent_session_lifetime = timedelta(hours=8)
 
 @app.route("/update")
 def update_df():
