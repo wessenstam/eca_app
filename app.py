@@ -159,7 +159,8 @@ def show_form_data():
                              'val_cicd_era': user_info[0]['cicd-era'],
                              'val_cloud_k8s': user_info[0]['cloud-k8s'],
                              'val_cloud_fiesta': user_info[0]['cloud-fiesta'],
-                             'val_cloud_day2': user_info[0]['cloud-day2']
+                             'val_cloud_day2': user_info[0]['cloud-day2'],
+                             'pretime':'yes'
                              }
 
                 form.email.data=""
