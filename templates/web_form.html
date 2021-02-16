@@ -11,13 +11,11 @@
         <P>Enter the email address used to register for Global Tech Summit below and click Lookup to access your Lab Environment
         Details and Self-Service Lab Validation.<BR>
         
-        Note: Nutanix users who registered via Okta, the email should match your Okta username @nutanix.com address.</P>
+        <B>Note:</B> Nutanix users who registered via Okta, the email should match your Okta username @nutanix.com address.</P>
         <form class="form-horizontal" action="" method="post" novalidate>
             {{ form.hidden_tag() }}
             <p>
-                {{ form.email.label }} {{ form.email(size=32,value="") }}
-            </p>
-            <p>{{ form.submit(class="btn btn-primary") }}</p>
+                {{ form.email.label }} {{ form.email(size=32,value="") }} {{ form.submit(class="btn btn-primary") }}</p>
         </form>
     {% endif %}
     {% if error %}
