@@ -85,11 +85,14 @@ def before_request():
 
 @app.route('/logout')  
 def logout():  
+    error = ""
+    form = ""
+    user = ""
     if 'email' in session:  
         session.pop('email',None)  
-        return render_template('web_form.html');  
+        return render_template('web_form.html', title='vGTS 2021 - Cluster lookup', user=user_data, form=form, error=error)
     else:  
-        return render_template('web_form.html')
+        return render_template('web_form.html', title='vGTS 2021 - Cluster lookup', user=user_data, form=form, error=error)
 
 @app.route("/update")
 def update_df():
