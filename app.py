@@ -142,6 +142,8 @@ def show_form_data():
                              'era_network': user_info[0]['Era Managed network'],
                              'karbon_start': user_info[0]['Karbon IP - Start'],
                              'karbon_stop': user_info[0]['Karbon IP - Stop'],
+                             'aws_ip':user_info[0]['AWS-IP'],
+                             'snow_instance':user_info[0]['SNOW'],
                              'user_x': user_info[0]['UserX'],
                              'val_hc_snow': user_info[0]['hc-iaas-snow'],
                              'val_hc_leap': user_info[0]['hc-iaas-leap'],

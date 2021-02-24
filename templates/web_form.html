@@ -111,7 +111,7 @@
                 </tr>
                 <tr>
                     <td>AWS-Cluster Prism Element Cluster/Virtual IP</td>
-                    <td>TBD</td>
+                    <td>{{ user.aws_ip }}</td>
                 </tr>
                 
                 <TR>
@@ -186,30 +186,30 @@
                 </tr>
                 <tr>
                     <td>Era Username</td>
-                    <td>admin (will be same as PC creds)</td>
+                    <td>admin (Same as PC creds)</td>
                 </tr>
                 <tr>
                     <td>Era Password</td>
-                    <td>ntnxGTS2021!(will be same as PC creds)</td>
+                    <td>ntnxGTS2021! (Same as PC creds)</td>
                 </tr>
                 <tr>
                     <td colspan="2" bgcolor="#ff4455"><center><B>ServiceNow Information</B></center></td>
                 </tr>
                 <tr>
                     <td>ServiceNow Instance Name</td>
-                    <td>dev###</td>
+                    <td>{{ user.snow_instance }}</td>
                 </tr>
                 <tr>
                     <td>ServiceNow Instance URL</td>
-                    <td>https://dev####.service-now.com</td>
+                    <td>https://{{ user.snow_instance }}.service-now.com</td>
                 </tr>
                 <tr>
                     <td>ServiceNow Username</td>
-                    <td>admin(will be same as PC creds)</td>
+                    <td>admin (Same as PC creds)</td>
                 </tr>
                 <tr>
                     <td>ServiceNow password</td>
-                    <td>ntnxGTS2021!(will be same as PC creds)</td>
+                    <td>ntnxGTS2021! (Same as PC creds)</td>
                 </tr>
 
                 <tr>
@@ -219,6 +219,7 @@
                     <td>Karbon Network for MetalLB</td>
                     <td>{{ user.karbon_start }} - {{ user.karbon_stop }}</td>
                 </tr>
+                <TR><TD colspan="2"><HR></TD></TR>
                 <TR>
                     <td colspan="2" bgcolor="#B0D235"><center><B>Validation status - Hybrid Cloud IaaS labs</B></center></td>
                 </tr>
