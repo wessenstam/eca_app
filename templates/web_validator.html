@@ -55,8 +55,8 @@
     <TR>
       <th>First Name</th><th>Last Name</th><th>Application Availability</th><th>Data Access Management</th><th>MSSQL</th><th>Ultimate</th>
     </TR>
-    <TR>
       {% for value in dblist %}
+      <TR>
         {% if  value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" or value.split(',')[7] == "Pending" %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
             {% if "Pending" in value.split(',')[4] %}
@@ -83,9 +83,9 @@
               <TD>&nbsp;</TD>
             {% endif %}
         {% endif %}
-
+      </TR>
       {% endfor %}
-    </TR>
+
   </table>
 
 <hr style="height:4px;border-width:0;background-color:#B0D235">
