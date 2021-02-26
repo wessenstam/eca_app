@@ -249,7 +249,7 @@ def show_form_validator():
                 dict_user = df.iloc[int(usernr)-1].to_dict()
 
                 # Are we lloking for SNOW validation?
-                if str(requests.args.get('snow_instance')):
+                if str(request.args.get('snow_instance')):
                     snow_instance=str(request.args.get('lab'))
                     user_values={'username':dict_user['First Name']+" "+dict_user['Last Name'],
                                 'clustername': dict_user['Cluster Name'],
