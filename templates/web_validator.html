@@ -130,7 +130,7 @@
     </TR>
       {% for value in cicdlist %}
         <TR>
-        {% if  value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" %}
+        {% if  value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
 
             {% if "Pending" in value.split(',')[5] %}
