@@ -54,14 +54,14 @@
     <P>Please make sure the user has the following created for the validation</P>
 
     {% if val_name=="aav" %}
-        <P> Go into Era (<B>https://{{ user.pc_ip[:-2] }}43</B>) > Database Server VMs > List > <B>USER0{{ user.userx }}#-SQLAG</B> and validate the server exists. It should have 2 VMs on EraCluster and 1 VM on AWS-Cluster. The status of the VMs may be red due to testing failover, this is expected.
-
-        <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/DAAG.png">
+        <P> 
+            Go into Era (<B>https://{{ user.pc_ip[:-2] }}43</B>) > Database Server VMs > List > <B>USER0{{ user.userx }}#-SQLAG</B> and validate the server exists. It should have 2 VMs on EraCluster and 1 VM on AWS-Cluster. The status of the VMs may be red due to testing failover, this is expected.<BR>
+            <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/DAAG.png">
         </P>
 
     {% elif val_name=="dam" %}
         <P> 
-            Go into <B>Era > Databases > Sources</B> and find the <B>USER0{{ user.userx }}-SampleDB</B>
+            Go into <B>Era > Databases > Sources</B> and find the <B>USER0{{ user.userx }}-SampleDB</B><BR>
 
             <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/DAM.png">
             <br>
@@ -73,14 +73,14 @@
 
     {% elif val_name=="mssql" %}
         <P> 
-            In<B>Era (<B>https://{{ user.pc_ip[:-2] }}43</B>) > Database Server VMs > List</B>, select the <B>USER0{{ user.userx }}-SampleDBVM</B><BR>
+            In <B>Era (<B>https://{{ user.pc_ip[:-2] }}43</B>) > Database Server VMs > List</B>, select the <B>USER0{{ user.userx }}-SampleDBVM</B><BR>
             Under <B>Software Profile Version</B>, validate the <B>Current Version</B> is <B>2.0</B>.
 
         </P>
 
     {% else %}
         <P> 
-            In <B>Prism Central ( <B>https://{{ user.pc_ip }}:9440</B>) > VMs</B>, search for <B>USER0{{ user.userx }}-MSSQL-Source VM</B> and note the IP address.<BR>
+            In <B>Prism Central (<B>https://{{ user.pc_ip }}:9440</B>) > VMs</B>, search for <B>USER0{{ user.userx }}-MSSQL-Source VM</B> and note the IP address.<BR>
             In <B>Prism Central > Operations > Integrations</B>, validate the <B>USER0{{ user.userx }}-MSSQL-Source VM</B> IP address appears in the list of <B>External Entity Instances</B> and is <B>Active</B>. <BR>
             <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/MON.png">
 
