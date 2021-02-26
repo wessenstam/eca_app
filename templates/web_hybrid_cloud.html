@@ -55,7 +55,7 @@
 
     {% if val_name=="SNOW" %}
         <P> Log into their ServiceNow instance at <B>http://{{ user.snow_instance }}.service-now.com</B> using <B>admin</B> and <B>ntnxGTS2021!</B> as username and password.<BR>
-            Under <B>ServiceNow > Nutanix Calm > Catalog Items</B> and validate they have created a <B>USER## CentOS</B> catalog item that corresponds to their specific blueprint and project.
+            Under <B>ServiceNow > Nutanix Calm > Catalog Items</B> and validate they have created a <B>USER0{{ user.userx }} CentOS</B> catalog item that corresponds to their specific blueprint and project.
             <BR>
             <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/SNOW.png">
         </P>
