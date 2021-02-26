@@ -257,7 +257,7 @@ def show_form_validator():
                                 'pc_ip':dict_user['IP address PC'],
                                 'usernr':dict_user['Nr'],
                                 'userx': dict_user['UserX'],
-                                'snow_instace': dict_user['SNOW'],
+                                'snow_instance': dict_user['SNOW'],
                                 'labname': labname
                                 }
 
