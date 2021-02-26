@@ -54,7 +54,9 @@
     <P>Please make sure the user has the following created for the validation</P>
 
     {% if val_name=="SNOW" %}
-        <P> ServiceNOW instance is <B>http://{{ user.snow_instance }}.service-now.com</B>
+        <P> Log into their ServiceNow instance at <B>http://{{ user.snow_instance }}.service-now.com</B>.<BR>
+            Under <B>ServiceNow > Nutanix Calm > Catalog Items</B> and validate they have created a <B>USER## CentOS</B> catalog item that corresponds to their specific blueprint and project.
+            <BR>
             <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/SNOW.png">
         </P>
 
