@@ -6,20 +6,21 @@
     </head>
     <body>
     <center>
-    {% if user.userx == "1" %}
-        {% set k8s-ip = user.pc_ip.split('.')[0] %}
+
+        {% if user.userx == "1" %}
+        {% set k8s_ip = user.pc_ip[:-2]~"112" %}
     {% elif user.userx == "2" %}
-        {% set k8s-ip = user.pc_ip[:-2] %}
+        {% set k8s_ip = user.pc_ip[:-2]~"114" %}
     {% elif user.userx == "3" %}
-        {% set k8s-ip = user.pc_ip[:-2] %}
+        {% set k8s_ip = user.pc_ip[:-2]~"116" %}
     {% elif user.userx == "4" %}
-        {% set k8s-ip = user.pc_ip[:-2] %}
+        {% set k8s_ip = user.pc_ip[:-2]~"118" %}
     {% elif user.userx == "5" %}
-        {% set k8s-ip = user.pc_ip[:-2] %}
+        {% set k8s_ip = user.pc_ip[:-2]~"120" %}
     {% elif user.userx == "6" %}
-        {% set k8s-ip = user.pc_ip[:-2] %}
+        {% set k8s_ip = user.pc_ip[:-2]~"122" %}
     {% elif user.userx == "7" %}
-        {% set k8s-ip = user.pc_ip[:-2] %}
+        {% set k8s_ip = user.pc_ip[:-2]~"124" %}
     {% endif %}
 
     {% if user.labname == "cloud-k8s" %}
@@ -69,11 +70,11 @@
         <P> Follow these steps to validate {{ user.username }}
             <ul>
                 <ul>
-                    <li>Open in a web browser http://{{ k8s-ip }}:8080</li>
+                    <li>Open in a web browser <B>http://{{ k8s_ip }}:8080</B>.</li>
                 </ul>
             </ul>
-
-            You should see something alike this screen:
+            <HR>
+            You should see something alike this screen:<BR>
             <img src="https://s3.amazonaws.com/handsonworkshops.prod.media/ws/4d3eaa5afa06408e8823954301b5713a/i/file/f8efcbdbe75f4e269cc918b8bbb56de1/168.png">
         </P>
         <P>If you see this screen the user has ran through all the steps for this lab to be validated.</P>
@@ -82,24 +83,24 @@
         <P> Follow these steps to validate {{ user.username }}.
             <ul>
                 <ul>
-                    <li>Open in a web browser http://{{ k8s-ip }}:8080.</li>
+                    <li>Open in a web browser <B>http://{{ k8s_ip }}:8080</B>.</li>
                     <li>Look for a line (in the red square) as shown in the below screenshot.</li>
                 </ul>
             </ul>
-
-            You should see something alike this screen:
+            <HR>
+            You should see something alike this screen:<BR>
             <img src="https://s3.amazonaws.com/handsonworkshops.prod.media/ws/4d3eaa5afa06408e8823954301b5713a/i/file/f8efcbdbe75f4e269cc918b8bbb56de1/711.png">
         </P>
 
     {% else %}
         <P> Follow these steps to validte 
             <ul>
-                <li>Open Prism Central for user {{ user.userx }} using IP address {{ user.pc_ip }}.</li>
+                <li>Open Prism Central for <B>USER0{{ user.userx }}</B> using IP address <B>{{ user.pc_ip }}</B>.</li>
                 <li>Open the Objects Store <B>nutanix-objects</B></li>
                 <li>Open the Bucket, normally <b>{{ user.userx }}-k10-bucket</b></li>
             </ul>
-            
-            You should see something alike this screen:
+            <HR>
+            You should see something alike this screen:<BR>
             <img src="https://s3.amazonaws.com/handsonworkshops.prod.media/ws/4d3eaa5afa06408e8823954301b5713a/i/file/f8efcbdbe75f4e269cc918b8bbb56de1/516.png">
         </P>
 
