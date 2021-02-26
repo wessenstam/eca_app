@@ -7,7 +7,7 @@
     <body>
     <center>
     {% if user.userx == "1" %}
-        {% set k8s-ip = user.pc_ip[:-2] %}
+        {% set k8s-ip = user.pc_ip.split('.')[0]~"HELLO" %}
     {% elif user.userx == "2" %}
         {% set k8s-ip = user.pc_ip[:-2] %}
     {% elif user.userx == "3" %}
