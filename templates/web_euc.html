@@ -8,7 +8,7 @@
     <center>
 
     {% if user.labname == "hc-euc-prov" %}
-        {% set labname = "Provision & Expand" %}
+        {% set labname = "Multi-Cloud Desktops with Citrix on AHV" %}
         {% set val_name = "Provision" %}
     {% elif user.labname == "hc-euc-calm" %}
         {% set labname = "Dynamic Expansion with Calm Runbooks" %}
@@ -19,7 +19,7 @@
     {% endif %}
 
 
-    <h2>Validator page for Hybrid Cloud EUC - {{ labname }} lab</h2>
+    <h2>Validator page for Hybrid Cloud EUC - {{ labname }}</h2>
 
     <P>
     Below is the information for user <B>{{ user.username }} </B>that has asked validation.<BR><BR>
@@ -51,13 +51,30 @@
     <P>Please make sure the user has the following created for the validation</P>
 
     {% if val_name=="Provision" %}
-        <P> Show the validation information for the provisioning lab</P>
+        <P> 
+            <B>RDP</B> to <B>Citrix Delivery Controller</B> VM ({{ user.pc_ip[:-2] }}44).<br>
+            Username: NTNXLAB\Administrator<BR>
+            Password: nutanix/4u<br><br>
+            Open <B>Citrix Studio</B> if not already open.<BR>
+            Under <B>Machine Catalogs</B> validate there are <B><B>USER0{{ user.userx }} CLOUD</B>and <B>USER0{{ user.userx }} OPPREM</B> catalogs.<BR>
+            <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/EUC1.png"><br>
+            <B>NOTE::</B> Only one validator can be connected to the <B>Citrix Delivery Controller</B> VM via RDP at a time. If you get kicked out, it means someone else just tried to connect to that server. Give it a minute and try again.
+        </P>
 
     {% elif val_name=="Calm" %}
-        <P> Show the validation information for the Calm lab</P>
+        <P> 
+            In <B>Prism Central ({{ user.pc_ip }}) > Calm > Runbooks > Execution History</B>, validate there is a successful execution of the <B>USER0{{ user.userx }} Add Desktop</B> runbook.<BR>
+            <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/EUC2.png"><br>
+    
+        </P>
 
     {% else %}
-        <P> Show the validation information for the Flow lab</P>
+        <P> 
+            In <B>Prism Central  ({{ user.pc_ip }}) > Policies > Security</P>, open the <B>USER0{{ user.userx }}-ADIsolate</B> policy.<BR>
+            Click the <B>#</B> next to <B>Bootcamp Users</B>.<br>
+            Validate there is at least one VM in the list of filtered VMs that matches the <B>USER0{{ user.userx }}</B><BR>
+            <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/EUC3.png"><br>
+        </P>
 
     {% endif %}
 
