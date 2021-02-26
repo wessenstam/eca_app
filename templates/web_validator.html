@@ -97,7 +97,6 @@
       <th>First Name</th><th>Last Name</th><th>Provision</th><th>Calm Runbooks</th><th>Security</th>
     </TR>
       {% for value in euclist %}
-      Value for EUC is{{ value }}
         <TR>
         {% if  value.split(',')[2] != "" and (value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending") %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
