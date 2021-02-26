@@ -43,7 +43,8 @@ Thumbs.db
 # PyhtonCache Directories #
 ######################
 *pychache*/*
-
+venv
+.idea
 # Sensitive info #
 ##################
 *json*
