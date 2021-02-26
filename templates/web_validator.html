@@ -17,8 +17,8 @@
       <th>First Name</th><th>Last Name</th><th>SNOW</th><th>Leap</th><th>SNOW and CMDB</th><th>SNOW and X-Play</th>
     </TR>
       {% for value in iaaslist %}
+      Value for IAAS is  {{ value }}
         <TR>
-          {{ value }}
         {% if  value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" or value.split(',')[7] == "Pending" %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
             {% if "Pending" in value.split(',')[4] %}
@@ -58,7 +58,7 @@
     </TR>
 
       {% for value in dblist %}
-      {{ value }}
+      Value for DB is{{ value }}
       <TR>
         {% if  value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" or value.split(',')[7] == "Pending" %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
@@ -99,7 +99,7 @@
       <th>First Name</th><th>Last Name</th><th>Provision</th><th>Calm Runbooks</th><th>Security</th>
     </TR>
       {% for value in euclist %}
-      {{ value }}
+      Value for EUC is{{ value }}
         <TR>
         {% if  value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
@@ -133,7 +133,7 @@
       <th>First Name</th><th>Last Name</th><th>Use CI/CD</th><th>Use with Era</th>
     </TR>
       {% for value in cicdlist %}
-      {{ value }}
+      Value for CICD is{{ value }}
         <TR>
         {% if  value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
@@ -162,7 +162,7 @@
       <th>First Name</th><th>Last Name</th><th>K8s Configuration</th><th>Deployed Fiesta App</th><th>Day 2 operations</th>
     </TR>
       {% for value in cloudlist %}
-      {{ value }}
+      Value for Cloud is {{ value }}
       <TR>
         {% if  value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
