@@ -54,7 +54,7 @@
     <P>Please make sure the user has the following created for the validation</P>
 
     {% if val_name=="SNOW" %}
-        <P> Show the validation information for the ServiceNOW lab</P>
+        <P> ServiceNOW instance is {{ user.snow_instance }}.service-now.com</P>
 
     {% elif val_name=="LEAP" %}
         <P> Show the validation information for the Leap lab</P>

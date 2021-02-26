@@ -241,27 +241,42 @@ def show_form_validator():
             if str(request.args.get('lab')) != 'None':
                 usernr=str(request.args.get('usernr'))
                 labname=str(request.args.get('lab'))
-
+                
                 # Have the data updated and get the returned info for the webpage
                 web_templ=update_gsheet_df(int(usernr), labname, "In progress")
 
                 # Get all information from the DF for the user
                 dict_user = df.iloc[int(usernr)-1].to_dict()
-                user_values={'username':dict_user['First Name']+" "+dict_user['Last Name'],
-                             'clustername': dict_user['Cluster Name'],
-                             'clusterip': dict_user['IP address VIP'],
-                             'pc_ip':dict_user['IP address PC'],
-                             'usernr':dict_user['Nr'],
-                             'userx': dict_user['UserX'],
-                             'labname': labname
-                            }
+
+                # Are we lloking for SNOW validation?
+                if str(requests.args.get('snow_instance')):
+                    snow_instance=str(request.args.get('lab'))
+                    user_values={'username':dict_user['First Name']+" "+dict_user['Last Name'],
+                                'clustername': dict_user['Cluster Name'],
+                                'clusterip': dict_user['IP address VIP'],
+                                'pc_ip':dict_user['IP address PC'],
+                                'usernr':dict_user['Nr'],
+                                'userx': dict_user['UserX'],
+                                'snow_instace': dict_user['SNOW'],
+                                'labname': labname
+                                }
+
+                else:
+                    user_values={'username':dict_user['First Name']+" "+dict_user['Last Name'],
+                                'clustername': dict_user['Cluster Name'],
+                                'clusterip': dict_user['IP address VIP'],
+                                'pc_ip':dict_user['IP address PC'],
+                                'usernr':dict_user['Nr'],
+                                'userx': dict_user['UserX'],
+                                'labname': labname
+                                }
 
                 return render_template(web_templ, title='vGTS 2021 - Cluster lookup', user=user_values)
 
             else:
                 # Get all users info: usernr, First Name, Last Name and Pending status lab validation, but they must not be empty!
                 # Make copies of the existing big DF
-                df_val_hc_iaas=df[['Nr','UserX','First Name','Last Name','hc-iaas-snow','hc-iaas-leap','hc-iaas-cmdb','hc-iaas-xplay']].copy()
+                df_val_hc_iaas=df[['Nr','UserX','First Name','Last Name','hc-iaas-snow','hc-iaas-leap','hc-iaas-cmdb','hc-iaas-xplay','SNOW']].copy()
                 df_val_db=df[['Nr','UserX','First Name','Last Name','hc-db-aav','hc-db-dam','hc-db-mssql','hc-db-ultimate']].copy()
                 df_val_euc=df[['Nr','UserX','First Name','Last Name','hc-euc-prov','hc-euc-calm','hc-euc-flow']].copy()
                 df_val_cicd = df[['Nr','UserX', 'First Name', 'Last Name', 'cicd-cont', 'cicd-use', 'cicd-era']].copy()
@@ -293,7 +308,7 @@ def show_form_validator():
                                  str(key)+","+str(df_val_hc_iaas.to_dict()['UserX'][key])+","+str(df_val_hc_iaas.to_dict()['First Name'][key])+","+
                                  str(df_val_hc_iaas.to_dict()['Last Name'][key])+","+str(df_val_hc_iaas.to_dict()['hc-iaas-snow'][key])+","+
                                  str(df_val_hc_iaas.to_dict()['hc-iaas-leap'][key])+","+str(df_val_hc_iaas.to_dict()['hc-iaas-cmdb'][key])+","+
-                                 str(df_val_hc_iaas.to_dict()['hc-iaas-xplay'][key])
+                                 str(df_val_hc_iaas.to_dict()['hc-iaas-xplay'][key])+","+str(df_val_hc_iaas.to_dict()['SNOW'][key])
                         )
 
                 db_lst=[]
