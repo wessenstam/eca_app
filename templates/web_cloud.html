@@ -6,19 +6,19 @@
     </head>
     <body>
     <center>
-    {% if user.userx == "USER01" %}
+    {% if user.userx == "1" %}
         {% set k8s-ip = user.pc_ip.split(.)[0]~"."~user.pc_ip.split(.)[1]~"."~user.pc_ip.split(.)[2]~".112" %}
-    {% elif user.userx == "USER02" %}
+    {% elif user.userx == "2" %}
         {% set k8s-ip = user.pc_ip.split(.)[0]~"."~user.pc_ip.split(.)[1]~"."~user.pc_ip.split(.)[2]~".114" %}
-    {% elif user.userx == "USER03" %}
-        {% set k8s-ip = user.pc_ip.split(.)[0]~"."~user.pc_ip.split(.)[1]~"."~user.pc_ip.split(.)[2]~".116" %}
-    {% elif user.userx == "USER04" %}
+    {% elif user.userx == "3" %}
+        {% set k8s-ip = user.pc_ip.split(.)[0] %}
+    {% elif user.userx == "4" %}
         {% set k8s-ip = user.pc_ip.split(.)[0]~"."~user.pc_ip.split(.)[1]~"."~user.pc_ip.split(.)[2]~".118" %}
-    {% elif user.userx == "USER05" %}
+    {% elif user.userx == "5" %}
         {% set k8s-ip = user.pc_ip.split(.)[0]~"."~user.pc_ip.split(.)[1]~"."~user.pc_ip.split(.)[2]~".120" %}
-    {% elif user.userx == "USER06" %}
+    {% elif user.userx == "6" %}
         {% set k8s-ip = user.pc_ip.split(.)[0]~"."~user.pc_ip.split(.)[1]~"."~user.pc_ip.split(.)[2]~".122" %}
-    {% elif user.userx == "USER07" %}
+    {% elif user.userx == "7" %}
         {% set k8s-ip = user.pc_ip.split(.)[0]~"."~user.pc_ip.split(.)[1]~"."~user.pc_ip.split(.)[2]~".124" %}
     {% endif %}
 
