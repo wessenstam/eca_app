@@ -7,19 +7,19 @@
     <body>
     <center>
     {% if user.userx == "1" %}
-        {% set k8s-ip = user.pc_ip[:-2]".112" %}
+        {% set k8s-ip = user.pc_ip[:-2] %}
     {% elif user.userx == "2" %}
-        {% set k8s-ip = user.pc_ip[:-2]".114" %}
+        {% set k8s-ip = user.pc_ip[:-2] %}
     {% elif user.userx == "3" %}
-        {% set k8s-ip = user.pc_ip[:-2]".112" %}
+        {% set k8s-ip = user.pc_ip[:-2] %}
     {% elif user.userx == "4" %}
-        {% set k8s-ip = user.pc_ip[:-2]"118" %}
+        {% set k8s-ip = user.pc_ip[:-2] %}
     {% elif user.userx == "5" %}
-        {% set k8s-ip = user.pc_ip[:-2]"120" %}
+        {% set k8s-ip = user.pc_ip[:-2] %}
     {% elif user.userx == "6" %}
-        {% set k8s-ip = user.pc_ip[:-2]"122" %}
+        {% set k8s-ip = user.pc_ip[:-2] %}
     {% elif user.userx == "7" %}
-        {% set k8s-ip = user.pc_ip[:-2]"124" %}
+        {% set k8s-ip = user.pc_ip[:-2] %}
     {% endif %}
 
     {% if user.labname == "cloud-k8s" %}
