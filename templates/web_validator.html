@@ -17,7 +17,6 @@
       <th>First Name</th><th>Last Name</th><th>SNOW</th><th>Leap</th><th>SNOW and CMDB</th><th>SNOW and X-Play</th>
     </TR>
       {% for value in iaaslist %}
-      Value for IAAS is  {{ value }}
         <TR>
         {% if  value.split(',')[2] != "" and (value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" or value.split(',')[7] == "Pending") %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
@@ -58,9 +57,8 @@
     </TR>
 
       {% for value in dblist %}
-      Value for DB is{{ value }}
       <TR>
-        {% if  value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" or value.split(',')[7] == "Pending" %}
+        {% if  value.split(',')[2] != "" and (value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" or value.split(',')[7] == "Pending") %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
             {% if "Pending" in value.split(',')[4] %}
               <TD><A HREF="/validator?lab=hc-db-aav&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[4] }} </A></TD>
@@ -101,7 +99,7 @@
       {% for value in euclist %}
       Value for EUC is{{ value }}
         <TR>
-        {% if  value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" %}
+        {% if  value.split(',')[2] != "" and (value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending") %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
             {% if "Pending" in value.split(',')[4] %}
               <TD><A HREF="/validator?lab=hc-euc-prov&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[4] }} </A></TD>
@@ -133,9 +131,8 @@
       <th>First Name</th><th>Last Name</th><th>Use CI/CD</th><th>Use with Era</th>
     </TR>
       {% for value in cicdlist %}
-      Value for CICD is{{ value }}
         <TR>
-        {% if  value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" %}
+        {% if value.split(',')[2] != "" and (value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending") %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
 
             {% if "Pending" in value.split(',')[5] %}
@@ -162,9 +159,8 @@
       <th>First Name</th><th>Last Name</th><th>K8s Configuration</th><th>Deployed Fiesta App</th><th>Day 2 operations</th>
     </TR>
       {% for value in cloudlist %}
-      Value for Cloud is {{ value }}
       <TR>
-        {% if  value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" %}
+        {% if  value.split(',')[2] != "" and (value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending") %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
             {% if "Pending" in value.split(',')[4] %}
               <TD><A HREF="/validator?lab=cloud-k8s&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[4] }} </A></TD>
