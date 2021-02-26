@@ -6,6 +6,21 @@
     </head>
     <body>
     <center>
+    {% if user.userx == "USER01" %}
+        {% set k8s-ip = user.pc_ip.split(.)[0]~"."~user.pc_ip.split(.)[1]~"."~user.pc_ip.split(.)[2]~".112" %}
+    {% elif user.userx == "USER02" %}
+        {% set k8s-ip = user.pc_ip.split(.)[0]~"."~user.pc_ip.split(.)[1]~"."~user.pc_ip.split(.)[2]~".114" %}
+    {% elif user.userx == "USER03" %}
+        {% set k8s-ip = user.pc_ip.split(.)[0]~"."~user.pc_ip.split(.)[1]~"."~user.pc_ip.split(.)[2]~".116" %}
+    {% elif user.userx == "USER04" %}
+        {% set k8s-ip = user.pc_ip.split(.)[0]~"."~user.pc_ip.split(.)[1]~"."~user.pc_ip.split(.)[2]~".118" %}
+    {% elif user.userx == "USER05" %}
+        {% set k8s-ip = user.pc_ip.split(.)[0]~"."~user.pc_ip.split(.)[1]~"."~user.pc_ip.split(.)[2]~".120" %}
+    {% elif user.userx == "USER06" %}
+        {% set k8s-ip = user.pc_ip.split(.)[0]~"."~user.pc_ip.split(.)[1]~"."~user.pc_ip.split(.)[2]~".122" %}
+    {% elif user.userx == "USER07" %}
+        {% set k8s-ip = user.pc_ip.split(.)[0]~"."~user.pc_ip.split(.)[1]~"."~user.pc_ip.split(.)[2]~".124" %}
+    {% endif %}
 
     {% if user.labname == "cloud-k8s" %}
         {% set labname = "Kubernetes configuration" %}
@@ -51,13 +66,42 @@
     <P>Please make sure the user has the following created for the validation</P>
 
     {% if val_name=="k8s" %}
-        <P> Show the validation information for the Kubernetes configuration lab</P>
+        <P> Follow these steps to validate {{ user.username }}
+            <ul>
+                <ul>
+                    <li>Open in a web browser http://{{ k8s-ip }}:8080</li>
+                </ul>
+            </ul>
+
+            You should see something alike this screen:
+            <img src="https://s3.amazonaws.com/handsonworkshops.prod.media/ws/4d3eaa5afa06408e8823954301b5713a/i/file/f8efcbdbe75f4e269cc918b8bbb56de1/168.png">
+        </P>
+        <P>If you see this screen the user has ran through all the steps for this lab to be validated.</P>
 
     {% elif val_name=="fiesta" %}
-        <P> Show the validation information for the Fiesta app running on k8s lab</P>
+        <P> Follow these steps to validate {{ user.username }}.
+            <ul>
+                <ul>
+                    <li>Open in a web browser http://{{ k8s-ip }}:8080.</li>
+                    <li>Look for a line (in the red square) as shown in the below screenshot.</li>
+                </ul>
+            </ul>
+
+            You should see something alike this screen:
+            <img src="https://s3.amazonaws.com/handsonworkshops.prod.media/ws/4d3eaa5afa06408e8823954301b5713a/i/file/f8efcbdbe75f4e269cc918b8bbb56de1/711.png">
+        </P>
 
     {% else %}
-        <P> Show the validation information for the Day 2 operations lab</P>
+        <P> Follow these steps to validte 
+            <ul>
+                <li>Open Prism Central for user {{ user.userx }} using IP address {{ user.pc_ip }}.</li>
+                <li>Open the Objects Store <B>nutanix-objects</B></li>
+                <li>Open the Bucket, normally <b>{{ user.userx }}-k10-bucket</b></li>
+            </ul>
+            
+            You should see something alike this screen:
+            <img src="https://s3.amazonaws.com/handsonworkshops.prod.media/ws/4d3eaa5afa06408e8823954301b5713a/i/file/f8efcbdbe75f4e269cc918b8bbb56de1/516.png">
+        </P>
 
     {% endif %}
 
