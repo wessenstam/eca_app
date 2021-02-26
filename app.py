@@ -271,7 +271,7 @@ def show_form_validator():
                                 'labname': labname
                                 }
 
-                return render_template(web_templ, title='vGTS 2021 - Cluster lookup', user=user_values)
+                return render_template(web_templ, title='vGTS2021 - Validator area', user=user_values)
 
             else:
                 # Get all users info: usernr, First Name, Last Name and Pending status lab validation, but they must not be empty!
