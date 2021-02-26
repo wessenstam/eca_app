@@ -54,7 +54,7 @@
     <P>Please make sure the user has the following created for the validation</P>
 
     {% if val_name=="SNOW" %}
-        <P> Log into their ServiceNow instance at <B><A HREF="http://{{ user.snow_instance }}.service-now.com/login.do?user_name=admin&sys_action=sysverb_login&user_password=ntnxGTS2021%21">http://{{ user.snow_instance }}.service-now.com/login.do?user_name=admin&sys_action=sysverb_login&user_password=ntnxGTS2021%21</A></B> using <B>admin</B> and <B>ntnxGTS2021!</B> as username and password.<BR>
+        <P> Log into their ServiceNow instance at <B><A HREF="http://{{ user.snow_instance }}.service-now.com/login.do?user_name=admin&sys_action=sysverb_login&user_password=ntnxGTS2021%21">http://{{ user.snow_instance }}.service-now.com/login.do?user_name=admin&sys_action=sysverb_login&user_password=ntnxGTS2021%21</A>.<BR>
             Under <B>ServiceNow > Nutanix Calm > Catalog Items</B> and validate they have created a <B>USER0{{ user.userx }} CentOS</B> catalog item that corresponds to their specific blueprint and project.
             <BR>
             <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/SNOW.png">
