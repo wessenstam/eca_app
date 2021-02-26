@@ -53,8 +53,8 @@
     {% if val_name=="cont" %}
         <P> Follow these steps to validate {{ user.username }}
             <ul>
-                <li>Open Prism Central for user <B>{{ user.userx }}</B> using <B>https://{{ user.pc_ip }}:9440</B>.</li>
-                <li>Get the IP address of the VM named <B>{{ user.userx }}-docker_vm</B>.</li>
+                <li>Open Prism Central for <B>USER0{{ user.userx }}</B> using <B>https://{{ user.pc_ip }}:9440</B>.</li>
+                <li>Get the IP address of the VM named <B>USER0{{ user.userx }}-docker_vm</B>.</li>
                 <li>Open in a web browser http://IP ADDRESS:5000</li>
             </ul>
 
@@ -67,10 +67,10 @@
     {% elif val_name=="use" %}
         <P> Follow these steps to validate {{ user.username }}
             <ul>
-                <li>Open Prism Central for user {{ user.userx }} using <B>https://{{ user.pc_ip }}:9440</B>.</li>
-                <li>Get the IP address of the VM named <B>{{ user.userx }}-docker_vm</B>.</li>
+                <li>Open Prism Central for <B>USER0{{ user.userx }}</B>using <B>https://{{ user.pc_ip }}:9440</B>.</li>
+                <li>Get the IP address of the VM named <B>USER0{{ user.userx }}-docker_vm</B>.</li>
                 <li>Open in a web browser http://IP ADDRESS:8080</li>
-                <li>Use for the login in Gitea: <b>{{ user.x }}</b> with password <B>nutanix/4u</B> (If not working, please ask {{ user.username }} for the credentials via Slack).</li>
+                <li>Use for the login in Gitea: <b>USER0{{ user.x }}</b> with password <B>nutanix/4u</B> (If not working, please ask {{ user.username }} for the credentials via Slack).</li>
             </ul>
 
             You should see something alike this screen:
@@ -82,9 +82,9 @@
         <P> Follow these steps to validate {{ user.username }}
             <ul>
                 <ul>
-                    <li>Open Prism Central for user {{ user.userx }} usingusing <B>https://{{ user.pc_ip }}:9440</B>.</li>
-                    <li>Get the IP address of the VM named <B>{{ user.userx }}-docker_vm</B>.</li>
-                    <li>Open in a web browser http://<IP ADDRESS>:5050</li>
+                    <li>Open Prism Central for <B>USER0{{ user.userx }}</B> using <B>https://{{ user.pc_ip }}:9440</B>.</li>
+                    <li>Get the IP address of the VM named <B>USER0{{ user.userx }}-docker_vm</B>.</li>
+                    <li>Open in a web browser http://IP ADDRESS:5050</li>
                 </ul>
             </ul>
 
