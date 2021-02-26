@@ -18,6 +18,7 @@
     </TR>
       {% for value in iaaslist %}
         <TR>
+          {{ value }}
         {% if  value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" or value.split(',')[7] == "Pending" %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
             {% if "Pending" in value.split(',')[4] %}
