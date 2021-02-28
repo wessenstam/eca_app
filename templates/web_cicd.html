@@ -52,38 +52,38 @@
 
     {% if val_name=="cont" %}
         <P> 
-            Open Prism Central for <B>USER0{{ user.userx }}</B> using <B>https://{{ user.pc_ip }}:9440</B>.<BR>
+            Open <B>Prism Central (https://{{ user.pc_ip }}:9440) > VMs</B> .<BR><BR>
             Get the IP address of the VM named <B>USER0{{ user.userx }}-docker_vm</B>.<BR><BR>
             Open in a web browser http://IP ADDRESS:5000/products<BR><BR>
             
-            You should see something alike this screen:<BR>
+            You should see something like this screen:<BR>
             <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/fiesta-1.png">
         </P>
-        <P>If you see this screen the user has ran through all the steps for this lab to be validated.</P>
+
 
 
     {% elif val_name=="use" %}
         <P> 
-            Open Prism Central for <B>USER0{{ user.userx }}</B> using <B>https://{{ user.pc_ip }}:9440</B>.<BR><BR>
+            Open <B>Prism Central (https://{{ user.pc_ip }}:9440) > VMs</B> .<BR><BR>
             Get the IP address of the VM named <B>USER0{{ user.userx }}-docker_vm</B>.<BR><BR>
             Open in a web browser <B>http://IP ADDRESS:8080</B><BR><BR>
             Use for the login in Gitea: <b>USER0{{ user.userx }}</b> with password <B>nutanix/4u</B> (If not working, please ask {{ user.username }} for the credentials via Slack).<BR><BR>
             
-            You should see something alike this screen:<BR>
+            You should see something like this screen:<BR>
             <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/fiesta-2.png">
         </P>
-        <P>If you see this screen the user has ran through all the steps for this lab to be validated.</P>
+
 
     {% else %}
         <P> 
-            Open Prism Central for <B>USER0{{ user.userx }}</B> using <B>https://{{ user.pc_ip }}:9440</B>.<BR><BR>
+            Open <B>Prism Central (https://{{ user.pc_ip }}:9440) > VMs</B> .<BR><BR>
             Get the IP address of the VM named <B>USER0{{ user.userx }}-docker_vm</B>.<BR><BR>
             Open in a web browser <B>http://IP ADDRESS:5050</B><BR><BR>
             
-            You should see something alike this screen:<BR>
+            You should see something like this screen:<BR>
             <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/fiesta-3.png">
         </P>
-        <P>If you see this screen the user has ran through all the steps for this lab to be validated.</P>
+
 
     {% endif %}
 

@@ -70,27 +70,26 @@
         <P> 
             Open in a web browser <B>http://{{ k8s_ip }}:8080</B>.<BR><BR>
             
-            You should see something alike this screen:<BR>
+            You should see something like this screen:<BR>
             <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/k8s-1.png">
         </P>
-        <P>If you see this screen the user has ran through all the steps for this lab to be validated.</P>
+
 
     {% elif val_name=="fiesta" %}
         <P> 
             Open in a web browser <B>http://{{ k8s_ip }}:8080</B>.<BR><BR>
             Look for a line (in the red square) as shown in the below screenshot.<BR><BR>
             
-            You should see something alike this screen:<BR>
+            You should see something like this screen:<BR>
             <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/k8s-2.png">
         </P>
 
     {% else %}
         <P> 
-            Open Prism Central for <B>USER0{{ user.userx }}</B> using IP address <B>{{ user.pc_ip }}</B>.<BR><BR>
-            Open the Objects Store <B>nutanix-objects</B><BR><BR>
-            Open the Bucket, normally <b>USER0{{ user.userx }}-k10-bucket</b><BR><BR>
+            Open <B>Prism Central (https://{{ user.pc_ip }}:9440)> Services > Objects > ntnx-objects</B><BR><BR>
+            Open the Bucket, <b>USER0{{ user.userx }}-k10-bucket > Performance</b><BR><BR>
             
-            You should see something alike this screen:<BR><BR>
+            You should see something like this screen:<BR><BR>
             <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/k8s-3.png">
         </P>
 
