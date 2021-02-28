@@ -51,13 +51,11 @@
     <P>Please make sure the user has the following created for the validation</P>
 
     {% if val_name=="cont" %}
-        <P> Follow these steps to validate {{ user.username }}
-            <ul>
-                <li>Open Prism Central for <B>USER0{{ user.userx }}</B> using <B>https://{{ user.pc_ip }}:9440</B>.</li>
-                <li>Get the IP address of the VM named <B>USER0{{ user.userx }}-docker_vm</B>.</li>
-                <li>Open in a web browser http://IP ADDRESS:5000</li>
-            </ul>
-            <HR>
+        <P> 
+            Open Prism Central for <B>USER0{{ user.userx }}</B> using <B>https://{{ user.pc_ip }}:9440</B>.<BR>
+            Get the IP address of the VM named <B>USER0{{ user.userx }}-docker_vm</B>.<BR><BR>
+            Open in a web browser http://IP ADDRESS:5000<BR><BR>
+            
             You should see something alike this screen:<BR>
             <img src="https://s3.amazonaws.com/handsonworkshops.prod.media/ws/4d3eaa5afa06408e8823954301b5713a/i/file/f8efcbdbe75f4e269cc918b8bbb56de1/9.png">
         </P>
@@ -65,29 +63,23 @@
 
 
     {% elif val_name=="use" %}
-        <P> Follow these steps to validate {{ user.username }}
-            <ul>
-                <li>Open Prism Central for <B>USER0{{ user.userx }}</B> using <B>https://{{ user.pc_ip }}:9440</B>.</li>
-                <li>Get the IP address of the VM named <B>USER0{{ user.userx }}-docker_vm</B>.</li>
-                <li>Open in a web browser <B>http://IP ADDRESS:8080</B></li>
-                <li>Use for the login in Gitea: <b>USER0{{ user.userx }}</b> with password <B>nutanix/4u</B> (If not working, please ask {{ user.username }} for the credentials via Slack).</li>
-            </ul>
-            <HR>
+        <P> 
+            Open Prism Central for <B>USER0{{ user.userx }}</B> using <B>https://{{ user.pc_ip }}:9440</B>.<BR><BR>
+            Get the IP address of the VM named <B>USER0{{ user.userx }}-docker_vm</B>.<BR><BR>
+            Open in a web browser <B>http://IP ADDRESS:8080</B><BR><BR>
+            Use for the login in Gitea: <b>USER0{{ user.userx }}</b> with password <B>nutanix/4u</B> (If not working, please ask {{ user.username }} for the credentials via Slack).<BR><BR>
+            
             You should see something alike this screen:<BR>
             <img src="https://s3.amazonaws.com/handsonworkshops.prod.media/ws/4d3eaa5afa06408e8823954301b5713a/i/file/f8efcbdbe75f4e269cc918b8bbb56de1/29.png">
         </P>
         <P>If you see this screen the user has ran through all the steps for this lab to be validated.</P>
 
     {% else %}
-        <P> Follow these steps to validate {{ user.username }}
-            <ul>
-                <ul>
-                    <li>Open Prism Central for <B>USER0{{ user.userx }}</B> using <B>https://{{ user.pc_ip }}:9440</B>.</li>
-                    <li>Get the IP address of the VM named <B>USER0{{ user.userx }}-docker_vm</B>.</li>
-                    <li>Open in a web browser <B>http://IP ADDRESS:5050</B></li>
-                </ul>
-            </ul>
-            <HR>
+        <P> 
+            Open Prism Central for <B>USER0{{ user.userx }}</B> using <B>https://{{ user.pc_ip }}:9440</B>.<BR><BR>
+            Get the IP address of the VM named <B>USER0{{ user.userx }}-docker_vm</B>.<BR><BR>
+            Open in a web browser <B>http://IP ADDRESS:5050</B><BR><BR>
+            
             You should see something alike this screen:<BR>
             <img src="https://s3.amazonaws.com/handsonworkshops.prod.media/ws/4d3eaa5afa06408e8823954301b5713a/i/file/f8efcbdbe75f4e269cc918b8bbb56de1/201.png">
         </P>

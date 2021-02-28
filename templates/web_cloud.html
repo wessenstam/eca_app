@@ -67,40 +67,30 @@
     <P>Please make sure the user has the following created for the validation</P>
 
     {% if val_name=="k8s" %}
-        <P> Follow these steps to validate {{ user.username }}
-            <ul>
-                <ul>
-                    <li>Open in a web browser <B>http://{{ k8s_ip }}:8080</B>.</li>
-                </ul>
-            </ul>
-            <HR>
+        <P> 
+            Open in a web browser <B>http://{{ k8s_ip }}:8080</B>.<BR><BR>
+            
             You should see something alike this screen:<BR>
             <img src="https://s3.amazonaws.com/handsonworkshops.prod.media/ws/4d3eaa5afa06408e8823954301b5713a/i/file/f8efcbdbe75f4e269cc918b8bbb56de1/168.png">
         </P>
         <P>If you see this screen the user has ran through all the steps for this lab to be validated.</P>
 
     {% elif val_name=="fiesta" %}
-        <P> Follow these steps to validate {{ user.username }}.
-            <ul>
-                <ul>
-                    <li>Open in a web browser <B>http://{{ k8s_ip }}:8080</B>.</li>
-                    <li>Look for a line (in the red square) as shown in the below screenshot.</li>
-                </ul>
-            </ul>
-            <HR>
+        <P> 
+            Open in a web browser <B>http://{{ k8s_ip }}:8080</B>.<BR><BR>
+            Look for a line (in the red square) as shown in the below screenshot.<BR><BR>
+            
             You should see something alike this screen:<BR>
             <img src="https://s3.amazonaws.com/handsonworkshops.prod.media/ws/4d3eaa5afa06408e8823954301b5713a/i/file/f8efcbdbe75f4e269cc918b8bbb56de1/711.png">
         </P>
 
     {% else %}
-        <P> Follow these steps to validte 
-            <ul>
-                <li>Open Prism Central for <B>USER0{{ user.userx }}</B> using IP address <B>{{ user.pc_ip }}</B>.</li>
-                <li>Open the Objects Store <B>nutanix-objects</B></li>
-                <li>Open the Bucket, normally <b>USER0{{ user.userx }}-k10-bucket</b></li>
-            </ul>
-            <HR>
-            You should see something alike this screen:<BR>
+        <P> 
+            Open Prism Central for <B>USER0{{ user.userx }}</B> using IP address <B>{{ user.pc_ip }}</B>.<BR><BR>
+            Open the Objects Store <B>nutanix-objects</B><BR><BR>
+            Open the Bucket, normally <b>USER0{{ user.userx }}-k10-bucket</b><BR><BR>
+            
+            You should see something alike this screen:<BR><BR>
             <img src="https://s3.amazonaws.com/handsonworkshops.prod.media/ws/4d3eaa5afa06408e8823954301b5713a/i/file/f8efcbdbe75f4e269cc918b8bbb56de1/516.png">
         </P>
 
