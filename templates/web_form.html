@@ -49,11 +49,11 @@
                     <option value="hc-euc-prov">Hybrid Cloud EUC - Multi-Cloud Desktops with Citrix on AHV</option>
                     <option value="hc-euc-calm">Hybrid Cloud EUC - Dynamic Expansion with Calm Runbooks</option>
                     <option value="hc-euc-flow">Hybrid Cloud EUC - Securing Desktops with Flow</option>
-                    <option value="cicd-use">Containerize App & CICD - Building The Pipeline</option>
-                    <option value="cicd-era">Containerize App & CICD - Creating Development Databases with Era</option>
-                    <option value="cloud-k8s">Cloud Native - Adding Network Services & Dashboards</option>
-                    <option value="cloud-fiesta">Cloud Native - Deploying Fiesta Web Service</option>
-                    <option value="cloud-day2">Cloud Native - Day 2 Operations</option>
+                    <option value="cicd-use">Containerize App and CICD - Building The Pipeline</option>
+                    <option value="cicd-era">Containerize App and CICD - Creating Development Databases with Era</option>
+                    <option value="cloud-k8s">Cloud Native Apps on Nutanix - Adding Network Services & Dashboards</option>
+                    <option value="cloud-fiesta">Cloud Native Apps on Nutanix - Deploying Fiesta Web Service</option>
+                    <option value="cloud-day2">Cloud Native Apps on Nutanix - Day 2 Operations</option>
 
                 </select>
                 <input type="Submit" class="btn btn-primary" value="Validate">
@@ -227,7 +227,7 @@
                     <td >{{ user.val_hc_snow }}</td>
                 </tr>
                 <tr>
-                    <td>Cross-Cluster Migration with Leap</td>
+                    <td>Cross-Cluster DR and Migration with Leap</td>
                     <td>{{ user.val_hc_leap }}</td>
                 </tr>
                 <tr>
@@ -254,14 +254,14 @@
                     <td >{{ user.val_hc_db_mssql }}</td>
                 </tr>
                 <tr>
-                    <td >Prism Ultimate</td>
+                    <td >Application Monitoring with Prism Ultimate</td>
                     <td >{{ user.val_hc_db_ultimate }}</td>
                 </tr>
                 <TR>
                     <td colspan="2" bgcolor="#B0D235"><center><B>Validation status - Hybrid Cloud EUC</B></center></td>
                 </tr>
                 <tr>
-                    <td >Provision & Expand</td>
+                    <td >Multi-Cloud Desktops with Citrix on AHV</td>
                     <td >{{ user.val_hc_euc_prov }}</td>
                 </tr>
                 <tr>
@@ -273,29 +273,25 @@
                     <td >{{ user.val_hc_euc_flow }}</td>
                 </tr>
                 <TR>
-                    <td colspan="2" bgcolor="#B0D235"><center><B>Validation status - Containerizing Apps and CI/CD</B></center></td>
+                    <td colspan="2" bgcolor="#B0D235"><center><B>Validation status - Containerize App & CICD</B></center></td>
                 </tr>
                 <tr>
-                    <td >Containerize the Fiesta App</td>
-                    <td >{{ user.val_cicd_cont }}</td>
-                </tr>
-                <tr>
-                    <td >Using the CI/CD infrastructure</td>
+                    <td >Building The Pipeline</td>
                     <td >{{ user.val_cicd_use }}</td>
                 </tr>
                 <tr>
-                    <td >Getting a development environment with Era</td>
+                    <td >Creating Development Databases with Era</td>
                     <td >{{ user.val_cicd_era }}</td>
                 </tr>
                 <TR>
                     <td colspan="2" bgcolor="#B0D235"><center><B>Validation status - Cloud Native Apps on Nutanix</B></center></td>
                 </tr>
                 <tr>
-                    <td >Kubernetes configuration</td>
+                    <td >Adding Network Services & Dashboards</td>
                     <td >{{ user.val_cloud_k8s }}</td>
                 </tr>
                 <tr>
-                    <td >Fiesta Application</td>
+                    <td >Deploying Fiesta Web Service</td>
                     <td >{{ user.val_cloud_fiesta }}</td>
                 </tr>
                 <tr>
