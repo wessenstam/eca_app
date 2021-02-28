@@ -56,7 +56,7 @@
             Username: NTNXLAB\Administrator<BR><BR>
             Password: nutanix/4u<br><br>
             Open <B>Citrix Studio</B> if not already open.<BR><BR>
-            Under <B>Machine Catalogs</B> validate there are <B><B>USER0{{ user.userx }} CLOUD</B>and <B>USER0{{ user.userx }} OPPREM</B> catalogs.<BR><BR>
+            Under <B>Machine Catalogs</B> validate there are <B><B>USER0{{ user.userx }} CLOUD</B>and <B>USER0{{ user.userx }} ONPREM</B> catalogs.<BR><BR>
             <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/EUC1.png"><br><BR>
             <B>NOTE::</B> Only one validator can be connected to the <B>Citrix Delivery Controller</B> VM via RDP at a time. If you get kicked out, it means someone else just tried to connect to that server. Give it a minute and try again.
         </P>
@@ -70,7 +70,7 @@
 
     {% else %}
         <P> 
-            In <B>Prism Central  ({{ user.pc_ip }}) > Policies > Security</P>, open the <B>USER0{{ user.userx }}-ADIsolate</B> policy.<BR><BR>
+            In <B>Prism Central  ({{ user.pc_ip }}) > Policies > Security</B>, open the <B>USER0{{ user.userx }}-ADIsolate</B> policy.<BR><BR>
             Click the <B>#</B> next to <B>Bootcamp Users</B>.<br><BR>
             Validate there is at least one VM in the list of filtered VMs that matches the <B>USER0{{ user.userx }}</B><BR><BR>
             <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/EUC3.png">
