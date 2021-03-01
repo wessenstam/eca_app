@@ -23,7 +23,7 @@
         {{ error.message }}
 
     {% else %}
-
+    
         {% if user.attendee_name %}
         <hr>
         <h3>Self-Service Lab Validation</h3>
@@ -39,22 +39,21 @@
                 <input type="hidden" name="pcip" value="{{ user.pc_vip }}">
                 <select id="lab" name="lab" size="1">
                     <option value="hc-iaas-snow">Hybrid Cloud IaaS - Self Service with ServiceNOW</option>
-                    <option value="hc-iaas-leap">Hybrid Cloud IaaS - Cross-Cluster Migration with Leap</option>
+                    <option value="hc-iaas-leap">Hybrid Cloud IaaS - Cross-Cluster DR and Migration</option>
                     <option value="hc-iaas-cmdb">Hybrid Cloud IaaS - ServiceNOW Alert & CMDB Integration</option>
                     <option value="hc-iaas-xplay">Hybrid Cloud IaaS - Automated remediation with ServiceNOW and X-Play</option>
                     <option value="hc-db-aav">Hybrid Cloud DB - Multi-Cloud Application Availability</option>
                     <option value="hc-db-dam">Hybrid Cloud DB - Multi-Cloud Data Access Management</option>
                     <option value="hc-db-mssql">Hybrid Cloud DB - Patching SQL Server with Era</option>
-                    <option value="hc-db-ultimate">Hybrid Cloud DB - Prism Ultimate</option>
-                    <option value="hc-euc-prov">Hybrid Cloud EUC - Provision & Expand</option>
+                    <option value="hc-db-ultimate">Hybrid Cloud DB - Application Monitoring with Prism Ultimate</option>
+                    <option value="hc-euc-prov">Hybrid Cloud EUC - Multi-Cloud Desktops with Citrix on AHV</option>
                     <option value="hc-euc-calm">Hybrid Cloud EUC - Dynamic Expansion with Calm Runbooks</option>
                     <option value="hc-euc-flow">Hybrid Cloud EUC - Securing Desktops with Flow</option>
-                    <option value="cicd-cont">Containerize App & CICD - Containerize the Fiesta App</option>
-                    <option value="cicd-use">Containerize App & CICD - Building The Pipeline</option>
-                    <option value="cicd-era">Containerize App & CICD - Creating Development Databases with Era</option>
-                    <option value="cloud-k8s">Cloud Native - Kubernetes configuration</option>
-                    <option value="cloud-fiesta">Cloud Native - Fiesta Application</option>
-                    <option value="cloud-day2">Cloud Native - Day 2 Operations</option>
+                    <option value="cicd-use">Containerize App and CICD - Building The Pipeline</option>
+                    <option value="cicd-era">Containerize App and CICD - Creating Development Databases with Era</option>
+                    <option value="cloud-k8s">Cloud Native Apps on Nutanix - Adding Network Services & Dashboards</option>
+                    <option value="cloud-fiesta">Cloud Native Apps on Nutanix - Deploying Fiesta Web Service</option>
+                    <option value="cloud-day2">Cloud Native Apps on Nutanix - Day 2 Operations</option>
 
                 </select>
                 <input type="Submit" class="btn btn-primary" value="Validate">
@@ -78,232 +77,228 @@
                     <td>{{ user.attendee_name }}</td>
                 </tr>
                 {% if user.pretime=="no" %}
-                <tr>
-                    <td>USER## ID (Used as a common prefix throughout the lab, ex. USER01)</td>
-                    {% if user.user_x | int < 10 %} 
-                        <td>USER0{{ user.user_x }}</td>
-                    {% else %}
-                        <td>USER{{ user.user_x }}</td>
-                    {% endif %}
-                </tr>
-                <tr>
-                    <td>HPOC Frame/VPN Username</td>
-                    {% if user.user_x | int < 10 %}
-                        <td>{{ user.cluster_name }}-User0{{ user.user_x }}</td>
-                    {% else %}
-                        <td>{{ user.cluster_name }}-User{{ user.user_x }}</td>
-                    {% endif %}
-                </tr>
-                <tr>
-                    <td>HPOC Frame/VPN password</td>
-                    <td>ntnxGTS2021!</td>
-                </tr>
-                <tr>
-                    <td colspan="2" bgcolor="#ff4455"><center><B>Nutanix Cluster Information</B></center></td>
-                </tr>
-                <tr>
-                    <td>Prism Central IP</td>
-                    <td>{{ user.pc_vip }}</td>
-                </tr>
-                <tr>
-                    <td>On-premises (HPOC) Prism Element Cluster/Virtual IP</td>
-                    <td>{{ user.pe_vip }}</td>
-                </tr>
-                <tr>
-                    <td>AWS-Cluster Prism Element Cluster/Virtual IP</td>
-                    <td>{{ user.aws_ip }}</td>
-                </tr>
-                
-                <TR>
-                    <td>Prism Element/Prism Central Username</td>
-                    <td>admin</td>
-                </TR>
-                <tr>
-                    <td >Prism Element/Prism Central Password</td>
-                    <td >{{ user.password }}</td>
-                </tr>
-                <TR>
-                    <td colspan="2" bgcolor="#ff4455"><center><B>Active Directory Information</B></center></td>
-                </tr>
-                <tr>
-                    <td>Domain Controller IP (DNS Server)</td>
-                    <td>{{ user.pc_vip[:-2] }}41</td>
-                </tr>
-                <tr>
-                    <td>Fully Qualified Domain Name</td>
-                    <td>ntnxlab.local</td>
-                </tr>
-                <tr>
-                    <td>Admin Username</td>
-                    <td>Administrator</td>
-                </tr>
-                <tr>
-                    <td>Admin Password</td>
-                    <td>nutanix/4u</td>
-                </tr>
-                <tr>
-                    <td>User Username</td>
-                    {% if user.user_x | int < 10 %} 
-                        <td>user0{{ user.user_x }}</td>
-                    {% else %}
-                        <td>user{{ user.user_x }}</td>
-                    {% endif %}
-                </tr>
-                <TR>
-                    <td>User Password</td>
-                    <td>nutanix/4u</td>
-                </tr>
-                <TR>
-                    <td>Developer username</td>
-                    {% if user.user_x | int < 10 %} 
-                        <td>devuser0{{ user.user_x }}</td>
-                    {% else %}
-                        <td>devuser{{ user.user_x }}</td>
-                    {% endif %}
-                </tr>
-                <TR>
-                    <td>Developer Password</td>
-                    <td>nutanix/4u</td>
-                </tr>
-                <TR>
-                    <td>Operator username</td>
-                    {% if user.user_x | int < 10 %} 
-                        <td>operator0{{ user.user_x }}</td>
-                    {% else %}
-                        <td>operator{{ user.user_x }}</td>
-                    {% endif %}
-                </tr>
-                <TR>
-                    <td>Operator Password</td>
-                    <td>nutanix/4u</td>
-                </tr>
-                <tr>
-                    <td colspan="2" bgcolor="#ff4455"><center><B>Era Information</B></center></td>
-                </tr>
-                <tr>
-                    <td >Era server IP</td>
-                    <td >{{ user.pc_vip[:-2] }}43</td>
-                </tr>
-                <tr>
-                    <td>Era Username</td>
-                    <td>admin (Same as PC creds)</td>
-                </tr>
-                <tr>
-                    <td>Era Password</td>
-                    <td>ntnxGTS2021! (Same as PC creds)</td>
-                </tr>
-                <tr>
-                    <td colspan="2" bgcolor="#ff4455"><center><B>ServiceNow Information</B></center></td>
-                </tr>
-                <tr>
-                    <td>ServiceNow Instance Name</td>
-                    <td>{{ user.snow_instance }}</td>
-                </tr>
-                <tr>
-                    <td>ServiceNow Instance URL</td>
-                    <td>https://{{ user.snow_instance }}.service-now.com</td>
-                </tr>
-                <tr>
-                    <td>ServiceNow Username</td>
-                    <td>admin (Same as PC creds)</td>
-                </tr>
-                <tr>
-                    <td>ServiceNow password</td>
-                    <td>ntnxGTS2021! (Same as PC creds)</td>
-                </tr>
+                    <tr>
+                        <td>USER## ID (Used as a common prefix throughout the lab, ex. USER01)</td>
+                        {% if user.user_x | int < 10 %} 
+                            <td>USER0{{ user.user_x }}</td>
+                        {% else %}
+                            <td>USER{{ user.user_x }}</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>HPOC Frame/VPN Username</td>
+                        {% if user.user_x | int < 10 %}
+                            <td>{{ user.cluster_name }}-User0{{ user.user_x }}</td>
+                        {% else %}
+                            <td>{{ user.cluster_name }}-User{{ user.user_x }}</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>HPOC Frame/VPN password</td>
+                        <td>ntnxGTS2021!</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" bgcolor="#ff4455"><center><B>Nutanix Cluster Information</B></center></td>
+                    </tr>
+                    <tr>
+                        <td>Prism Central IP</td>
+                        <td>{{ user.pc_vip }}</td>
+                    </tr>
+                    <tr>
+                        <td>On-premises (HPOC) Prism Element Cluster/Virtual IP</td>
+                        <td>{{ user.pe_vip }}</td>
+                    </tr>
+                    <tr>
+                        <td>AWS-Cluster Prism Element Cluster/Virtual IP</td>
+                        <td>{{ user.aws_ip }}</td>
+                    </tr>
 
-                <tr>
-                    <td colspan="2" bgcolor="#ff4455"><center><B>Karbon Information</B></center></td>
-                </tr>
-                <tr>
-                    <td>Karbon Network for MetalLB</td>
-                    <td>{{ user.karbon_start }}-{{ user.karbon_stop }}</td>
-                </tr>
-                <TR><TD colspan="2"><HR></TD></TR>
-                <TR>
-                    <td colspan="2" bgcolor="#B0D235"><center><B>Validation status - Hybrid Cloud IaaS labs</B></center></td>
-                </tr>
-                <tr>
-                    <td >Self Service with ServiceNOW</td>
-                    <td >{{ user.val_hc_snow }}</td>
-                </tr>
-                <tr>
-                    <td>Cross-Cluster Migration with Leap</td>
-                    <td>{{ user.val_hc_leap }}</td>
-                </tr>
-                <tr>
-                    <td>ServiceNOW Alert & CMDB Integration</td>
-                    <td>{{ user.val_hc_cmdb }}</td>
-                </tr>
-                <tr>
-                    <td>Automated remediation with ServiceNOW and X-Play</td>
-                    <td>{{ user.val_hc_xplay }}</td>
-                </tr>
-                <TR>
-                    <td colspan="2" bgcolor="#B0D235"><center><B>Validation status - Hybrid Cloud Database Management</B></center></td>
-                </tr>
-                <tr>
-                    <td >Multi-Cloud Application Avalability</td>
-                    <td >{{ user.val_hc_db_aav }}</td>
-                </tr>
-                <tr>
-                    <td >Multi-Cloud Data Access Management</td>
-                    <td >{{ user.val_hc_db_dam }}</td>
-                </tr>
-                <tr>
-                    <td >Patching SQL Server with Era</td>
-                    <td >{{ user.val_hc_db_mssql }}</td>
-                </tr>
-                <tr>
-                    <td >Prism Ultimate</td>
-                    <td >{{ user.val_hc_db_ultimate }}</td>
-                </tr>
-                <TR>
-                    <td colspan="2" bgcolor="#B0D235"><center><B>Validation status - Hybrid Cloud EUC</B></center></td>
-                </tr>
-                <tr>
-                    <td >Provision & Expand</td>
-                    <td >{{ user.val_hc_euc_prov }}</td>
-                </tr>
-                <tr>
-                    <td >Dynamic Expansion with Calm Runbooks</td>
-                    <td >{{ user.val_hc_euc_calm }}</td>
-                </tr>
-                <tr>
-                    <td >Securing Desktops with Flow</td>
-                    <td >{{ user.val_hc_euc_flow }}</td>
-                </tr>
-                <TR>
-                    <td colspan="2" bgcolor="#B0D235"><center><B>Validation status - Containerizing Apps and CI/CD</B></center></td>
-                </tr>
-                <tr>
-                    <td >Containerize the Fiesta App</td>
-                    <td >{{ user.val_cicd_cont }}</td>
-                </tr>
-                <tr>
-                    <td >Using the CI/CD infrastructure</td>
-                    <td >{{ user.val_cicd_use }}</td>
-                </tr>
-                <tr>
-                    <td >Getting a development environment with Era</td>
-                    <td >{{ user.val_cicd_era }}</td>
-                </tr>
-                <TR>
-                    <td colspan="2" bgcolor="#B0D235"><center><B>Validation status - Cloud Native Apps on Nutanix</B></center></td>
-                </tr>
-                <tr>
-                    <td >Kubernetes configuration</td>
-                    <td >{{ user.val_cloud_k8s }}</td>
-                </tr>
-                <tr>
-                    <td >Fiesta Application</td>
-                    <td >{{ user.val_cloud_fiesta }}</td>
-                </tr>
-                <tr>
-                    <td >Day 2 Operations</td>
-                    <td >{{ user.val_cloud_day2 }}</td>
-                </tr>
-            {% endif %}    
+                    <TR>
+                        <td>Prism Element/Prism Central Username</td>
+                        <td>admin</td>
+                    </TR>
+                    <tr>
+                        <td >Prism Element/Prism Central Password</td>
+                        <td >{{ user.password }}</td>
+                    </tr>
+                    <TR>
+                        <td colspan="2" bgcolor="#ff4455"><center><B>Active Directory Information</B></center></td>
+                    </tr>
+                    <tr>
+                        <td>Domain Controller IP (DNS Server)</td>
+                        <td>{{ user.pc_vip[:-2] }}41</td>
+                    </tr>
+                    <tr>
+                        <td>Fully Qualified Domain Name</td>
+                        <td>ntnxlab.local</td>
+                    </tr>
+                    <tr>
+                        <td>Admin Username</td>
+                        <td>Administrator</td>
+                    </tr>
+                    <tr>
+                        <td>Admin Password</td>
+                        <td>nutanix/4u</td>
+                    </tr>
+                    <tr>
+                        <td>User Username</td>
+                        {% if user.user_x | int < 10 %} 
+                            <td>user0{{ user.user_x }}</td>
+                        {% else %}
+                            <td>user{{ user.user_x }}</td>
+                        {% endif %}
+                    </tr>
+                    <TR>
+                        <td>User Password</td>
+                        <td>nutanix/4u</td>
+                    </tr>
+                    <TR>
+                        <td>Developer username</td>
+                        {% if user.user_x | int < 10 %} 
+                            <td>devuser0{{ user.user_x }}</td>
+                        {% else %}
+                            <td>devuser{{ user.user_x }}</td>
+                        {% endif %}
+                    </tr>
+                    <TR>
+                        <td>Developer Password</td>
+                        <td>nutanix/4u</td>
+                    </tr>
+                    <TR>
+                        <td>Operator username</td>
+                        {% if user.user_x | int < 10 %} 
+                            <td>operator0{{ user.user_x }}</td>
+                        {% else %}
+                            <td>operator{{ user.user_x }}</td>
+                        {% endif %}
+                    </tr>
+                    <TR>
+                        <td>Operator Password</td>
+                        <td>nutanix/4u</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" bgcolor="#ff4455"><center><B>Era Information</B></center></td>
+                    </tr>
+                    <tr>
+                        <td >Era server IP</td>
+                        <td >{{ user.pc_vip[:-2] }}43</td>
+                    </tr>
+                    <tr>
+                        <td>Era Username</td>
+                        <td>admin (Same as PC creds)</td>
+                    </tr>
+                    <tr>
+                        <td>Era Password</td>
+                        <td>ntnxGTS2021! (Same as PC creds)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" bgcolor="#ff4455"><center><B>ServiceNow Information</B></center></td>
+                    </tr>
+                    <tr>
+                        <td>ServiceNow Instance Name</td>
+                        <td>{{ user.snow_instance }}</td>
+                    </tr>
+                    <tr>
+                        <td>ServiceNow Instance URL</td>
+                        <td>https://{{ user.snow_instance }}.service-now.com</td>
+                    </tr>
+                    <tr>
+                        <td>ServiceNow Username</td>
+                        <td>admin (Same as PC creds)</td>
+                    </tr>
+                    <tr>
+                        <td>ServiceNow password</td>
+                        <td>ntnxGTS2021! (Same as PC creds)</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2" bgcolor="#ff4455"><center><B>Karbon Information</B></center></td>
+                    </tr>
+                    <tr>
+                        <td>Karbon Network for MetalLB</td>
+                        <td>{{ user.karbon_start }}-{{ user.karbon_stop }}</td>
+                    </tr>
+                    <TR><TD colspan="2"><HR></TD></TR>
+                    <TR>
+                        <td colspan="2" bgcolor="#B0D235"><center><B>Validation status - Hybrid Cloud IaaS labs</B></center></td>
+                    </tr>
+                    <tr>
+                        <td >Self Service with ServiceNOW</td>
+                        <td >{{ user.val_hc_snow }}</td>
+                    </tr>
+                    <tr>
+                        <td>Cross-Cluster DR and Migration with Leap</td>
+                        <td>{{ user.val_hc_leap }}</td>
+                    </tr>
+                    <tr>
+                        <td>ServiceNOW Alert & CMDB Integration</td>
+                        <td>{{ user.val_hc_cmdb }}</td>
+                    </tr>
+                    <tr>
+                        <td>Automated remediation with ServiceNOW and X-Play</td>
+                        <td>{{ user.val_hc_xplay }}</td>
+                    </tr>
+                    <TR>
+                        <td colspan="2" bgcolor="#B0D235"><center><B>Validation status - Hybrid Cloud Database Management</B></center></td>
+                    </tr>
+                    <tr>
+                        <td >Multi-Cloud Application Avalability</td>
+                        <td >{{ user.val_hc_db_aav }}</td>
+                    </tr>
+                    <tr>
+                        <td >Multi-Cloud Data Access Management</td>
+                        <td >{{ user.val_hc_db_dam }}</td>
+                    </tr>
+                    <tr>
+                        <td >Patching SQL Server with Era</td>
+                        <td >{{ user.val_hc_db_mssql }}</td>
+                    </tr>
+                    <tr>
+                        <td >Application Monitoring with Prism Ultimate</td>
+                        <td >{{ user.val_hc_db_ultimate }}</td>
+                    </tr>
+                    <TR>
+                        <td colspan="2" bgcolor="#B0D235"><center><B>Validation status - Hybrid Cloud EUC</B></center></td>
+                    </tr>
+                    <tr>
+                        <td >Multi-Cloud Desktops with Citrix on AHV</td>
+                        <td >{{ user.val_hc_euc_prov }}</td>
+                    </tr>
+                    <tr>
+                        <td >Dynamic Expansion with Calm Runbooks</td>
+                        <td >{{ user.val_hc_euc_calm }}</td>
+                    </tr>
+                    <tr>
+                        <td >Securing Desktops with Flow</td>
+                        <td >{{ user.val_hc_euc_flow }}</td>
+                    </tr>
+                    <TR>
+                        <td colspan="2" bgcolor="#B0D235"><center><B>Validation status - Containerize App & CICD</B></center></td>
+                    </tr>
+                    <tr>
+                        <td >Building The Pipeline</td>
+                        <td >{{ user.val_cicd_use }}</td>
+                    </tr>
+                    <tr>
+                        <td >Creating Development Databases with Era</td>
+                        <td >{{ user.val_cicd_era }}</td>
+                    </tr>
+                    <TR>
+                        <td colspan="2" bgcolor="#B0D235"><center><B>Validation status - Cloud Native Apps on Nutanix</B></center></td>
+                    </tr>
+                    <tr>
+                        <td >Adding Network Services & Dashboards</td>
+                        <td >{{ user.val_cloud_k8s }}</td>
+                    </tr>
+                    <tr>
+                        <td >Deploying Fiesta Web Service</td>
+                        <td >{{ user.val_cloud_fiesta }}</td>
+                    </tr>
+                    <tr>
+                        <td >Day 2 Operations</td>
+                        <td >{{ user.val_cloud_day2 }}</td>
+                    </tr>
+                {% endif %}    
             </table>
             <hr>
             <P><A href="/logout">Logout</A></P>

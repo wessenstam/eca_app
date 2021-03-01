@@ -11,7 +11,7 @@
         {% set labname = "Self-Service with ServiceNow" %}
         {% set val_name = "SNOW" %}
     {% elif user.labname == "hc-iaas-leap" %}
-        {% set labname = "Cross-Cluster Migration with Leap" %}
+        {% set labname = "Cross-Cluster DR and Migration with Leap" %}
         {% set val_name = "LEAP" %}
     {% elif user.labname == "hc-iaas-leap" %}
         {% set labname = "ServiceNOW Alert & CMDB Integration" %}
@@ -22,7 +22,7 @@
     {% endif %}
 
 
-    <h2>Validator page for Hybrid Cloud IaaS - {{ labname }} lab</h2>
+    <h2>Validator page for Hybrid Cloud IaaS - {{ labname }}</h2>
 
     <P>
     Below is the information for user <B>{{ user.username }} </B>that has asked validation.<BR><BR>
@@ -54,16 +54,36 @@
     <P>Please make sure the user has the following created for the validation</P>
 
     {% if val_name=="SNOW" %}
-        <P> Show the validation information for the ServiceNOW lab</P>
+        <P> Log into their ServiceNow instance at <B><A HREF="http://{{ user.snow_instance }}.service-now.com/login.do?user_name=admin&sys_action=sysverb_login&user_password=ntnxGTS2021%21">http://{{ user.snow_instance }}.service-now.com/login.do?user_name=admin&sys_action=sysverb_login&user_password=ntnxGTS2021%21</A>.<BR><BR>
+            Under <B>ServiceNow > Nutanix Calm > Catalog Items</B> and validate they have created a <B>USER0{{ user.userx }} CentOS</B> catalog item that corresponds to their specific blueprint and project.
+            <BR><BR>
+            <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/SNOW.png">
+        </P>
 
     {% elif val_name=="LEAP" %}
-        <P> Show the validation information for the Leap lab</P>
+        <P> 
+            In <B>Prism Central (<B>https://{{ user.pc_ip }}:9440</B>) > Policies > Recovery Plans</B>, validate the <B>USER0{{ user.userx }}-DR</B> policy <B>Last Failover Status</B> is <B>Succeeded with Warnings</B>
+            <BR><BR>
+            <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/LEAP.png">
+        </P>
 
     {% elif val_name=="CMDB" %}
-        <P> Show the validation information for the CMDB lab</P>
+        <P> 
+            In <B>Prism Central (<B>https://{{ user.pc_ip }}:9440</B>) > Operations > Playbooks > List</B>,open the <B>USER0{{ user.userx }} Alerts</B> playbook.<BR><BR>
+            
+            Under <B>Plays</B>, validate the playbook has at least one <B>Succeeded</B> execution.
+            <BR><BR>
+            <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/CMDB.png">
+        </P>
 
     {% else %}
-        <P> Show the validation information for the X-Play lab</P>
+        <P> 
+            In <B>Prism Central (<B>https://{{ user.pc_ip }}:9440</B>) > Operations > Playbooks > List</B>,open the <B>USER0{{ user.userx }} Memory Add</B> playbook.<BR><BR>
+            
+            Under <B>Plays</B>, validate the playbook has at least one <B>Succeeded</B> execution.
+            <BR><BR>
+            <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/XPLAY.png">
+        </P>
 
     {% endif %}
 
