@@ -25,6 +25,7 @@
     {% else %}
     
         {% if user.attendee_name %}
+        {% if user.pretime=="no" %}
         <hr>
         <h3>Self-Service Lab Validation</h3>
         <P>
@@ -60,6 +61,7 @@
             </P>
         </form>
         </P>
+        {% endif %}
         <hr>
         <h3>Your Lab Environment Details</h3>
         <P>Refer to the information below when completing your labs for USER## ID, IPs, credentials, and other information specific
