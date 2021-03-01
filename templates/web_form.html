@@ -25,7 +25,7 @@
     {% else %}
     
         {% if user.attendee_name %}
-            {% if user.pretime=="no" %}
+            {% if user.pretime!="yes" %}
             {{ user.pretime }}
             <hr>
             <h3>Self-Service Lab Validation</h3>
