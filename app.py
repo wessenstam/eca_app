@@ -164,7 +164,6 @@ def show_form_data():
                              'val_cloud_day2': user_info[0]['cloud-day2'],
                              'pretime':'no'
                              }
-
                 form.email.data=""
             except IndexError:
                 error = {'message' : 'Unknown email address', 'email' : form.email.data }
