@@ -58,7 +58,7 @@
 
       {% for value in dblist %}
       <TR>
-        {% if  value.split(',')[2] != "" and (value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" or value.split(',')[7] == "Pending") %}
+        {% if  value.split(',')[2] != "" and (value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" or value.split(',')[7] == "Pending" or value.split(',')[4] == "In progress" or value.split(',')[5] == "In progress" or value.split(',')[6] == "In progress" or value.split(',')[7] == "In progress") %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
             {% if "Pending" in value.split(',')[4] %}
               <TD><A HREF="/validator?lab=hc-db-aav&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[4] }} </A></TD>
@@ -98,7 +98,7 @@
     </TR>
       {% for value in euclist %}
         <TR>
-        {% if  value.split(',')[2] != "" and (value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending") %}
+          {% if  value.split(',')[2] != "" and (value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" or value.split(',')[7] == "Pending" or value.split(',')[4] == "In progress" or value.split(',')[5] == "In progress" or value.split(',')[6] == "In progress" or value.split(',')[7] == "In progress") %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
             {% if "Pending" in value.split(',')[4] %}
               <TD><A HREF="/validator?lab=hc-euc-prov&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[4] }} </A></TD>
@@ -131,7 +131,7 @@
     </TR>
       {% for value in cicdlist %}
         <TR>
-        {% if value.split(',')[2] != "" and (value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending") %}
+          {% if  value.split(',')[2] != "" and (value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" or value.split(',')[7] == "Pending" or value.split(',')[4] == "In progress" or value.split(',')[5] == "In progress" or value.split(',')[6] == "In progress" or value.split(',')[7] == "In progress") %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
 
             {% if "Pending" in value.split(',')[5] %}
@@ -159,7 +159,7 @@
     </TR>
       {% for value in cloudlist %}
       <TR>
-        {% if  value.split(',')[2] != "" and (value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending") %}
+        {% if  value.split(',')[2] != "" and (value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" or value.split(',')[7] == "Pending" or value.split(',')[4] == "In progress" or value.split(',')[5] == "In progress" or value.split(',')[6] == "In progress" or value.split(',')[7] == "In progress") %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
             {% if "Pending" in value.split(',')[4] %}
               <TD><A HREF="/validator?lab=cloud-k8s&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[4] }} </A></TD>
