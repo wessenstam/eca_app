@@ -7,20 +7,27 @@
     <body>
     <center>
 
-        {% if user.userx == "1" %}
-        {% set k8s_ip = user.pc_ip[:-2]~"112" %}
+    {% if user.userx == "1" %}
+        {% set k8s_ip_2 = user.pc_ip[:-2]~"112" %}
+        {% set k8s_ip_1 = user.pc_ip[:-2]~"111" %}
     {% elif user.userx == "2" %}
-        {% set k8s_ip = user.pc_ip[:-2]~"114" %}
+        {% set k8s_ip_2 = user.pc_ip[:-2]~"114" %}
+        {% set k8s_ip_1 = user.pc_ip[:-2]~"113" %}
     {% elif user.userx == "3" %}
-        {% set k8s_ip = user.pc_ip[:-2]~"116" %}
+        {% set k8s_ip_2 = user.pc_ip[:-2]~"116" %}
+        {% set k8s_ip_1 = user.pc_ip[:-2]~"115" %}
     {% elif user.userx == "4" %}
-        {% set k8s_ip = user.pc_ip[:-2]~"118" %}
+        {% set k8s_ip_2 = user.pc_ip[:-2]~"118" %}
+        {% set k8s_ip_1 = user.pc_ip[:-2]~"117" %}
     {% elif user.userx == "5" %}
-        {% set k8s_ip = user.pc_ip[:-2]~"120" %}
+        {% set k8s_ip_2 = user.pc_ip[:-2]~"120" %}
+        {% set k8s_ip_1 = user.pc_ip[:-2]~"119" %}
     {% elif user.userx == "6" %}
-        {% set k8s_ip = user.pc_ip[:-2]~"122" %}
+        {% set k8s_ip_2 = user.pc_ip[:-2]~"122" %}
+        {% set k8s_ip_1 = user.pc_ip[:-2]~"121" %}
     {% elif user.userx == "7" %}
-        {% set k8s_ip = user.pc_ip[:-2]~"124" %}
+        {% set k8s_ip_2 = user.pc_ip[:-2]~"124" %}
+        {% set k8s_ip_1 = user.pc_ip[:-2]~"123" %}
     {% endif %}
 
     {% if user.labname == "cloud-k8s" %}
@@ -68,7 +75,7 @@
 
     {% if val_name=="k8s" %}
         <P> 
-            Open in a web browser <B>http://{{ k8s_ip }}:8080</B>.<BR><BR>
+            Open in a web browser <B>http://{{ k8s_ip_2 }}:8080</B> in some cases it might be <B>http://{{ k8s_ip_2 }}:8080</B>.<BR><BR>
             
             You should see something like this screen:<BR>
             <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/k8s-1.png">
@@ -77,7 +84,7 @@
 
     {% elif val_name=="fiesta" %}
         <P> 
-            Open in a web browser <B>http://{{ k8s_ip }}:8080</B>.<BR><BR>
+            Open in a web browser <B>http://{{ k8s_ip_2 }}:8080</B> in some cases it might be <B>http://{{ k8s_ip_2 }}:8080</B>.<BR><BR>
             Look for a line (in the red square) as shown in the below screenshot.<BR><BR>
             
             You should see something like this screen:<BR>
