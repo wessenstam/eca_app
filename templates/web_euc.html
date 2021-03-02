@@ -63,14 +63,14 @@
 
     {% elif val_name=="Calm" %}
         <P> 
-            In <B>Prism Central ({{ user.pc_ip }}) > Calm > Runbooks > Execution History</B>, validate there is a successful execution of the <B>USER0{{ user.userx }} Add Desktop</B> runbook.<BR><BR>
+            In <B>Prism Central <a HREF="http://{{ user.pc_ip }}:9440" target="_blank">({{ user.pc_ip }})</a> > Calm > Runbooks > Execution History</B>, validate there is a successful execution of the <B>USER0{{ user.userx }} Add Desktop</B> runbook.<BR><BR>
             <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/EUC2.png"><br>
     
         </P>
 
     {% else %}
         <P> 
-            In <B>Prism Central  ({{ user.pc_ip }}) > Policies > Security</B>, open the <B>USER0{{ user.userx }}-ADIsolate</B> policy.<BR><BR>
+            In <B>Prism Central  <a HREF="http://{{ user.pc_ip }}:9440" target="_blank">({{ user.pc_ip }})</a> > Policies > Security</B>, open the <B>USER0{{ user.userx }}-ADIsolate</B> policy.<BR><BR>
             Click the <B>#</B> next to <B>Bootcamp Users</B>.<br><BR>
             Validate there is at least one VM in the list of filtered VMs that matches the <B>USER0{{ user.userx }}</B><BR><BR>
             <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/EUC3.png">
