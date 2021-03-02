@@ -23,7 +23,7 @@
         {{ error.message }}
 
     {% else %}
-    
+        {{ user.cluster_name }}
         {% if user.attendee_name %}
             {% if user.pretime!="yes" %}
             {% if user.cluster_name!="RTP-POC048" or user.cluster_name!="RTP-POC049" or user.cluster_name!="RTP-POC050" or user.cluster_name!="RTP-POC054" or user.cluster_name!="RTP-POC055" %}
