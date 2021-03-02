@@ -101,19 +101,19 @@
         {% if  value.split(',')[2] != "" and (value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending") %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
             {% if "Pending" in value.split(',')[4] %}
-              <TD><A HREF="/validator?lab=hc-euc-prov&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[4] }} </A></TD>
+              <TD><A HREF="/validator?lab=hc-euc-prov&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[4] }} </A></TD>
             {% else %}
               <TD>&nbsp;</TD>
             {% endif %}
 
             {% if "Pending" in value.split(',')[5] %}
-              <TD><A HREF="/validator?lab=hc-euc-calm&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[5] }} </A></TD>
+              <TD><A HREF="/validator?lab=hc-euc-calm&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[5] }} </A></TD>
             {% else %}
               <TD>&nbsp;</TD>
             {% endif %}
 
             {% if "Pending" in value.split(',')[6] %}
-              <TD><A HREF="/validator?lab=hc-euc-flow&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[6] }} </A></TD>
+              <TD><A HREF="/validator?lab=hc-euc-flow&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[6] }} </A></TD>
             {% else %}
               <TD>&nbsp;</TD>
             {% endif %}
@@ -135,13 +135,13 @@
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
 
             {% if "Pending" in value.split(',')[5] %}
-              <TD><A HREF="/validator?lab=cicd-use&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[5] }} </A></TD>
+              <TD><A HREF="/validator?lab=cicd-use&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[5] }} </A></TD>
             {% else %}
               <TD>&nbsp;</TD>
             {% endif %}
 
             {% if "Pending" in value.split(',')[6] %}
-              <TD><A HREF="/validator?lab=cicd-era&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[6] }} </A></TD>
+              <TD><A HREF="/validator?lab=cicd-era&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[6] }} </A></TD>
             {% else %}
               <TD>&nbsp;</TD>
             {% endif %}
@@ -162,19 +162,19 @@
         {% if  value.split(',')[2] != "" and (value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending") %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
             {% if "Pending" in value.split(',')[4] %}
-              <TD><A HREF="/validator?lab=cloud-k8s&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[4] }} </A></TD>
+              <TD><A HREF="/validator?lab=cloud-k8s&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[4] }} </A></TD>
             {% else %}
               <TD>&nbsp;</TD>
             {% endif %}
 
             {% if "Pending" in value.split(',')[5] %}
-              <TD><A HREF="/validator?lab=cloud-fiesta&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[5] }} </A></TD>
+              <TD><A HREF="/validator?lab=cloud-fiesta&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[5] }} </A></TD>
             {% else %}
               <TD>&nbsp;</TD>
             {% endif %}
 
             {% if "Pending" in value.split(',')[6] %}
-              <TD><A HREF="/validator?lab=cloud-day2&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[6] }} </A></TD>
+              <TD><A HREF="/validator?lab=cloud-day2&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[6] }} </A></TD>
             {% else %}
               <TD>&nbsp;</TD>
             {% endif %}

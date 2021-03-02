@@ -25,12 +25,10 @@
     {% else %}
     
         {% if user.attendee_name %}
-        <hr>
-        <h3>Self-Service Lab Validation</h3>
-        <P>
-        Once you have completed a lab exercise, select the specific exercise from the dropdown menu below and click Validate. A proctor will remotely connect to your cluster and verify the exercise has been completed. Validation Status can be
-        viewed below Environment Details below
-        <form class="form-horizontal" action="/validation" method="post" novalidate>
+            {% if user.pretime!="yes" %}
+            {{ user.pretime }}
+            <hr>
+            <h3>Self-Service Lab Validation</h3>
             <P>
                 <input type="hidden" name="username" value="{{ user.attendee_name }}">
                 <input type="hidden" name="clustername" value="{{ user.cluster_name }}">
@@ -54,11 +52,12 @@
                     <option value="cloud-fiesta">Cloud Native Apps on Nutanix - Deploying Fiesta Web Service</option>
                     <option value="cloud-day2">Cloud Native Apps on Nutanix - Day 2 Operations</option>
 
-                </select>
-                <input type="Submit" class="btn btn-primary" value="Validate">
+                    </select>
+                    <input type="Submit" class="btn btn-primary" value="Validate">
+                </P>
+            </form>
             </P>
-        </form>
-        </P>
+            {% endif %}
         <hr>
         <h3>Your Lab Environment Details</h3>
         <P>Refer to the information below when completing your labs for USER## ID, IPs, credentials, and other information specific
