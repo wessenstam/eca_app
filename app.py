@@ -228,11 +228,15 @@ def show_form_validator():
         if request.method =="POST":
             reply_post = request.form
             webdata={'username':reply_post['username'],
-                     'labname':reply_post['labname']
-                     }
+                        'labname':reply_post['labname']
+                        }
 
-            # Have the data updated
-            update_gsheet_df(int(reply_post['usernr']),reply_post['labname'],"Validated")
+            if reply_post['action'] == "Validate":
+                # Have the data updated as we have a valid validation request
+                update_gsheet_df(int(reply_post['usernr']),reply_post['labname'],"Validated")
+            else:
+                # Have the data updated as we have a valid validation request
+                update_gsheet_df(int(reply_post['usernr']),reply_post['labname'],"")
 
             return render_template('web_validation_received.html',info=webdata, title='vGTS2021 - Validator area')
         else:
