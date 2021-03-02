@@ -24,43 +24,7 @@
 
     {% else %}
         {% if user.attendee_name %}
-            {% if user.pretime!="yes" %}
-            <P>
-            <hr>
-            <h3>Self-Service Lab Validation</h3>
-            <P>
-                Once you have completed a lab exercise, select the specific exercise from the dropdown menu below and click Validate. A proctor will remotely connect to your cluster and verify the exercise has been completed. Validation Status can be
-        viewed below Environment Details below
-            </P>
-            <form class="form-horizontal" action="/validation" method="post" novalidate>
-                <input type="hidden" name="username" value="{{ user.attendee_name }}">
-                <input type="hidden" name="clustername" value="{{ user.cluster_name }}">
-                <input type="hidden" name="clusterip" value="{{ user.pe_vip }}">
-                <input type="hidden" name="usernr" value="{{ user.uniq_nr }}">
-                <input type="hidden" name="pcip" value="{{ user.pc_vip }}">
-                <select id="lab" name="lab" size="1">
-                    <option value="hc-iaas-snow">Hybrid Cloud IaaS - Self Service with ServiceNOW</option>
-                    <option value="hc-iaas-leap">Hybrid Cloud IaaS - Cross-Cluster DR and Migration</option>
-                    <option value="hc-iaas-cmdb">Hybrid Cloud IaaS - ServiceNOW Alert & CMDB Integration</option>
-                    <option value="hc-iaas-xplay">Hybrid Cloud IaaS - Automated remediation with ServiceNOW and X-Play</option>
-                    <option value="hc-db-aav">Hybrid Cloud DB - Multi-Cloud Application Availability</option>
-                    <option value="hc-db-dam">Hybrid Cloud DB - Multi-Cloud Data Access Management</option>
-                    <option value="hc-db-ultimate">Hybrid Cloud DB - Application Monitoring with Prism Ultimate</option>
-                    <option value="hc-euc-prov">Hybrid Cloud EUC - Multi-Cloud Desktops with Citrix on AHV</option>
-                    <option value="hc-euc-calm">Hybrid Cloud EUC - Dynamic Expansion with Calm Runbooks</option>
-                    <option value="hc-euc-flow">Hybrid Cloud EUC - Securing Desktops with Flow</option>
-                    <option value="cicd-use">Containerize App and CICD - Building The Pipeline</option>
-                    <option value="cicd-era">Containerize App and CICD - Creating Development Databases with Era</option>
-                    <option value="cloud-k8s">Cloud Native Apps on Nutanix - Adding Network Services & Dashboards</option>
-                    <option value="cloud-fiesta">Cloud Native Apps on Nutanix - Deploying Fiesta Web Service</option>
-                    <option value="cloud-day2">Cloud Native Apps on Nutanix - Day 2 Operations</option>
-
-                    </select>
-                    <input type="Submit" class="btn btn-primary" value="Validate">
-                </P>
-            </form>
-            </P>
-            {% endif %}
+            
         <hr>
         <h3>Your Lab Environment Details</h3>
         <P>Refer to the information below when completing your labs for USER## ID, IPs, credentials, and other information specific
@@ -222,6 +186,42 @@
                     <TR><TD colspan="2"><HR></TD></TR>
                     <TR>
                         <td colspan="2" bgcolor="#B0D235"><center><B>Validation status - Hybrid Cloud IaaS labs</B></center></td>
+                        {% if user.pretime!="yes" %}
+                            <P>
+                            <hr>
+                            <h3>Self-Service Lab Validation</h3>
+                            <P>
+                                Once you have completed a lab exercise, select the specific exercise from the dropdown menu below and click Validate. A proctor will remotely connect to your cluster and verify the exercise has been completed. Validation Status can be viewed below Environment Details below
+                            </P>
+                            <form class="form-horizontal" action="/validation" method="post" novalidate>
+                                <input type="hidden" name="username" value="{{ user.attendee_name }}">
+                                <input type="hidden" name="clustername" value="{{ user.cluster_name }}">
+                                <input type="hidden" name="clusterip" value="{{ user.pe_vip }}">
+                                <input type="hidden" name="usernr" value="{{ user.uniq_nr }}">
+                                <input type="hidden" name="pcip" value="{{ user.pc_vip }}">
+                                <select id="lab" name="lab" size="1">
+                                    <option value="hc-iaas-snow">Hybrid Cloud IaaS - Self Service with ServiceNOW</option>
+                                    <option value="hc-iaas-leap">Hybrid Cloud IaaS - Cross-Cluster DR and Migration</option>
+                                    <option value="hc-iaas-cmdb">Hybrid Cloud IaaS - ServiceNOW Alert & CMDB Integration</option>
+                                    <option value="hc-iaas-xplay">Hybrid Cloud IaaS - Automated remediation with ServiceNOW and X-Play</option>
+                                    <option value="hc-db-aav">Hybrid Cloud DB - Multi-Cloud Application Availability</option>
+                                    <option value="hc-db-dam">Hybrid Cloud DB - Multi-Cloud Data Access Management</option>
+                                    <option value="hc-db-ultimate">Hybrid Cloud DB - Application Monitoring with Prism Ultimate</option>
+                                    <option value="hc-euc-prov">Hybrid Cloud EUC - Multi-Cloud Desktops with Citrix on AHV</option>
+                                    <option value="hc-euc-calm">Hybrid Cloud EUC - Dynamic Expansion with Calm Runbooks</option>
+                                    <option value="hc-euc-flow">Hybrid Cloud EUC - Securing Desktops with Flow</option>
+                                    <option value="cicd-use">Containerize App and CICD - Building The Pipeline</option>
+                                    <option value="cicd-era">Containerize App and CICD - Creating Development Databases with Era</option>
+                                    <option value="cloud-k8s">Cloud Native Apps on Nutanix - Adding Network Services & Dashboards</option>
+                                    <option value="cloud-fiesta">Cloud Native Apps on Nutanix - Deploying Fiesta Web Service</option>
+                                    <option value="cloud-day2">Cloud Native Apps on Nutanix - Day 2 Operations</option>
+
+                                    </select>
+                                    <input type="Submit" class="btn btn-primary" value="Validate">
+                                </P>
+                            </form>
+                            </P>
+                            {% endif %}
                     </tr>
                     <tr>
                         <td >Self Service with ServiceNOW</td>
