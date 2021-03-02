@@ -25,9 +25,14 @@
     {% else %}
         {% if user.attendee_name %}
             {% if user.pretime!="yes" %}
+            <P>
             <hr>
             <h3>Self-Service Lab Validation</h3>
             <P>
+                Once you have completed a lab exercise, select the specific exercise from the dropdown menu below and click Validate. A proctor will remotely connect to your cluster and verify the exercise has been completed. Validation Status can be
+        viewed below Environment Details below
+            </P>
+            <form class="form-horizontal" action="/validation" method="post" novalidate></form>
                 <input type="hidden" name="username" value="{{ user.attendee_name }}">
                 <input type="hidden" name="clustername" value="{{ user.cluster_name }}">
                 <input type="hidden" name="clusterip" value="{{ user.pe_vip }}">
