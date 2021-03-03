@@ -65,8 +65,9 @@
 
     {% elif val_name=="use" %}
         <P> 
-            Open <B>Prism Central <a HREF="https://{{ user.pc_ip }}:9440" target="_blank">(https://{{ user.pc_ip }}:9440)</a> > VMs</B> .<BR><BR>
-            Get the IP address of the VM named <B>USER0{{ user.userx }}-docker_vm</B>.<BR><BR>
+            Open <B>Prism Central <a HREF="https://{{ user.pc_ip }}:9440" target="_blank">(https://{{ user.pc_ip }}:9440)</a> > Service -> Calm -> Applications</B> .<BR><BR>
+            In the <B>Applications view</B> click <B>User0{{ user.userx }} CICD</B><BR><BR>
+            Click in the <B>Services</B> tab and get the IP address of the <B>Docker VM</B> service on the right side of the screen.
             Open in a web browser <B>http://IP ADDRESS:8080</B><BR><BR>
             Use for the login in Gitea: <b>nutanix</b> with password <B>nutanix/4u</B> (If not working, please ask {{ user.username }} for the credentials via Slack).<BR><BR>
             
@@ -77,8 +78,9 @@
 
     {% else %}
         <P> 
-            Open <B>Prism Central <a HREF="https://{{ user.pc_ip }}:9440" target="_blank">(https://{{ user.pc_ip }}:9440)</a> > VMs</B> .<BR><BR>
-            Get the IP address of the VM named <B>USER0{{ user.userx }}-docker_vm</B>.<BR><BR>
+            Open <B>Prism Central <a HREF="https://{{ user.pc_ip }}:9440" target="_blank">(https://{{ user.pc_ip }}:9440)</a> > Service -> Calm -> Applications</B> .<BR><BR>
+            In the <B>Applications view</B> click <B>User0{{ user.userx }} CICD</B><BR><BR>
+            Click in the <B>Services</B> tab and get the IP address of the <B>Docker VM</B> service on the right side of the screen.
             Open in a web browser <B>http://IP ADDRESS:5050</B><BR><BR>
             
             You should see something like this screen:<BR>
