@@ -74,7 +74,6 @@ data = wks.get_all_values()
 headers = data.pop(0)
 # Drop all data in a dataframe
 df = pd.DataFrame(data, columns=headers)
-
 # Area for definition of variables
 lab_type_lst=["snow","leap","cmdb","xplay","aav","dam","mssql","ultimate","prov","calm","flow","cont","use","era","k8s","fiesta","day2"]
 
@@ -109,7 +108,6 @@ def update_df():
 
 @app.route("/", methods=['GET', 'POST'])
 def show_form_data():
-
     if 'email ' not in session:
         error=''
         form = LoginForm()
