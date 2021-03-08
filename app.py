@@ -13,6 +13,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired
 import gspread
+from gspread_formatting  import *
 import pandas as pd
 import os
 from datetime import timedelta
@@ -24,42 +25,53 @@ class LoginForm(FlaskForm):
     email = StringField('Email Address', validators=[DataRequired()])
     submit = SubmitField('Lookup...')
 
+# Function for updating the underlaying GSheet so we can always grab back to the updated version
 def update_gsheet_df(usernr, lab,progress):
-    # Based o the information we got we need to set some variables to the correct values.
+    # Based on the information we got we need to set some variables to the correct values.
     row = int(usernr) + 1
-    col = 16
-    if "iaas" in lab:  # Enter the IAAS labs
-        type_lab = lab[8:]
-        item_nr = lab_type_lst.index(type_lab)
-        col = col + item_nr
-        web_templ="web_hybrid_cloud.html"
-    elif "db" in lab:  # Enter the DB labs
-        type_lab = lab[6:]
-        item_nr = lab_type_lst.index(type_lab)
-        col = col + item_nr
-        web_templ = "web_database.html"
-    elif "euc" in lab:  # Enter the EUC labs
-        type_lab = lab[7:]
-        item_nr = lab_type_lst.index(type_lab)
-        col = col + item_nr
-        web_templ = "web_euc.html"
-    elif "cicd" in lab:  # Enter the CICD labs
-        type_lab = lab[5:]
-        item_nr = lab_type_lst.index(type_lab)
-        col = col + item_nr
-        web_templ = "web_cicd.html"
+    # If the progress is empty, this means people are just getting the data from their lookup page
+    if lab == "":
+        # We seem to have received no progress so we are to color col 0 (NR) green so we know they tried to get some data
+        # Update the GSheet row of the user and col 0
+        fmt = cellFormat(backgroundColor=color(0, 1,0),textFormat=textFormat(foregroundColor=color(0, 0, 0)))
+        format_cell_range(wks, "A"+str(row),  fmt)
     else:
-        type_lab = lab[6:]
-        item_nr = lab_type_lst.index(type_lab)
-        col = col + item_nr  # Column AC
-        web_templ = "web_cloud.html"
+        col = 16
 
-    # Update Gsheet
-    wks.update_cell(row, col, progress)
-    # Update the DF
-    df.iat[int(usernr) - 1, int(col) - 1] = progress
+        if "iaas" in lab:  # Enter the IAAS labs
+            type_lab = lab[8:]
+            item_nr = lab_type_lst.index(type_lab)
+            col = col + item_nr
+            web_templ="web_hybrid_cloud.html"
+        elif "db" in lab:  # Enter the DB labs
+            type_lab = lab[6:]
+            item_nr = lab_type_lst.index(type_lab)
+            col = col + item_nr
+            web_templ = "web_database.html"
+        elif "euc" in lab:  # Enter the EUC labs
+            type_lab = lab[7:]
+            item_nr = lab_type_lst.index(type_lab)
+            col = col + item_nr
+            web_templ = "web_euc.html"
+        elif "cicd" in lab:  # Enter the CICD labs
+            type_lab = lab[5:]
+            item_nr = lab_type_lst.index(type_lab)
+            col = col + item_nr
+            web_templ = "web_cicd.html"
+        else:
+            type_lab = lab[6:]
+            item_nr = lab_type_lst.index(type_lab)
+            col = col + item_nr  # Column AC
+            web_templ = "web_cloud.html"
 
-    return web_templ
+        # Update Gsheet
+        wks.update_cell(row, col, progress)
+        # Update the DF
+        df.iat[int(usernr) - 1, int(col) - 1] = progress
+
+        return web_templ
+
+
 
 # Some Flask settings
 app = Flask(__name__)
@@ -127,6 +139,7 @@ def show_form_data():
         # Change the df into a dict so we can grab the data
         if str(df_user_info):
             user_info = df_user_info.to_dict('records')
+            update_gsheet_df(user_info[0]['Nr'],"","")
             try:
                 # Assigning the user data to variables that we need to show
                 user_data = {'uniq_nr':user_info[0]['Nr'],
@@ -233,8 +246,8 @@ def show_form_validator():
                 # Have the data updated as we have a valid validation request
                 update_gsheet_df(int(reply_post['usernr']),reply_post['labname'],"Validated")
             else:
-                # Have the data updated as we have a valid validation request
-                update_gsheet_df(int(reply_post['usernr']),reply_post['labname'],"")
+                # Have the data updated as we have a rejected validation request
+                update_gsheet_df(int(reply_post['usernr']),reply_post['labname'],"Rejected")
 
             return render_template('web_validation_received.html',info=webdata, title='vGTS2021 - Validator area')
         else:

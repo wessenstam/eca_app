@@ -4,6 +4,24 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <meta http-equiv="refresh" content="300; URL=/">
         <title>{{ title }}</title>
+        <script type="text/javascript">
+        <!--
+
+            function validate_form ( )
+            {
+                valid = true;
+
+                if ( document.lab_val.lab.value == "bogus" )
+                {
+                    alert ( "Please select a valid lab for validation..." );
+                    valid = false;
+                }
+
+                return valid;
+            }
+
+        //-->
+        </script>
     </head>
     <body><center>
     {% if not user.attendee_name %}
@@ -193,7 +211,7 @@
                             <P>
                                 Once you have completed a lab exercise, select the specific exercise from the dropdown menu below and click Validate. A proctor will remotely connect to your cluster and verify the exercise has been completed. Validation Status can be viewed below Environment Details below
                             </P>
-                            <form class="form-horizontal" action="/validation" method="post" novalidate>
+                            <form name="lab_val" class="form-horizontal" action="/validation" method="post" novalidate onsubmit="return validate_form()">
                                 <input type="hidden" name="username" value="{{ user.attendee_name }}">
                                 <input type="hidden" name="clustername" value="{{ user.cluster_name }}">
                                 <input type="hidden" name="clusterip" value="{{ user.pe_vip }}">
@@ -231,79 +249,143 @@
                     </TR>
                     <tr>
                         <td >Self Service with ServiceNOW</td>
-                        <td >{{ user.val_hc_snow }}</td>
+                        {% if user.val_hc_snow == "Rejected" %}
+                            <td >{{ user.val_hc_snow }}. The validation request has been rejected by the validator as it did not meet the validation criteria. </td>
+                        {% else %}
+                            <td >{{ user.val_hc_snow }}</td>
+                        {% endif %}
                     </tr>
                     <tr>
                         <td>Cross-Cluster DR and Migration with Leap</td>
-                        <td>{{ user.val_hc_leap }}</td>
+                        {% if user.val_hc_leap == "Rejected" %}
+                            <td>{{ user.val_hc_leap }}. The validation request has been rejected by the validator as it did not meet the validation criteria. </td>
+                        {% else %}
+                            <td>{{ user.val_hc_leap }}</td>
+                        {% endif %}
                     </tr>
                     <tr>
                         <td>ServiceNOW Alert & CMDB Integration</td>
-                        <td>{{ user.val_hc_cmdb }}</td>
+                        {% if user.val_hc_cmdb == "Rejected" %}
+                            <td>{{ user.val_hc_cmdb }}. The validation request has been rejected by the validator as it did not meet the validation criteria. </td>
+                        {% else %}
+                            <td>{{ user.val_hc_cmdb }}</td>
+                        {% endif %}
                     </tr>
                     <tr>
                         <td>Automated remediation with ServiceNOW and X-Play</td>
-                        <td>{{ user.val_hc_xplay }}</td>
+                        {% if user.val_hc_xplay == "Rejected" %}
+                            <td>{{ user.val_hc_xplay }}. The validation request has been rejected by the validator as it did not meet the validation criteria. </td>
+                        {% else %}
+                            <td>{{ user.val_hc_xplay }}</td>
+                        {% endif %}
                     </tr>
                     <TR>
                         <td colspan="2" bgcolor="#B0D235"><center><B>Validation status - Hybrid Cloud Database Management</B></center></td>
                     </tr>
                     <tr>
                         <td >Multi-Cloud Application Avalability</td>
-                        <td >{{ user.val_hc_db_aav }}</td>
+                        {% if user.val_hc_db_aav == "Rejected" %}
+                            <td>{{ user.val_hc_db_aav }}. The validation request has been rejected by the validator as it did not meet the validation criteria. </td>
+                        {% else %}
+                            <td>{{ user.val_hc_db_aav }}</td>
+                        {% endif %}
                     </tr>
                     <tr>
                         <td >Multi-Cloud Data Access Management</td>
-                        <td >{{ user.val_hc_db_dam }}</td>
+                        {% if user.val_hc_db_dam == "Rejected" %}
+                            <td>{{ user.val_hc_db_dam }}. The validation request has been rejected by the validator as it did not meet the validation criteria. </td>
+                        {% else %}
+                            <td>{{ user.val_hc_db_dam }}</td>
+                        {% endif %}
                     </tr>
                     <tr>
                         <td >Patching SQL Server with Era</td>
-                        <td >{{ user.val_hc_db_mssql }}</td>
+                        {% if user.val_hc_db_mssql == "Rejected" %}
+                            <td>{{ user.val_hc_db_mssql }}. The validation request has been rejected by the validator as it did not meet the validation criteria. </td>
+                        {% else %}
+                            <td>{{ user.val_hc_db_mssql }}</td>
+                        {% endif %}
                     </tr>
                     <tr>
                         <td >Application Monitoring with Prism Ultimate</td>
-                        <td >{{ user.val_hc_db_ultimate }}</td>
+                        {% if user.val_hc_db_ultimate == "Rejected" %}
+                            <td>{{ user.val_hc_db_ultimate }}. The validation request has been rejected by the validator as it did not meet the validation criteria. </td>
+                        {% else %}
+                            <td>{{ user.val_hc_db_ultimate }}</td>
+                        {% endif %}
                     </tr>
                     <TR>
                         <td colspan="2" bgcolor="#B0D235"><center><B>Validation status - Hybrid Cloud EUC</B></center></td>
                     </tr>
                     <tr>
                         <td >Multi-Cloud Desktops with Citrix on AHV</td>
-                        <td >{{ user.val_hc_euc_prov }}</td>
+                        {% if user.val_hc_euc_prov == "Rejected" %}
+                            <td>{{ user.val_hc_euc_prov }}. The validation request has been rejected by the validator as it did not meet the validation criteria. </td>
+                        {% else %}
+                            <td>{{ user.val_hc_euc_prov }}</td>
+                        {% endif %}
                     </tr>
                     <tr>
                         <td >Dynamic Expansion with Calm Runbooks</td>
-                        <td >{{ user.val_hc_euc_calm }}</td>
+                         {% if user.val_hc_euc_calm == "Rejected" %}
+                            <td>{{ user.val_hc_euc_calm }}. The validation request has been rejected by the validator as it did not meet the validation criteria. </td>
+                        {% else %}
+                            <td>{{ user.val_hc_euc_calm }}</td>
+                        {% endif %}
                     </tr>
                     <tr>
                         <td >Securing Desktops with Flow</td>
-                        <td >{{ user.val_hc_euc_flow }}</td>
+                         {% if user.val_hc_euc_flow == "Rejected" %}
+                            <td>{{ user.val_hc_euc_flow }}. The validation request has been rejected by the validator as it did not meet the validation criteria. </td>
+                        {% else %}
+                            <td>{{ user.val_hc_euc_flow }}</td>
+                        {% endif %}
                     </tr>
                     <TR>
                         <td colspan="2" bgcolor="#B0D235"><center><B>Validation status - Containerize App & CICD</B></center></td>
                     </tr>
                     <tr>
                         <td >Building The Pipeline</td>
-                        <td >{{ user.val_cicd_use }}</td>
+                         {% if user.val_cicd_use == "Rejected" %}
+                            <td>{{ user.val_cicd_use }}. The validation request has been rejected by the validator as it did not meet the validation criteria. </td>
+                        {% else %}
+                            <td>{{ user.val_cicd_use }}</td>
+                        {% endif %}
                     </tr>
                     <tr>
                         <td >Creating Development Databases with Era</td>
-                        <td >{{ user.val_cicd_era }}</td>
+                         {% if user.val_cicd_era == "Rejected" %}
+                            <td>{{ user.val_cicd_era }}. The validation request has been rejected by the validator as it did not meet the validation criteria. </td>
+                        {% else %}
+                            <td>{{ user.val_cicd_era }}</td>
+                        {% endif %}
                     </tr>
                     <TR>
                         <td colspan="2" bgcolor="#B0D235"><center><B>Validation status - Cloud Native Apps on Nutanix</B></center></td>
                     </tr>
                     <tr>
                         <td >Adding Network Services & Dashboards</td>
-                        <td >{{ user.val_cloud_k8s }}</td>
+                         {% if user.val_cloud_k8s == "Rejected" %}
+                            <td>{{ user.val_cloud_k8s }}. The validation request has been rejected by the validator as it did not meet the validation criteria. </td>
+                        {% else %}
+                            <td>{{ user.val_cloud_k8s }}</td>
+                        {% endif %}
                     </tr>
                     <tr>
                         <td >Deploying Fiesta Web Service</td>
-                        <td >{{ user.val_cloud_fiesta }}</td>
+                         {% if user.val_cloud_fiesta == "Rejected" %}
+                            <td>{{ user.val_cloud_fiesta }}. The validation request has been rejected by the validator as it did not meet the validation criteria. </td>
+                        {% else %}
+                            <td>{{ user.val_cloud_fiesta }}</td>
+                        {% endif %}
                     </tr>
                     <tr>
                         <td >Day 2 Operations</td>
-                        <td >{{ user.val_cloud_day2 }}</td>
+                         {% if user.val_cloud_day2 == "Rejected" %}
+                            <td>{{ user.val_cloud_day2 }}. The validation request has been rejected by the validator as it did not meet the validation criteria. </td>
+                        {% else %}
+                            <td>{{ user.val_cloud_day2 }}</td>
+                        {% endif %}
                     </tr>
                 {% endif %}    
             </table>
