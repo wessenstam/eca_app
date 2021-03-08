@@ -220,21 +220,51 @@
                                 <select id="lab" name="lab" size="1">
                                     <option value="bogus" selected>---- Select your lab for validation ----</option>
                                     <option value="bogus"> </option>
-                                    <option value="hc-iaas-snow">Hybrid Cloud IaaS - Self Service with ServiceNOW</option>
-                                    <option value="hc-iaas-leap">Hybrid Cloud IaaS - Cross-Cluster DR and Migration</option>
-                                    <option value="hc-iaas-cmdb">Hybrid Cloud IaaS - ServiceNOW Alert & CMDB Integration</option>
-                                    <option value="hc-iaas-xplay">Hybrid Cloud IaaS - Automated remediation with ServiceNOW and X-Play</option>
-                                    <option value="hc-db-aav">Hybrid Cloud DB - Multi-Cloud Application Availability</option>
-                                    <option value="hc-db-dam">Hybrid Cloud DB - Multi-Cloud Data Access Management</option>
-                                    <option value="hc-db-ultimate">Hybrid Cloud DB - Application Monitoring with Prism Ultimate</option>
-                                    <option value="hc-euc-prov">Hybrid Cloud EUC - Multi-Cloud Desktops with Citrix on AHV</option>
-                                    <option value="hc-euc-calm">Hybrid Cloud EUC - Dynamic Expansion with Calm Runbooks</option>
-                                    <option value="hc-euc-flow">Hybrid Cloud EUC - Securing Desktops with Flow</option>
-                                    <option value="cicd-use">Containerize App and CICD - Building The Pipeline</option>
-                                    <option value="cicd-era">Containerize App and CICD - Creating Development Databases with Era</option>
-                                    <option value="cloud-k8s">Cloud Native Apps on Nutanix - Adding Network Services & Dashboards</option>
-                                    <option value="cloud-fiesta">Cloud Native Apps on Nutanix - Deploying Fiesta Web Service</option>
-                                    <option value="cloud-day2">Cloud Native Apps on Nutanix - Day 2 Operations</option>
+                                    {% if user.val_hc_snow == "Rejected" or user.val_hc_snow == "" %}
+                                        <option value="hc-iaas-snow">Hybrid Cloud IaaS - Self Service with ServiceNOW</option>
+                                    {% endif %}
+                                    {% if user.val_hc_leap == "Rejected" or user.val_hc_leap == "" %}
+                                        <option value="hc-iaas-leap">Hybrid Cloud IaaS - Cross-Cluster DR and Migration</option>
+                                    {% endif %}
+                                    {% if user.val_hc_cmdb == "Rejected" or user.val_hc_cmdb == "" %}
+                                        <option value="hc-iaas-cmdb">Hybrid Cloud IaaS - ServiceNOW Alert & CMDB Integration</option>
+                                    {% endif %}
+                                    {% if user.val_hc_xplay == "Rejected" or user.val_hc_xplay == "" %}
+                                        <option value="hc-iaas-xplay">Hybrid Cloud IaaS - Automated remediation with ServiceNOW and X-Play</option>
+                                    {% endif %}
+                                    {% if user.val_hc_db_aav == "Rejected" or user.val_hc_db_aav == "" %}
+                                        <option value="hc-db-aav">Hybrid Cloud DB - Multi-Cloud Application Availability</option>
+                                    {% endif %}
+                                    {% if user.val_hc_db_dam == "Rejected" or user.val_hc_db_dam == "" %}
+                                        <option value="hc-db-dam">Hybrid Cloud DB - Multi-Cloud Data Access Management</option>
+                                    {% endif %}
+                                    {% if user.val_hc_db_ultimate == "Rejected" or user.val_hc_db_ultimate == "" %}
+                                        <option value="hc-db-ultimate">Hybrid Cloud DB - Application Monitoring with Prism Ultimate</option>
+                                    {% endif %}
+                                    {% if user.val_hc_euc_prov == "Rejected" or user.val_hc_euc_prov == "" %}
+                                        <option value="hc-euc-prov">Hybrid Cloud EUC - Multi-Cloud Desktops with Citrix on AHV</option>
+                                    {% endif %}
+                                    {% if user.val_hc_euc_calm == "Rejected" or user.val_hc_euc_calm == "" %}
+                                        <option value="hc-euc-calm">Hybrid Cloud EUC - Dynamic Expansion with Calm Runbooks</option>
+                                    {% endif %}
+                                    {% if user.val_hc_euc_flow == "Rejected" or user.val_hc_euc_flow == "" %}
+                                        <option value="hc-euc-flow">Hybrid Cloud EUC - Securing Desktops with Flow</option>
+                                    {% endif %}
+                                    {% if user.val_cicd_use == "Rejected" or user.val_cicd_use == "" %}
+                                        <option value="cicd-use">Containerize App and CICD - Building The Pipeline</option>
+                                    {% endif %}
+                                    {% if user.val_cicd_era == "Rejected" or user.val_cicd_era == "" %}
+                                        <option value="cicd-era">Containerize App and CICD - Creating Development Databases with Era</option>
+                                    {% endif %}
+                                    {% if user.val_cloud_k8s == "Rejected" or user.val_cloud_k8s == "" %}
+                                        <option value="cloud-k8s">Cloud Native Apps on Nutanix - Adding Network Services & Dashboards</option>
+                                    {% endif %}
+                                    {% if user.val_cloud_fiesta == "Rejected" or user.val_cloud_fiesta == "" %}
+                                        <option value="cloud-fiesta">Cloud Native Apps on Nutanix - Deploying Fiesta Web Service</option>
+                                    {% endif %}
+                                    {% if user.val_cloud_day2 == "Rejected" or user.val_cloud_day2 == "" %}
+                                        <option value="cloud-day2">Cloud Native Apps on Nutanix - Day 2 Operations</option>
+                                    {% endif %}
 
                                     </select>
                                     <input type="Submit" class="btn btn-primary" value="Validate">
