@@ -43,7 +43,6 @@ Thumbs.db
 # PyhtonCache Directories #
 ######################
 *pychache*/*
-venv
 .idea
 # Sensitive info #
 ##################
@@ -51,3 +50,4 @@ venv
 *.csv
 *.pyc
 *.list
+/venv/
