@@ -105,6 +105,7 @@ headers = data.pop(0)
 # Drop all data in a dataframe for the attendees
 df = pd.DataFrame(data, columns=headers)
 
+
 # ****************************************************************************************************************
 # Grab the data from teh SME Gsheet
 wks_sme = gc.open("GTS SME Validations").sheet1
@@ -149,7 +150,6 @@ def update_df():
     headers = data.pop(0)
     # Drop all data in a dataframe for the attendees
     df.update(pd.DataFrame(data, columns=headers))
-
     # ****************************************************************************************************************
     # Grab the data from the SME Gsheet
     wks_sme = gc.open("GTS SME Validations").sheet1
@@ -175,15 +175,15 @@ def show_form_data():
             session['email'] = search_email
         if 'email' in session:
             search_email=session['email']
-
         # Change the email to a list so we can lowercase and search Case insensitive in the DataFrame
         df_user_info = df[df['Email'].str.lower().isin(search_email)]
         # Change the df into a dict so we can grab the data
+        
         if str(df_user_info):
             user_info = df_user_info.to_dict('records')
-            update_gsheet_df(user_info[0]['Nr'],"","")
             try:
                 # Assigning the user data to variables that we need to show
+                update_gsheet_df(user_info[0]['Nr'],"","")
                 user_data = {'uniq_nr':user_info[0]['Nr'],
                              'attendee_name': user_info[0]['First Name'] + ' ' + user_info[0]['Last Name'],
                              'password': user_info[0]['Password'],
@@ -292,7 +292,7 @@ def show_form_validator():
 
             else:
                 # Have the data updated as we have a rejected validation request
-                update_gsheet_df(int(reply_post['usernr']),reply_post['labname'],"Rejected")
+                update_gsheet_df(int(reply_post['usernr']),reply_post['labname'],"Rejected,"+reply_post['validator'])
 
             return render_template('web_validation_received.html',info=webdata, title='vGTS2021 - Validator area')
         else:

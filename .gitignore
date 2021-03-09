@@ -42,7 +42,7 @@ Thumbs.db
 
 # PyhtonCache Directories #
 ######################
-*pychache*/*
+/*pychache*/
 .idea
 # Sensitive info #
 ##################
