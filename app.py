@@ -5,8 +5,6 @@
 
 
 
-from oauth2client.service_account import ServiceAccountCredentials
-
 import json
 from flask import *
 from flask_wtf import FlaskForm
@@ -17,9 +15,13 @@ from gspread_formatting  import *
 import pandas as pd
 import os
 from datetime import timedelta
+from oauth2client.service_account import ServiceAccountCredentials
 
+# ****************************************************************************************************************
+# Get the needed password for the vlidator pages from the OS envionment
 validator_password=os.environ['validator_password']
 
+# ****************************************************************************************************************
 # Geting the Forms ready to be used
 class LoginForm(FlaskForm):
     email = StringField('Email Address', validators=[DataRequired()])
@@ -29,6 +31,7 @@ class LoginForm(FlaskForm):
 def update_gsheet_df(usernr, lab,progress):
     # Based on the information we got we need to set some variables to the correct values.
     row = int(usernr) + 1
+
     # If the progress is empty, this means people are just getting the data from their lookup page
     if lab == "":
         # We seem to have received no progress so we are to color col 0 (NR) green so we know they tried to get some data
@@ -37,7 +40,6 @@ def update_gsheet_df(usernr, lab,progress):
         format_cell_range(wks, "A"+str(row),  fmt)
     else:
         col = 16
-
         if "iaas" in lab:  # Enter the IAAS labs
             type_lab = lab[8:]
             item_nr = lab_type_lst.index(type_lab)
@@ -64,31 +66,60 @@ def update_gsheet_df(usernr, lab,progress):
             col = col + item_nr  # Column AC
             web_templ = "web_cloud.html"
 
-        # Update Gsheet
+        # Update Attendee Gsheet
         wks.update_cell(row, col, progress)
         # Update the DF
         df.iat[int(usernr) - 1, int(col) - 1] = progress
 
+        if progress == "Validated":
+            # Update the Validator GSheet and DF_SME if there has been a validated received
+            col=col - 14
+            col_df=col - 1
+            row_sme=int(df_sme[df_sme['Name'] == session['validator']].index[0])
+            # Read the value from the DF_SME for the validator
+            value=df_sme.iloc[row_sme,col_df]
+            if value=="":
+                value=0
+            value=int(value)+1
+            df_sme.iat[row_sme,col_df] = int(value)
+            wks_sme.update_cell(row_sme+2, col, value)
         return web_templ
 
 
-
+# ****************************************************************************************************************
 # Some Flask settings
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'you-will-never-guess'
 
-# Grabbing the initial data from gsheet
+# ****************************************************************************************************************
+# Set the needed GSheet credentials
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 credentials = ServiceAccountCredentials.from_json_keyfile_name('json/gts-gsheet-pandas-flask.json',scope)  # Change location as soon as it comes into prod
 gc = gspread.authorize(credentials)
-wks = gc.open("GTS Clusters-Assignments").sheet1  # get the Gsheet
+
+# ****************************************************************************************************************
+# Grabbing the initial data from gsheet for the attendees
+wks = gc.open("GTS Clusters-Assignments").sheet1
 data = wks.get_all_values()
 headers = data.pop(0)
-# Drop all data in a dataframe
+# Drop all data in a dataframe for the attendees
 df = pd.DataFrame(data, columns=headers)
+
+# ****************************************************************************************************************
+# Grab the data from teh SME Gsheet
+wks_sme = gc.open("GTS SME Validations").sheet1
+data = wks_sme.get_all_values()
+headers = data.pop(0)
+# Drop all data in a dataframe for the attendees
+df_sme = pd.DataFrame(data, columns=headers)
+
+
+# ****************************************************************************************************************
 # Area for definition of variables
 lab_type_lst=["snow","leap","cmdb","xplay","aav","dam","mssql","ultimate","prov","calm","flow","cont","use","era","k8s","fiesta","day2"]
 
+
+# Build the routing fo the pages
 @app.before_request
 def before_request():
     session.permanent = True
@@ -99,11 +130,13 @@ def logout():
     error = ""
     form = LoginForm()
     user_data = ""
+    session.pop('validator', None)
+    session.pop('validated', None)
     if 'email' in session:  
-        session.pop('email',None)  
-        return render_template('web_loged_out.html')
+        session.pop('email',None)
+        return render_template('web_loged_out.html',org="attendee")
     else:  
-        return render_template('web_loged_out.html')
+        return render_template('web_loged_out.html',org="validator")
 
 @app.route("/update")
 def update_df():
@@ -114,8 +147,17 @@ def update_df():
     wks = gc.open("GTS Clusters-Assignments").sheet1  # get the Gsheet
     data = wks.get_all_values()
     headers = data.pop(0)
-    # Drop all data in a dataframe
+    # Drop all data in a dataframe for the attendees
     df.update(pd.DataFrame(data, columns=headers))
+
+    # ****************************************************************************************************************
+    # Grab the data from the SME Gsheet
+    wks_sme = gc.open("GTS SME Validations").sheet1
+    data = wks_sme.get_all_values()
+    headers = data.pop(0)
+    # Drop all data in a dataframe for the SMEs
+    df_sme.update(pd.DataFrame(data, columns=headers))
+
     return render_template('web_update.html', title='vGTS2021 - Cluster lookup')
 
 @app.route("/", methods=['GET', 'POST'])
@@ -245,6 +287,9 @@ def show_form_validator():
             if reply_post['action'] == "Validate":
                 # Have the data updated as we have a valid validation request
                 update_gsheet_df(int(reply_post['usernr']),reply_post['labname'],"Validated")
+                row_sme = df_sme.loc[df_sme['Name'] == session['validator']].index[0] + 2
+
+
             else:
                 # Have the data updated as we have a rejected validation request
                 update_gsheet_df(int(reply_post['usernr']),reply_post['labname'],"Rejected")
@@ -262,7 +307,7 @@ def show_form_validator():
                 # Get all information from the DF for the user
                 dict_user = df.iloc[int(usernr)-1].to_dict()
 
-                # Are we lloking for SNOW validation?
+                # Are we looking for SNOW validation?
                 if str(request.args.get('snow_instance')):
                     snow_instance=str(request.args.get('lab'))
                     user_values={'username':dict_user['First Name']+" "+dict_user['Last Name'],
@@ -272,7 +317,8 @@ def show_form_validator():
                                 'usernr':dict_user['Nr'],
                                 'userx': dict_user['UserX'],
                                 'snow_instance': dict_user['SNOW'],
-                                'labname': labname
+                                'labname': labname,
+                                'validator': session['validator']
                                 }
 
                 else:
@@ -282,7 +328,8 @@ def show_form_validator():
                                 'pc_ip':dict_user['IP address PC'],
                                 'usernr':dict_user['Nr'],
                                 'userx': dict_user['UserX'],
-                                'labname': labname
+                                'labname': labname,
+                                'validator': session['validator']
                                 }
 
                 return render_template(web_templ, title='vGTS2021 - Validator area', user=user_values)
@@ -374,25 +421,31 @@ def show_form_validator():
                         )
 
                 # Render the pages
-                return render_template('web_validator.html', iaaslist=iaas_lst,dblist=db_lst,euclist=euc_lst,cicdlist=cicd_lst,cloudlist=cloud_lst)
-    else: # We don;t have a validated user
-        return render_template('web_validateme.html', info="No", title='vGTS2021 - Validator area')
+                return render_template('web_validator.html', iaaslist=iaas_lst,dblist=db_lst,euclist=euc_lst,cicdlist=cicd_lst,cloudlist=cloud_lst,validator=session['validator'])
+    else: # We don't have a validated user
+        sme_list=df_sme['Name'].tolist()
+        info_data={"validated":"No","validator":sme_list}
+        return render_template('web_validateme.html', info=info_data, title='vGTS2021 - Validator area')
 
 
 @app.route("/validateme", methods=['GET','POST'])
 def show_form_validateme():
+    sme_list = df_sme['Name'].tolist()
     if request.method == "POST":
         reply_post = request.form
-        print(reply_post['val_password'])
         if reply_post['val_password'] == validator_password:
             session['validated'] = "Yes"
-            return render_template('web_validateme.html', info="Yes", title='vGTS2021 - Validator area')
+            session['validator'] = reply_post['validator']
+            info_data ={'validated':'Yes',"validator":sme_list}
+            return render_template('web_validateme.html', info=info_data, title='vGTS2021 - Validator area')
 
         else:
-            return render_template('web_validateme.html', info="No", title='vGTS2021 - Validator area')
+            info_data = {'validated': 'No', "validator":sme_list}
+            return render_template('web_validateme.html', info=info_data, title='vGTS2021 - Validator area')
 
     else:
-        return render_template('web_validateme.html', info="No", title='vGTS2021 - Validator area')
+        info_data = {'validated': 'No', "validator":sme_list}
+        return render_template('web_validateme.html', info=info_data, title='vGTS2021 - Validator area')
 
 
 
