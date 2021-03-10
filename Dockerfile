@@ -1,6 +1,6 @@
 FROM alpine
 
-MAINTAINER Willem Essenstam <wessenstam.at@gmail.com>
+LABEL maintainer="wessenstam.at@gmail.com"
 
 # Get the to be needed stuff in
 RUN apk add --no-cache python3 python3-dev py3-pip libstdc++ g++ git && \
