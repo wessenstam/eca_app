@@ -55,17 +55,17 @@
         {{ user }}
     {% if val_name=="aav" %}
         <P> 
-            Go into Era <a href="https://{{ user.pc_ip[:-1] }}209" target="_blank">(<B>https://{{ user.pc_ip[:-2] }}43</B>)</a> > Database Server VMs > List > <B>USER0{{ user.userx }}#-SQLAG</B> and validate the server exists. It should have 2 VMs on EraCluster and 1 VM on AWS-Cluster. The status of the VMs may be red due to testing failover, this is expected.<BR><BR>
+            Go into Era <a href="https://{{ user.aws_ip[:-1] }}209" target="_blank">(<B>https://{{ user.pc_ip[:-2] }}43</B>)</a> > Database Server VMs > List > <B>USER0{{ user.userx }}#-SQLAG</B> and validate the server exists. It should have 2 VMs on EraCluster and 1 VM on AWS-Cluster. The status of the VMs may be red due to testing failover, this is expected.<BR><BR>
             <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/DAAG.png">
         </P>
 
     {% elif val_name=="dam" %}
         <P> 
-            Go into <B>Era <a href="https://{{ user.pc_ip[:-1] }}209" target="_blank">(<B>https://{{ user.pc_ip[:-2] }}43</B>)</a> > Databases > Sources</B> and find the <B>USER0{{ user.userx }}-SampleDB</B><BR><BR>
+            Go into <B>Era <a href="https://{{ user.aws_ip[:-1] }}209" target="_blank">(<B>https://{{ user.pc_ip[:-2] }}43</B>)</a> > Databases > Sources</B> and find the <B>USER0{{ user.userx }}-SampleDB</B><BR><BR>
 
             <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/DAM.png">
             <br><BR>
-            Go into Era <a href="https://{{ user.pc_ip[:-2] }}43" target="_blank">(<B>https://{{ user.pc_ip[:-2] }}43</B>)</a><BR><BR>
+            Go into Era <a href="https://{{ user.aws_ip[:-2] }}43" target="_blank">(<B>https://{{ user.pc_ip[:-2] }}43</B>)</a><BR><BR>
             Click the <B>1</B>> to view the list of clones for that Database.<BR><BR>
             Click the name of the clone that appears (there should only be 1).<BR><BR>
             Under <B>Database Server VM</B>, the <B>Name</B> should be the <B>USER0{{ user.userx }}-SampleDBVM</B> provisioned earlier in the lab.<BR><BR>

@@ -318,7 +318,8 @@ def show_form_validator():
                                 'userx': dict_user['UserX'],
                                 'snow_instance': dict_user['SNOW'],
                                 'labname': labname,
-                                'validator': session['validator']
+                                'validator': session['validator'],
+                                'aws_ip':dict_user['AWS-IP']
                                 }
 
                 else:
