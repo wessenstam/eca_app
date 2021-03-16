@@ -244,6 +244,9 @@
                                     {% if user.val_hc_db_dam.split(',')[0] == "Rejected" or user.val_hc_db_dam == "" %}
                                         <option value="hc-db-dam">Hybrid Cloud DB - Multi-Cloud Data Access Management</option>
                                     {% endif %}
+                                    {% if user.val_hc_db_mssql.split(',')[0] == "Rejected" or user.val_hc_db_mssql == "" %}
+                                        <option value="hc-db-mssql">Hybrid Cloud DB - Patching SQL server with Era</option>
+                                    {% endif %}
                                     {% if user.val_hc_db_ultimate.split(',')[0] == "Rejected" or user.val_hc_db_ultimate == "" %}
                                         <option value="hc-db-ultimate">Hybrid Cloud DB - Application Monitoring with Prism Ultimate</option>
                                     {% endif %}
