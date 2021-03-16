@@ -306,6 +306,7 @@ def show_form_validator():
 
                 # Get all information from the DF for the user
                 dict_user = df.iloc[int(usernr)-1].to_dict()
+                print(dict_user)
 
                 # Are we looking for SNOW validation?
                 if str(request.args.get('snow_instance')):
