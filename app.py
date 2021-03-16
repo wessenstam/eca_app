@@ -329,7 +329,8 @@ def show_form_validator():
                                 'usernr':dict_user['Nr'],
                                 'userx': dict_user['UserX'],
                                 'labname': labname,
-                                'validator': session['validator']
+                                'validator': session['validator'],
+                                'aws_ip':dict_user['AWS-IP']
                                 }
 
                 return render_template(web_templ, title='vGTS2021 - Validator area', user=user_values)
