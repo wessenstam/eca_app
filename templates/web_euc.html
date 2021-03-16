@@ -70,7 +70,7 @@
 
     {% else %}
         <P> 
-            In <B>Prism Central  <a HREF="https://{{ user.pc_ip }}:9440" target="_blank">({{ user.pc_ip }})</a> > Policies > Security</B>, open the <B>USER0{{ user.userx }}-ADIsolate</B> policy.<BR><BR>
+            In <B>Prism Central  <a HREF="https://{{ user.pc_ip }}:9440" target="_blank">({{ user.pc_ip }})</a> > Policies > Security</B>, open the <B>USER0{{ user.userx }}-ADIsolation</B> or <B>USER0{{ user.userx }}-UserIsolation</B> policy.<BR><BR>
             Click the <B>#</B> next to <B>Bootcamp Users</B>.<br><BR>
             Validate there is at least one VM in the list of filtered VMs that matches the <B>USER0{{ user.userx }}</B><BR><BR>
             <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/EUC3.png">
@@ -80,7 +80,7 @@
 
 
     <HR>
-        <P>If you agree that the user can be validated, please click the <B>I validate</B> button<BR><BR></P>
+        <P>If you agree that the user can be validated, please click the <B>Validate</B> button<BR><BR></P>
     <form class="form-horizontal" action="/validator" method="post" novalidate>
         <P>
             <input type="hidden" name="username" value="{{ user.username }}">
