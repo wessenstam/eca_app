@@ -329,8 +329,7 @@ def show_form_validator():
                                 'usernr':dict_user['Nr'],
                                 'userx': dict_user['UserX'],
                                 'labname': labname,
-                                'validator': session['validator'],
-                                'aws_ip':dict_user['AWS-IP']
+                                'validator': session['validator']
                                 }
 
                 return render_template(web_templ, title='vGTS2021 - Validator area', user=user_values)
@@ -339,7 +338,7 @@ def show_form_validator():
                 # Get all users info: usernr, First Name, Last Name and Pending status lab validation, but they must not be empty!
                 # Make copies of the existing big DF
                 df_val_hc_iaas=df[['Nr','UserX','First Name','Last Name','hc-iaas-snow','hc-iaas-leap','hc-iaas-cmdb','hc-iaas-xplay','SNOW']].copy()
-                df_val_db=df[['Nr','UserX','First Name','Last Name','hc-db-aav','hc-db-dam','hc-db-mssql','hc-db-ultimate']].copy()
+                df_val_db=df[['Nr','UserX','First Name','Last Name','hc-db-aav','hc-db-dam','hc-db-mssql','hc-db-ultimate','AWS-IP']].copy()
                 df_val_euc=df[['Nr','UserX','First Name','Last Name','hc-euc-prov','hc-euc-calm','hc-euc-flow']].copy()
                 df_val_cicd = df[['Nr','UserX', 'First Name', 'Last Name', 'cicd-cont', 'cicd-use', 'cicd-era']].copy()
                 df_val_cloud=df[['Nr','UserX','First Name','Last Name','cloud-k8s','cloud-fiesta','cloud-day2']].copy()
@@ -382,7 +381,7 @@ def show_form_validator():
                             str(key)+","+str(df_val_db.to_dict()['UserX'][key])+","+str(df_val_db.to_dict()['First Name'][key])+","+
                             str(df_val_db.to_dict()['Last Name'][key])+","+str(df_val_db.to_dict()['hc-db-aav'][key])+","+
                             str(df_val_db.to_dict()['hc-db-dam'][key])+","+str(df_val_db.to_dict()['hc-db-mssql'][key])+","+
-                            str(df_val_db.to_dict()['hc-db-ultimate'][key])
+                            str(df_val_db.to_dict()['hc-db-ultimate'][key])+","+str(df_val_db.to_dict()['AWS-IP'][key])
                         )
 
                 euc_lst=[]
