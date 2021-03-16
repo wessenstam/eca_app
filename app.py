@@ -334,7 +334,6 @@ def show_form_validator():
                                 'aws_ip':dict_user['AWS-IP']
                                 }
                 
-                print(user_values)
 
                 return render_template(web_templ, title='vGTS2021 - Validator area', user=user_values)
 
