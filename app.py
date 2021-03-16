@@ -306,7 +306,6 @@ def show_form_validator():
 
                 # Get all information from the DF for the user
                 dict_user = df.iloc[int(usernr)-1].to_dict()
-                print(dict_user)
 
                 # Are we looking for SNOW validation?
                 if str(request.args.get('snow_instance')):
@@ -333,6 +332,8 @@ def show_form_validator():
                                 'validator': session['validator'],
                                 'aws_ip':dict_user['AWS-IP']
                                 }
+                
+                print(user_values)
 
                 return render_template(web_templ, title='vGTS2021 - Validator area', user=user_values)
 
