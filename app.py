@@ -382,7 +382,7 @@ def show_form_validator():
                             str(key)+","+str(df_val_db.to_dict()['UserX'][key])+","+str(df_val_db.to_dict()['First Name'][key])+","+
                             str(df_val_db.to_dict()['Last Name'][key])+","+str(df_val_db.to_dict()['hc-db-aav'][key])+","+
                             str(df_val_db.to_dict()['hc-db-dam'][key])+","+str(df_val_db.to_dict()['hc-db-mssql'][key])+","+
-                            str(df_val_db.to_dict()['hc-db-ultimate'][key])+","+str(df_val_db.to_dict()['AWS-IP'][key])
+                            str(df_val_db.to_dict()['hc-db-ultimate'][key])
                         )
 
                 euc_lst=[]
