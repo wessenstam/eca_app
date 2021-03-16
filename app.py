@@ -36,8 +36,9 @@ def update_gsheet_df(usernr, lab,progress):
     if lab == "":
         # We seem to have received no progress so we are to color col 0 (NR) green so we know they tried to get some data
         # Update the GSheet row of the user and col 0
-        fmt = cellFormat(backgroundColor=color(0, 1,0),textFormat=textFormat(foregroundColor=color(0, 0, 0)))
-        format_cell_range(wks, "A"+str(row),  fmt)
+        GTS="USA" # Comment this line and uncomment the bewlo two so we get the "green" background in. Revert when in Primetime!!
+        #fmt = cellFormat(backgroundColor=color(0, 1,0),textFormat=textFormat(foregroundColor=color(0, 0, 0)))
+        #format_cell_range(wks, "A"+str(row),  fmt)
     else:
         col = 16
         if "iaas" in lab:  # Enter the IAAS labs
