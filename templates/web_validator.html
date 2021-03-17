@@ -20,25 +20,25 @@
         <TR>
         {% if  value.split(',')[2] != "" and (value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" or value.split(',')[7] == "Pending" or value.split(',')[4] == "In progress" or value.split(',')[5] == "In progress" or value.split(',')[6] == "In progress" or value.split(',')[7] == "In progress") %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
-            {% if not "Validated" in value.split(',')[4] %}
+            {% if not "Validated" in value.split(',')[4] and not "Rejected" in value.split(',')[4] %}
               <TD><A HREF="/validator?lab=hc-iaas-snow&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}&snow_instance={{ value.split(',')[8] }}">{{ value.split(',')[4] }} </A></TD>
             {% else %}
               <TD>&nbsp;</TD>
             {% endif %}
 
-            {% if not "Validated" in value.split(',')[5] %}
+            {% if not "Validated" in value.split(',')[5] and not "Rejected" in value.split(',')[5] %}
               <TD><A HREF="/validator?lab=hc-iaas-leap&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[5] }} </A></TD>
             {% else %}
               <TD>&nbsp;</TD>
             {% endif %}
 
-            {% if not "Validated" in value.split(',')[6] %}
+            {% if not "Validated" in value.split(',')[6] and not "Rejected" in value.split(',')[6] %}
               <TD><A HREF="/validator?lab=hc-iaas-cmdb&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[6] }} </A></TD>
             {% else %}
               <TD>&nbsp;</TD>
             {% endif %}
 
-            {% if not "Validated" in value.split(',')[7] %}
+            {% if not "Validated" in value.split(',')[7] and not "Rejected" in value.split(',')[7] %}
               <TD><A HREF="/validator?lab=hc-iaas-xplay&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[7] }} </A></TD>
             {% else %}
               <TD>&nbsp;</TD>
@@ -60,25 +60,25 @@
       <TR>
         {% if  value.split(',')[2] != "" and (value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" or value.split(',')[7] == "Pending" or value.split(',')[4] == "In progress" or value.split(',')[5] == "In progress" or value.split(',')[6] == "In progress" or value.split(',')[7] == "In progress") %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
-            {% if not "Validated" in value.split(',')[4] %}
+            {% if not "Validated" in value.split(',')[4] and not "Rejected" in value.split(',')[4] %}
               <TD><A HREF="/validator?lab=hc-db-aav&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[4] }} </A></TD>
             {% else %}
               <TD>&nbsp;</TD>
             {% endif %}
 
-            {% if not "Validated" in value.split(',')[5] %}
+            {% if not "Validated" in value.split(',')[5] and not "Rejected" in value.split(',')[5] %}
               <TD><A HREF="/validator?lab=hc-db-dam&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[5] }} </A></TD>
             {% else %}
               <TD>&nbsp;</TD>
             {% endif %}
 
-            {% if not "Validated" in value.split(',')[6] %}
+            {% if not "Validated" in value.split(',')[6] and not "Rejected" in value.split(',')[6] %}
               <TD><A HREF="/validator?lab=hc-db-mssql&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[6] }} </A></TD>
             {% else %}
               <TD>&nbsp;</TD>
             {% endif %}
 
-           {% if not "Validated" in value.split(',')[7] %}
+           {% if not "Validated" in value.split(',')[7] and not "Rejected" in value.split(',')[7] %}
               <TD><A HREF="/validator?lab=hc-db-ultimate&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[7] }} </A></TD>
             {% else %}
               <TD>&nbsp;</TD>
@@ -100,19 +100,19 @@
         <TR>
           {% if  value.split(',')[2] != "" and (value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" or value.split(',')[7] == "Pending" or value.split(',')[4] == "In progress" or value.split(',')[5] == "In progress" or value.split(',')[6] == "In progress" or value.split(',')[7] == "In progress") %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
-            {% if not "Validated" in value.split(',')[4] %}
+            {% if not "Validated" in value.split(',')[4] and not "Rejected" in value.split(',')[4] %}
               <TD><A HREF="/validator?lab=hc-euc-prov&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[4] }} </A></TD>
             {% else %}
               <TD>&nbsp;</TD>
             {% endif %}
 
-            {% if not "Validated" in value.split(',')[5] %}
+            {% if not "Validated" in value.split(',')[5] and not "Rejected" in value.split(',')[5] %}
               <TD><A HREF="/validator?lab=hc-euc-calm&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[5] }} </A></TD>
             {% else %}
               <TD>&nbsp;</TD>
             {% endif %}
 
-            {% if not "Validated" in value.split(',')[6] %}
+            {% if not "Validated" in value.split(',')[6] and not "Rejected" in value.split(',')[6] %}
               <TD><A HREF="/validator?lab=hc-euc-flow&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[6] }} </A></TD>
             {% else %}
               <TD>&nbsp;</TD>
@@ -134,13 +134,13 @@
           {% if  value.split(',')[2] != "" and (value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" or value.split(',')[7] == "Pending" or value.split(',')[4] == "In progress" or value.split(',')[5] == "In progress" or value.split(',')[6] == "In progress" or value.split(',')[7] == "In progress") %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
 
-            {% if not "Validated" in value.split(',')[5] %}
+            {% if not "Validated" in value.split(',')[5] and not "Rejected" in value.split(',')[5] %}
               <TD><A HREF="/validator?lab=cicd-use&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[5] }} </A></TD>
             {% else %}
               <TD>&nbsp;</TD>
             {% endif %}
 
-            {% if not "Validated" in value.split(',')[6] %}
+            {% if not "Validated" in value.split(',')[6] and not "Rejected" in value.split(',')[5] %}
               <TD><A HREF="/validator?lab=cicd-era&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[6] }} </A></TD>
             {% else %}
               <TD>&nbsp;</TD>
@@ -159,22 +159,21 @@
     </TR>
       {% for value in cloudlist %}
       <TR>
-
         {% if  value.split(',')[2] != "" and (value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" or value.split(',')[7] == "Pending" or value.split(',')[4] == "In progress" or value.split(',')[5] == "In progress" or value.split(',')[6] == "In progress" or value.split(',')[7] == "In progress") %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
-            {% if not "Validated" in value.split(',')[4] %}
+            {% if not "Validated" in value.split(',')[4] and not "Rejected" in value.split(',')[4] %}
               <TD><A HREF="/validator?lab=cloud-k8s&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[4] }} </A></TD>
             {% else %}
               <TD>&nbsp;</TD>
             {% endif %}
 
-            {% if not "Validated" in value.split(',')[5] %}
+            {% if not "Validated" in value.split(',')[5] and not "Rejected" in value.split(',')[5] %}
               <TD><A HREF="/validator?lab=cloud-fiesta&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[5] }} </A></TD>
             {% else %}
               <TD>&nbsp;</TD>
             {% endif %}
 
-            {% if not "Validated" in value.split(',')[6] %}
+            {% if not "Validated" in value.split(',')[6] and not "Rejected" in value.split(',')[6] %}
               <TD><A HREF="/validator?lab=cloud-day2&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[6] }} </A></TD>
             {% else %}
               <TD>&nbsp;</TD>
