@@ -293,7 +293,7 @@ def show_form_validator():
 
             else:
                 # Have the data updated as we have a rejected validation request
-                update_gsheet_df(int(reply_post['usernr']),reply_post['labname'],"Rejected,"+reply_post['validator'])
+                update_gsheet_df(int(reply_post['usernr']),reply_post['labname'],"Rejected;"+reply_post['validator'])
 
             return render_template('web_validation_received.html',info=webdata, title='vGTS2021 - Validator area')
         else:
