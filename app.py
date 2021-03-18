@@ -31,7 +31,7 @@ class LoginForm(FlaskForm):
 def update_gsheet_df(usernr, lab,progress):
     # Based on the information we got we need to set some variables to the correct values.
     row = int(usernr) + 1
-
+    print(lab)
     # If the progress is empty, this means people are just getting the data from their lookup page
     if lab == "":
         # We seem to have received no progress so we are to color col 0 (NR) green so we know they tried to get some data
@@ -70,8 +70,7 @@ def update_gsheet_df(usernr, lab,progress):
         # Update Attendee Gsheet
         wks.update_cell(row, col, progress)
         # Update the DF
-        df.iat[int(usernr) - 1, int(col) - 1] = progress
-
+        df.at[int(usernr)-1 , lab] = progress
         if progress == "Validated":
             # Update the Validator GSheet and DF_SME if there has been a validated received
             col=col - 14
@@ -157,7 +156,6 @@ def update_df():
     df.update(pd.DataFrame(data, columns=headers))
     # Clean up the lines with no email address
     df.drop(df[df['Email'] == ""].index, inplace=True)
-    df.index('Nr')
     # ****************************************************************************************************************
     # Grab the data from the SME Gsheet
     wks_sme = gc.open("GTS SME Validations").sheet1
@@ -278,7 +276,7 @@ def show_form_validation():
     # Update Gsheet
     wks.update_cell(row,col,"Pending")
     # Update the DF
-    df.iat[int(usernr)-1,int(col)-1]="Pending"
+    df.at[int(usernr)-1 , lab] = "Pending"
 
 
     return render_template('web_validation.html', title='vGTS 2021 - Validation', info=info_data)
@@ -310,17 +308,12 @@ def show_form_validator():
             if str(request.args.get('lab')) != 'None':
                 usernr=str(request.args.get('usernr'))
                 labname=str(request.args.get('lab'))
-                
                 # Have the data updated and get the returned info for the webpage
                 web_templ=update_gsheet_df(int(usernr), labname, "In progress")
-
                 # Get all information from the DF for the user
-                dict_user = df.iloc[int(usernr)-1].to_dict()
-
-                # Are we looking for SNOW validation?
-                if str(request.args.get('snow_instance')):
-                    snow_instance=str(request.args.get('lab'))
-                    user_values={'username':dict_user['First Name']+" "+dict_user['Last Name'],
+                dict_user = df.loc[int(usernr)-1].to_dict()
+                snow_instance=str(request.args.get('lab'))
+                user_values={'username':dict_user['First Name']+" "+dict_user['Last Name'],
                                 'clustername': dict_user['Cluster Name'],
                                 'clusterip': dict_user['IP address VIP'],
                                 'pc_ip':dict_user['IP address PC'],
@@ -329,21 +322,7 @@ def show_form_validator():
                                 'snow_instance': dict_user['SNOW'],
                                 'labname': labname,
                                 'validator': session['validator'],
-                                'aws_ip':dict_user['AWS-IP']
-                                }
-
-                else:
-                    user_values={'username':dict_user['First Name']+" "+dict_user['Last Name'],
-                                'clustername': dict_user['Cluster Name'],
-                                'clusterip': dict_user['IP address VIP'],
-                                'pc_ip':dict_user['IP address PC'],
-                                'usernr':dict_user['Nr'],
-                                'userx': dict_user['UserX'],
-                                'labname': labname,
-                                'validator': session['validator'],
-                                'aws_ip':dict_user['AWS-IP']
-                                }
-                
+                                'aws_ip':dict_user['AWS-IP']}
 
                 return render_template(web_templ, title='vGTS2021 - Validator area', user=user_values)
 
@@ -361,7 +340,7 @@ def show_form_validator():
                 df_val_hc_iaas=df_val_hc_iaas[((df_val_hc_iaas['hc-iaas-snow'] =="Pending") | (df_val_hc_iaas['hc-iaas-snow'] =="In progress")) | ((df_val_hc_iaas['hc-iaas-leap'] =="Pending") | (df_val_hc_iaas['hc-iaas-leap'] =="In progress")) | ((df_val_hc_iaas['hc-iaas-cmdb'] =="Pending") | (df_val_hc_iaas['hc-iaas-cmdb'] =="In progress")) | ((df_val_hc_iaas['hc-iaas-xplay'] =="Pending") | (df_val_hc_iaas['hc-iaas-xplay'] =="In progress"))]
                 df_val_db=df_val_db[(df_val_db['hc-db-aav'] == "Pending")| (df_val_db['hc-db-dam'] == "Pending") | (df_val_db['hc-db-mssql'] == "Pending") | (df_val_db['hc-db-ultimate'] == "Pending") | (df_val_db['hc-db-aav'] == "In progress")| (df_val_db['hc-db-dam'] == "In progress") | (df_val_db['hc-db-mssql'] == "In progress") | (df_val_db['hc-db-ultimate'] == "In progress")]
                 df_val_euc=df_val_euc[(df_val_euc['hc-euc-prov']=="Pending") | (df_val_euc['hc-euc-calm']=="Pending") | (df_val_euc['hc-euc-flow']=="Pending") | (df_val_euc['hc-euc-prov']=="In progress") | (df_val_euc['hc-euc-calm']=="In progress") | (df_val_euc['hc-euc-flow']=="In progress") ]
-                df_val_cicd=df_val_cicd[((df_val_cicd['cicd-use'] == "Pending") | (df_val_cicd['cicd-use'] == "In progress")) | ((df_val_cicd['cicd-era'] == "Pending") | (df_val_cicd['cicd-era'] == "In progress"))]
+                df_val_cicd=df_val_cicd[(df_val_cicd['cicd-cont'] == "Pending") | (df_val_cicd['cicd-use'] == "Pending") | (df_val_cicd['cicd-era'] == "Pending") | (df_val_cicd['cicd-cont'] == "In progress") | (df_val_cicd['cicd-use'] == "In progress") | (df_val_cicd['cicd-era'] == "In progress")]
                 df_val_cloud = df_val_cloud[(df_val_cloud['cloud-k8s'] == "Pending") | (df_val_cloud['cloud-fiesta'] == "Pending") | (df_val_cloud['cloud-day2'] == "Pending") | (df_val_cloud['cloud-k8s'] == "In progress") | (df_val_cloud['cloud-fiesta'] == "In progress") | (df_val_cloud['cloud-day2'] == "In progress")]
 
                 # Set new indexes on the temp DFs
@@ -371,7 +350,6 @@ def show_form_validator():
                 df_val_cicd=df_val_cicd.set_index('Nr')
                 df_val_cloud=df_val_cloud.set_index('Nr')
 
-                print(df_val_cicd)
                 # Create the data into a list so we can forward them to the renderer per lab
 
                 iaas_lst=[]
@@ -433,7 +411,6 @@ def show_form_validator():
                             str(df_val_cloud.to_dict()['cloud-fiesta'][key])+","+str(df_val_cloud.to_dict()['cloud-day2'][key])
 
                         )
-
                 # Render the pages
                 return render_template('web_validator.html', iaaslist=iaas_lst,dblist=db_lst,euclist=euc_lst,cicdlist=cicd_lst,cloudlist=cloud_lst,validator=session['validator'])
     else: # We don't have a validated user
@@ -467,4 +444,3 @@ if __name__ == "main":
     # start the app
     session.pop('email',None)
     app.run()
-
