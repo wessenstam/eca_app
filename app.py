@@ -105,7 +105,8 @@ data = wks.get_all_values()
 headers = data.pop(0)
 # Drop all data in a dataframe for the attendees
 df = pd.DataFrame(data, columns=headers)
-
+# Clean up the lines with no email address
+df.drop(df[df['Email'] == ""].index, inplace=True)
 
 # ****************************************************************************************************************
 # Grab the data from teh SME Gsheet
@@ -114,6 +115,8 @@ data = wks_sme.get_all_values()
 headers = data.pop(0)
 # Drop all data in a dataframe for the attendees
 df_sme = pd.DataFrame(data, columns=headers)
+# Cleaning up the lines that have no name
+df_sme.drop(df_sme[df_sme['Name'] == ""].index, inplace=True)
 
 
 # ****************************************************************************************************************
@@ -151,6 +154,9 @@ def update_df():
     headers = data.pop(0)
     # Drop all data in a dataframe for the attendees
     df.update(pd.DataFrame(data, columns=headers))
+    # Clean up the lines with no email address
+    df.drop(df[df['Email'] == ""].index, inplace=True)
+    
     # ****************************************************************************************************************
     # Grab the data from the SME Gsheet
     wks_sme = gc.open("GTS SME Validations").sheet1
@@ -158,7 +164,9 @@ def update_df():
     headers = data.pop(0)
     # Drop all data in a dataframe for the SMEs
     df_sme.update(pd.DataFrame(data, columns=headers))
-
+    # Cleaning up the lines that have no name
+    df_sme.drop(df_sme[df_sme['Name'] == ""].index, inplace=True)
+    
     return render_template('web_update.html', title='vGTS2021 - Cluster lookup')
 
 @app.route("/", methods=['GET', 'POST'])
