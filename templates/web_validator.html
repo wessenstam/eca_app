@@ -55,7 +55,6 @@
     <TR>
       <th>First Name</th><th>Last Name</th><th>Application Availability</th><th>Data Access Management</th><th>MSSQL</th><th>Ultimate</th>
     </TR>
-
       {% for value in dblist %}
       <TR>
         {% if  value.split(',')[2] != "" and (value.split(',')[4] == "Pending" or value.split(',')[5] == "Pending" or value.split(',')[6] == "Pending" or value.split(',')[7] == "Pending" or value.split(',')[4] == "In progress" or value.split(',')[5] == "In progress" or value.split(',')[6] == "In progress" or value.split(',')[7] == "In progress") %}
@@ -140,7 +139,7 @@
               <TD>&nbsp;</TD>
             {% endif %}
 
-            {% if not "Validated" in value.split(',')[6] and not "Rejected" in value.split(',')[5] %}
+            {% if not "Validated" in value.split(',')[6] and not "Rejected" in value.split(',')[6] %}
               <TD><A HREF="/validator?lab=cicd-era&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[6] }} </A></TD>
             {% else %}
               <TD>&nbsp;</TD>
