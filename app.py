@@ -361,7 +361,7 @@ def show_form_validator():
                 df_val_hc_iaas=df_val_hc_iaas[((df_val_hc_iaas['hc-iaas-snow'] =="Pending") | (df_val_hc_iaas['hc-iaas-snow'] =="In progress")) | ((df_val_hc_iaas['hc-iaas-leap'] =="Pending") | (df_val_hc_iaas['hc-iaas-leap'] =="In progress")) | ((df_val_hc_iaas['hc-iaas-cmdb'] =="Pending") | (df_val_hc_iaas['hc-iaas-cmdb'] =="In progress")) | ((df_val_hc_iaas['hc-iaas-xplay'] =="Pending") | (df_val_hc_iaas['hc-iaas-xplay'] =="In progress"))]
                 df_val_db=df_val_db[(df_val_db['hc-db-aav'] == "Pending")| (df_val_db['hc-db-dam'] == "Pending") | (df_val_db['hc-db-mssql'] == "Pending") | (df_val_db['hc-db-ultimate'] == "Pending") | (df_val_db['hc-db-aav'] == "In progress")| (df_val_db['hc-db-dam'] == "In progress") | (df_val_db['hc-db-mssql'] == "In progress") | (df_val_db['hc-db-ultimate'] == "In progress")]
                 df_val_euc=df_val_euc[(df_val_euc['hc-euc-prov']=="Pending") | (df_val_euc['hc-euc-calm']=="Pending") | (df_val_euc['hc-euc-flow']=="Pending") | (df_val_euc['hc-euc-prov']=="In progress") | (df_val_euc['hc-euc-calm']=="In progress") | (df_val_euc['hc-euc-flow']=="In progress") ]
-                df_val_cicd=df_val_cicd[(df_val_cicd['cicd-cont'] == "Pending") | (df_val_cicd['cicd-use'] == "Pending") | (df_val_cicd['cicd-era'] == "Pending") | (df_val_cicd['cicd-cont'] == "In progress") | (df_val_cicd['cicd-use'] == "In progress") | (df_val_cicd['cicd-era'] == "In progress")]
+                df_val_cicd=df_val_cicd[((df_val_cicd['cicd-use'] == "Pending") | (df_val_cicd['cicd-use'] == "In progress")) | ((df_val_cicd['cicd-era'] == "Pending") | (df_val_cicd['cicd-era'] == "In progress"))]
                 df_val_cloud = df_val_cloud[(df_val_cloud['cloud-k8s'] == "Pending") | (df_val_cloud['cloud-fiesta'] == "Pending") | (df_val_cloud['cloud-day2'] == "Pending") | (df_val_cloud['cloud-k8s'] == "In progress") | (df_val_cloud['cloud-fiesta'] == "In progress") | (df_val_cloud['cloud-day2'] == "In progress")]
 
                 # Set new indexes on the temp DFs
@@ -371,6 +371,7 @@ def show_form_validator():
                 df_val_cicd=df_val_cicd.set_index('Nr')
                 df_val_cloud=df_val_cloud.set_index('Nr')
 
+                print(df_val_cicd)
                 # Create the data into a list so we can forward them to the renderer per lab
 
                 iaas_lst=[]
