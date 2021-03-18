@@ -157,7 +157,6 @@ def update_df():
     df.update(pd.DataFrame(data, columns=headers))
     # Clean up the lines with no email address
     df.drop(df[df['Email'] == ""].index, inplace=True)
-    df.index('Nr')
     # ****************************************************************************************************************
     # Grab the data from the SME Gsheet
     wks_sme = gc.open("GTS SME Validations").sheet1
