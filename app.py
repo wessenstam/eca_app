@@ -31,7 +31,7 @@ class LoginForm(FlaskForm):
 def update_gsheet_df(usernr, lab,progress):
     # Based on the information we got we need to set some variables to the correct values.
     row = int(usernr) + 1
-
+    print(lab)
     # If the progress is empty, this means people are just getting the data from their lookup page
     if lab == "":
         # We seem to have received no progress so we are to color col 0 (NR) green so we know they tried to get some data
@@ -70,8 +70,7 @@ def update_gsheet_df(usernr, lab,progress):
         # Update Attendee Gsheet
         wks.update_cell(row, col, progress)
         # Update the DF
-        df.iat[int(usernr) - 1, int(col) - 1] = progress
-
+        df.at[int(usernr)-1 , lab] = progress
         if progress == "Validated":
             # Update the Validator GSheet and DF_SME if there has been a validated received
             col=col - 14
@@ -309,17 +308,12 @@ def show_form_validator():
             if str(request.args.get('lab')) != 'None':
                 usernr=str(request.args.get('usernr'))
                 labname=str(request.args.get('lab'))
-                
                 # Have the data updated and get the returned info for the webpage
                 web_templ=update_gsheet_df(int(usernr), labname, "In progress")
-
                 # Get all information from the DF for the user
-                dict_user = df.iloc[int(usernr)-1].to_dict()
-
-                # Are we looking for SNOW validation?
-                if str(request.args.get('snow_instance')):
-                    snow_instance=str(request.args.get('lab'))
-                    user_values={'username':dict_user['First Name']+" "+dict_user['Last Name'],
+                dict_user = df.loc[int(usernr)-1].to_dict()
+                snow_instance=str(request.args.get('lab'))
+                user_values={'username':dict_user['First Name']+" "+dict_user['Last Name'],
                                 'clustername': dict_user['Cluster Name'],
                                 'clusterip': dict_user['IP address VIP'],
                                 'pc_ip':dict_user['IP address PC'],
@@ -328,21 +322,7 @@ def show_form_validator():
                                 'snow_instance': dict_user['SNOW'],
                                 'labname': labname,
                                 'validator': session['validator'],
-                                'aws_ip':dict_user['AWS-IP']
-                                }
-
-                else:
-                    user_values={'username':dict_user['First Name']+" "+dict_user['Last Name'],
-                                'clustername': dict_user['Cluster Name'],
-                                'clusterip': dict_user['IP address VIP'],
-                                'pc_ip':dict_user['IP address PC'],
-                                'usernr':dict_user['Nr'],
-                                'userx': dict_user['UserX'],
-                                'labname': labname,
-                                'validator': session['validator'],
-                                'aws_ip':dict_user['AWS-IP']
-                                }
-                
+                                'aws_ip':dict_user['AWS-IP']}
 
                 return render_template(web_templ, title='vGTS2021 - Validator area', user=user_values)
 
@@ -431,7 +411,6 @@ def show_form_validator():
                             str(df_val_cloud.to_dict()['cloud-fiesta'][key])+","+str(df_val_cloud.to_dict()['cloud-day2'][key])
 
                         )
-
                 # Render the pages
                 return render_template('web_validator.html', iaaslist=iaas_lst,dblist=db_lst,euclist=euc_lst,cicdlist=cicd_lst,cloudlist=cloud_lst,validator=session['validator'])
     else: # We don't have a validated user
