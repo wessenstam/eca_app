@@ -276,7 +276,7 @@ def show_form_validation():
     # Update Gsheet
     wks.update_cell(row,col,"Pending")
     # Update the DF
-    df.iat[int(usernr)-1,int(col)-1]="Pending"
+    df.at[int(usernr)-1 , lab] = progress
 
 
     return render_template('web_validation.html', title='vGTS 2021 - Validation', info=info_data)
