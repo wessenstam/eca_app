@@ -6,7 +6,6 @@
     </head>
     <body>
     <center>
-
     {% if user.labname == "cicd-cont" %}
         {% set labname = "Containerize the Fiesta App" %}
         {% set val_name = "cont" %}
@@ -51,11 +50,8 @@
     <P>Please make sure the user has the following created for the validation</P>
 
     {% if val_name=="cont" %}
-        <P> 
-            Open <B>Prism Central <a HREF="https://{{ user.pc_ip }}:9440" target="_blank">(https://{{ user.pc_ip }}:9440)</a> > Service -> Calm -> Applications</B> .<BR><BR>
-            In the <B>Applications view</B> click <B>User0{{ user.userx }} CICD</B><BR><BR>
-            Click in the <B>Services</B> tab and get the IP address of the <B>Docker VM</B> service on the right side of the screen.
-            Open in a web browser http://IP ADDRESS:5000/products<BR><BR>
+        <P>
+            Open in a web browser <a HREF="http://{{ user.docker_vm_ip }}:5000/products" target="_blank">http://{{ user.docker_vm_ip }}:5000/products</a><BR><BR>
             
             You should see something like this screen:<BR>
             <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/fiesta-1.png">
@@ -65,10 +61,7 @@
 
     {% elif val_name=="use" %}
         <P> 
-            Open <B>Prism Central <a HREF="https://{{ user.pc_ip }}:9440" target="_blank">(https://{{ user.pc_ip }}:9440)</a> > Service -> Calm -> Applications</B> .<BR><BR>
-            In the <B>Applications view</B> click <B>User0{{ user.userx }} CICD</B><BR><BR>
-            Click in the <B>Services</B> tab and get the IP address of the <B>Docker VM</B> service on the right side of the screen.
-            Open in a web browser <B>http://IP ADDRESS:8080</B><BR><BR>
+            Open in a web browser <a HREF="http://{{ user.docker_vm_ip }}:8080" target="_blank">http://{{ user.docker_vm_ip }}:8080</a><BR><BR>
             Use for the login in Gitea: <b>nutanix</b> with password <B>nutanix/4u</B> (If not working, please ask {{ user.username }} for the credentials via Slack).<BR><BR>
             
             You should see something like this screen:<BR>
@@ -78,13 +71,10 @@
 
     {% else %}
         <P> 
-            Open <B>Prism Central <a HREF="https://{{ user.pc_ip }}:9440" target="_blank">(https://{{ user.pc_ip }}:9440)</a> > Service -> Calm -> Applications</B> .<BR><BR>
-            In the <B>Applications view</B> click <B>User0{{ user.userx }} CICD</B><BR><BR>
-            Click in the <B>Services</B> tab and get the IP address of the <B>Docker VM</B> service on the right side of the screen.
-            Open in a web browser <B>http://IP ADDRESS:5050</B><BR><BR>
+            Open in a web browser <a HREF="http://{{ user.docker_vm_ip }}:5050/products" target="_blank">http://{{ user.docker_vm_ip }}:5050/products</a><BR><BR>
             
             You should see something like this screen:<BR>
-            <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/fiesta-3.png">
+            <img src="https://raw.githubusercontent.com/wessenstam/eca_app/master/images/fiesta-1.png">
         </P>
 
 

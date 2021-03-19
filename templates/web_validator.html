@@ -16,16 +16,13 @@
     <TR>
       <th>First Name</th><th>Last Name</th><th>SNOW</th><th>Leap</th><th>SNOW and CMDB</th><th>SNOW and X-Play</th>
     </TR>
-      {{ iaaslist }}
       {% for value in iaaslist %}
         <TR>
-        {% if  value.split(',')[2] != "" %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
           <TD><A HREF="/validator?lab=hc-iaas-snow&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}&snow_instance={{ value.split(',')[8] }}">{{ value.split(',')[4] }} </A></TD>
           <TD><A HREF="/validator?lab=hc-iaas-leap&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[5] }} </A></TD>
           <TD><A HREF="/validator?lab=hc-iaas-cmdb&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[6] }} </A></TD>
           <TD><A HREF="/validator?lab=hc-iaas-xplay&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[7] }} </A></TD>
-        {% endif %}
         </TR>
       {% endfor %}
   </table>
@@ -37,16 +34,13 @@
     <TR>
       <th>First Name</th><th>Last Name</th><th>Application Availability</th><th>Data Access Management</th><th>MSSQL</th><th>Ultimate</th>
     </TR>
-      {{ dblist }}
       {% for value in dblist %}
       <TR>
-        {% if  value.split(',')[2] != "" %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
           <TD><A HREF="/validator?lab=hc-db-aav&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[4] }} </A></TD>
           <TD><A HREF="/validator?lab=hc-db-dam&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[5] }} </A></TD>
           <TD><A HREF="/validator?lab=hc-db-mssql&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[6] }} </A></TD>
           <TD><A HREF="/validator?lab=hc-db-ultimate&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[7] }} </A></TD>
-        {% endif %}
       </TR>
       {% endfor %}
 
@@ -59,15 +53,12 @@
     <TR>
       <th>First Name</th><th>Last Name</th><th>Provision</th><th>Calm Runbooks</th><th>Security</th>
     </TR>
-      {{ euclist }}
       {% for value in euclist %}
         <TR>
-          {% if  value.split(',')[2] != "" %}
             <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
             <TD><A HREF="/validator?lab=hc-euc-prov&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[4] }} </A></TD>
             <TD><A HREF="/validator?lab=hc-euc-calm&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[5] }} </A></TD>
             <TD><A HREF="/validator?lab=hc-euc-flow&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[6] }} </A></TD>
-          {% endif %}
         </TR>
       {% endfor %}
   </table>
@@ -79,7 +70,6 @@
     <TR>
       <th>First Name</th><th>Last Name</th><th>Use CI/CD</th><th>Use with Era</th>
     </TR>
-      {{ cicdlist }}
       {% for value in cicdlist %}
         <TR>
           {% if  value.split(',')[2] != "" %}
@@ -98,7 +88,6 @@
     <TR>
       <th>First Name</th><th>Last Name</th><th>K8s Configuration</th><th>Deployed Fiesta App</th><th>Day 2 operations</th>
     </TR>
-      {{ cloudlist }}
       {% for value in cloudlist %}
       <TR>
         {% if  value.split(',')[2] != "" %}
