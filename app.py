@@ -324,8 +324,10 @@ def show_form_validator():
                 web_templ=update_gsheet_df(int(usernr), labname, "In progress")
                 # Get all information from the DF for the user
                 dict_user = df.loc[int(usernr)-1].to_dict()
+                
                 # Get the Docker IP from the DF_docker_ip using the user's info
                 docker_ip= df_docker_ip.loc[df_docker_ip['Cluster IP']==dict_user['IP address VIP'],'User0'+str(dict_user['UserX'])].to_list()
+    
                 user_values={'username':dict_user['First Name']+" "+dict_user['Last Name'],
                                 'clustername': dict_user['Cluster Name'],
                                 'clusterip': dict_user['IP address VIP'],
