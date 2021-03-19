@@ -19,8 +19,8 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 # ****************************************************************************************************************
 # Get the needed password for the vlidator pages from the OS envionment
-#validator_password=os.environ['validator_password']
-validator_password='nutanix'
+validator_password=os.environ['validator_password']
+
 
 # ****************************************************************************************************************
 # Geting the Forms ready to be used
@@ -294,8 +294,6 @@ def show_form_validation():
 
 @app.route("/validator", methods=['GET','POST'])
 def show_form_validator():
-    session['validated']="Yes"
-    session['validator']="Willem Essenstam"
     if "validated" in session:
 
         if request.method =="POST":
