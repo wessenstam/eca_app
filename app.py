@@ -19,7 +19,8 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 # ****************************************************************************************************************
 # Get the needed password for the vlidator pages from the OS envionment
-validator_password=os.environ['validator_password']
+#validator_password=os.environ['validator_password']
+validator_password='nutanix'
 
 # ****************************************************************************************************************
 # Geting the Forms ready to be used
@@ -31,7 +32,6 @@ class LoginForm(FlaskForm):
 def update_gsheet_df(usernr, lab,progress):
     # Based on the information we got we need to set some variables to the correct values.
     row = int(usernr) + 1
-    print(lab)
     # If the progress is empty, this means people are just getting the data from their lookup page
     if lab == "":
         # We seem to have received no progress so we are to color col 0 (NR) green so we know they tried to get some data
@@ -109,7 +109,7 @@ df.drop(df[df['Email'] == ""].index, inplace=True)
 df.set_index('Nr')
 
 # ****************************************************************************************************************
-# Grab the data from teh SME Gsheet
+# Grab the data from the SME Gsheet
 wks_sme = gc.open("GTS SME Validations").sheet1
 data = wks_sme.get_all_values()
 headers = data.pop(0)
@@ -117,6 +117,17 @@ headers = data.pop(0)
 df_sme = pd.DataFrame(data, columns=headers)
 # Cleaning up the lines that have no name
 df_sme.drop(df_sme[df_sme['Name'] == ""].index, inplace=True)
+
+# ****************************************************************************************************************
+# Grab the data from the GTS 2021 Docker VM IP Gsheet
+wks_sme = gc.open("GTS 21 IP addresses").sheet1
+data = wks_sme.get_all_values()
+headers = data.pop(0)
+# Drop all data in a dataframe for the attendees
+df_docker_ip = pd.DataFrame(data, columns=headers)
+# Cleaning up the lines that have no name
+df_docker_ip.drop(df_docker_ip[df_docker_ip['Cluster IP'] == ""].index, inplace=True)
+
 
 
 # ****************************************************************************************************************
@@ -283,7 +294,8 @@ def show_form_validation():
 
 @app.route("/validator", methods=['GET','POST'])
 def show_form_validator():
-    
+    session['validated']="Yes"
+    session['validator']="Willem Essenstam"
     if "validated" in session:
 
         if request.method =="POST":
@@ -312,7 +324,10 @@ def show_form_validator():
                 web_templ=update_gsheet_df(int(usernr), labname, "In progress")
                 # Get all information from the DF for the user
                 dict_user = df.loc[int(usernr)-1].to_dict()
-                snow_instance=str(request.args.get('lab'))
+                
+                # Get the Docker IP from the DF_docker_ip using the user's info
+                docker_ip= df_docker_ip.loc[df_docker_ip['Cluster IP']==dict_user['IP address VIP'],'User0'+str(dict_user['UserX'])].to_list()
+    
                 user_values={'username':dict_user['First Name']+" "+dict_user['Last Name'],
                                 'clustername': dict_user['Cluster Name'],
                                 'clusterip': dict_user['IP address VIP'],
@@ -322,7 +337,8 @@ def show_form_validator():
                                 'snow_instance': dict_user['SNOW'],
                                 'labname': labname,
                                 'validator': session['validator'],
-                                'aws_ip':dict_user['AWS-IP']}
+                                'aws_ip':dict_user['AWS-IP'],
+                                'docker_vm_ip':docker_ip[0]}
 
                 return render_template(web_templ, title='vGTS2021 - Validator area', user=user_values)
 
@@ -342,6 +358,18 @@ def show_form_validator():
                 df_val_euc=df_val_euc[(df_val_euc['hc-euc-prov']=="Pending") | (df_val_euc['hc-euc-calm']=="Pending") | (df_val_euc['hc-euc-flow']=="Pending") | (df_val_euc['hc-euc-prov']=="In progress") | (df_val_euc['hc-euc-calm']=="In progress") | (df_val_euc['hc-euc-flow']=="In progress") ]
                 df_val_cicd=df_val_cicd[(df_val_cicd['cicd-cont'] == "Pending") | (df_val_cicd['cicd-use'] == "Pending") | (df_val_cicd['cicd-era'] == "Pending") | (df_val_cicd['cicd-cont'] == "In progress") | (df_val_cicd['cicd-use'] == "In progress") | (df_val_cicd['cicd-era'] == "In progress")]
                 df_val_cloud = df_val_cloud[(df_val_cloud['cloud-k8s'] == "Pending") | (df_val_cloud['cloud-fiesta'] == "Pending") | (df_val_cloud['cloud-day2'] == "Pending") | (df_val_cloud['cloud-k8s'] == "In progress") | (df_val_cloud['cloud-fiesta'] == "In progress") | (df_val_cloud['cloud-day2'] == "In progress")]
+
+                # Let's remove the validated and rejected values from the DFs
+                df_val_hc_iaas.replace(to_replace='Validated', value="", inplace=True)
+                df_val_hc_iaas.replace(to_replace=r'^Rejected.*', value="", regex=True, inplace=True)
+                df_val_db.replace(to_replace='Validated', value="", inplace=True)
+                df_val_db.replace(to_replace=r'^Rejected.*', value="", regex=True, inplace=True)
+                df_val_euc.replace(to_replace='Validated', value="", inplace=True)
+                df_val_euc.replace(to_replace=r'^Rejected.*', value="", regex=True, inplace=True)
+                df_val_cicd.replace(to_replace='Validated', value="", inplace=True)
+                df_val_cicd.replace(to_replace=r'^Rejected.*', value="", regex=True, inplace=True)
+                df_val_cloud.replace(to_replace='Validated', value="", inplace=True)
+                df_val_cloud.replace(to_replace=r'^Rejected.*', value="", regex=True, inplace=True)
 
                 # Set new indexes on the temp DFs
                 df_val_hc_iaas=df_val_hc_iaas.set_index('Nr')
@@ -444,4 +472,3 @@ if __name__ == "main":
     # start the app
     session.pop('email',None)
     app.run()
-
