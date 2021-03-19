@@ -50,7 +50,7 @@ gc = gspread.authorize(credentials)
 
 # ****************************************************************************************************************
 # Grabbing the initial data from gsheet for the attendees
-wks = gc.open("GTS 21 IP addresses").sheet1
+wks = gc.open("GTS IP addresses").sheet1
 data = wks.get_all_values()
 headers = data.pop(0)
 # Drop all data in a dataframe for the attendees
