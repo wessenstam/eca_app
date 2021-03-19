@@ -65,7 +65,7 @@
                     <td>Attendee Name</td>
                     <td>{{ user.attendee_name }}</td>
                 </tr>
-                {% if user.pretime=="no" %}
+                {% if user.pretime != "Yes" %}
                     <tr>
                         <td>USER## ID (Used as a common prefix throughout the lab, ex. USER01)</td>
                         {% if user.user_x | int < 10 %} 
@@ -210,7 +210,6 @@
                     <TR><TD colspan="2"><HR></TD></TR>
                     <TR>
                         <td colspan="2" bgcolor="#B0D235"><center>
-                        {% if user.pretime!="yes" %}
                             <P>
                             <hr>
                             <h3>Self-Service Lab Validation</h3>
@@ -280,7 +279,6 @@
                                 </P>
                             </form>
                             </P>
-                            {% endif %}
                             </center></td>
                     </tr>
                     <TR>
