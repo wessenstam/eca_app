@@ -17,7 +17,6 @@ import os
 from datetime import timedelta
 from oauth2client.service_account import ServiceAccountCredentials
 from sqlalchemy import create_engine
-from sqlalchemy import create_engine
 import pymysql
 
 # ****************************************************************************************************************
