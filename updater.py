@@ -12,8 +12,6 @@ def update_client(payload):
     payload=json.dumps(payload)
     reply=requests.post(url, data=payload)
     print("Updater has given the update command. Answer from server was :"+reply.text)
-    
-
 
 def main():
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
