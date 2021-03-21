@@ -16,8 +16,7 @@ import pandas as pd
 import os
 from datetime import timedelta
 from oauth2client.service_account import ServiceAccountCredentials
-from sqlalchemy import create_engine
-import pymysql
+import pika
 
 # ****************************************************************************************************************
 # Get the needed password for the vlidator pages from the OS envionment
@@ -27,6 +26,17 @@ pre_time="No"
 class LoginForm(FlaskForm):
     email = StringField('Email Address', validators=[DataRequired()])
     submit = SubmitField('Lookup...')
+
+def send_msq_msg(usernr,lab,progress):
+    data="{'usernr':'"+usernr+"','lab':'"+lab+"','progress':'"+progress+"'}"
+    json_data=json.dumps(data)
+    connection = pika.BlockingConnection(
+    pika.ConnectionParameters(host='localhost',port='6666'))
+    channel = connection.channel()
+    channel.queue_declare(queue='request')
+    channel.basic_publish(exchange='', routing_key='request', body=json_data)
+    print(" [x] Sent "+json_data)
+    connection.close()
 
 # Function for updating the underlaying GSheet so we can always grab back to the updated version
 def update_gsheet_df(usernr, lab,progress):
@@ -74,28 +84,6 @@ def update_gsheet_df(usernr, lab,progress):
 
         return web_templ
 
-def injectdata_db(action,dataframe,lab,usernr,progress):
-    # Update the data frame in the Database
-    tableName = "validations" 
-    sqlEngine = create_engine('mysql+pymysql://fiesta:fiesta@192.168.1.194/gts', pool_recycle=3600)
-    dbConnection = sqlEngine.connect()
-
-    if action=="Update" or action == "Initial":
-        try:
-            frame = dataframe.to_sql(tableName, dbConnection, if_exists='replace');
-        except ValueError as vx:
-            print(vx)
-        except Exception as ex:   
-            print(ex)
-        else:
-            print("Table %s created successfully."%tableName);
-
-    elif action == "update_user":
-        sql_query='update validations set `'+lab+'`="'+progress+'" where Nr='+usernr
-        print(sql_query)
-
-
-    dbConnection.close()
 # ****************************************************************************************************************
 # Some Flask settings
 app = Flask(__name__)
@@ -118,8 +106,6 @@ df = pd.DataFrame(data, columns=headers)
 df.drop(df[df['Email'] == ""].index, inplace=True)
 df.set_index('Nr')
 
-# Get the initial data from the DF in the Database
-injectdata_db("Initial",df,"" ,"" ,"" )
 
 # ****************************************************************************************************************
 # Area for definition of variables
@@ -145,6 +131,19 @@ def logout():
     else:  
         return render_template('web_loged_out.html',org="validator")
 
+
+@app.route("/update_api", methods=['POST'])
+def update_api_df():
+    send_post_dict=eval(json.loads(request.get_data().decode()))
+    usernr=send_post_dict['usernr']
+    lab=send_post_dict['lab']
+    progress=send_post_dict['progress']
+    # Update the DF so the user sees the data
+    df.at[int(usernr)-1 , lab] = "Pending"
+
+
+    return "Received"
+
 @app.route("/update")
 def update_df():
     # Reload the data from the Gsheet
@@ -160,9 +159,6 @@ def update_df():
     df.drop(df[df['Email'] == ""].index, inplace=True)
     df.set_index('Nr')
     
-    # Get the new DF data in the database
-    injectdata_db("Update",df,"" ,"" ,"" )
-
     return render_template('web_update.html', title='vGTS2021 - Cluster lookup')
 
 @app.route("/pre-time", methods=['GET'])
@@ -245,49 +241,13 @@ def show_form_validation():
     reply_post=request.form
     lab=reply_post['lab']
     username=reply_post['username']
-    clustername=reply_post['clustername']
-    clusterip=reply_post['clusterip']
-    pcip=reply_post['pcip']
     usernr=reply_post['usernr']
-    info_data= {'lab':lab,
-                'username':username,
-                'usernr': usernr,
-                'clustername':clustername,
-                'clusterip':clusterip,
-                'pcip': pcip
-               }
-    # Update the DF in the correct column and row
-    row=int(usernr)+1
-    col = 16
-    if "iaas" in lab: # Enter the IAAS labs
-        type_lab=lab[8:]
-        item_nr=lab_type_lst.index(type_lab)
-        col=col+item_nr
-    elif "db" in lab: # Enter the DB labs
-        type_lab = lab[6:]
-        item_nr = lab_type_lst.index(type_lab)
-        col = col + item_nr
-    elif "euc" in lab: # Enter the EUC labs
-        type_lab = lab[7:]
-        item_nr = lab_type_lst.index(type_lab)
-        col = col + item_nr
-    elif "cicd" in lab: # Enter the CICD labs
-        type_lab = lab[5:]
-        item_nr = lab_type_lst.index(type_lab)
-        col = col + item_nr
-    else:
-        type_lab = lab[6:]
-        item_nr = lab_type_lst.index(type_lab)
-        col = col + item_nr # Column AC
+    # Send the message to the message queue for next handling
+    send_msq_msg(usernr,lab,"Req Validation")
+    # Update the DF so they see the status
+    df.at[int(usernr)-1 , lab] = "Requested Validation"
 
-    # Update Gsheet
-    wks.update_cell(row,col,"Pending")
-    # Update the DF
-    df.at[int(usernr)-1 , lab] = "Pending"
-    # Update the database
-    injectdata_db("update_user","",lab,usernr,"Pending")
-
-    return render_template('web_validation.html', title='vGTS 2021 - Validation', info=info_data)
+    return render_template('web_validation.html', title='vGTS 2021 - Validation')
 
 if __name__ == "main":
     # start the app
