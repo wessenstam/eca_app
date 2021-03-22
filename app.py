@@ -20,7 +20,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 # ****************************************************************************************************************
 # Get the needed password for the vlidator pages from the OS envionment
 validator_password=os.environ['validator_password']
-pre_time="Yes"
+pre_time="No"
 # ****************************************************************************************************************
 # Geting the Forms ready to be used
 class LoginForm(FlaskForm):
