@@ -2,8 +2,7 @@ import pika, sys, os
 
 
 def send_msq_msg(msg):
-    connection = pika.BlockingConnection(
-    pika.ConnectionParameters(host='localhost'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
     channel = connection.channel()
     channel.queue_declare(queue='request')
     channel.basic_publish(exchange='', routing_key='request', body=msg)

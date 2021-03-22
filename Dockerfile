@@ -15,7 +15,8 @@ RUN apk add --no-cache python3 python3-dev py3-pip libstdc++ g++ git && \
     pip3 install flask-wtf && \
     pip3 install gspread-formatting && \
     pip3 install gspread_formatting && \
-# Create the /json location where we put a volume so we can grab the credentials outside the container
+    pip3 install pika && \
+    pip3 install requests && \
     mkdir /json && \
     chmod 777 /json
 
@@ -27,4 +28,4 @@ VOLUME /json
 
 EXPOSE 5000
 
-CMD ["sh", "start.sh"]
+CMD ["sh", "start.sh $script $port"]
