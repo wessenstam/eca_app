@@ -20,8 +20,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 # ****************************************************************************************************************
 # Get the needed password for the vlidator pages from the OS envionment
 validator_password=os.environ['validator_password']
-
-
+pre_time="Yes"
 # ****************************************************************************************************************
 # Geting the Forms ready to be used
 class LoginForm(FlaskForm):
@@ -36,9 +35,9 @@ def update_gsheet_df(usernr, lab,progress):
     if lab == "":
         # We seem to have received no progress so we are to color col 0 (NR) green so we know they tried to get some data
         # Update the GSheet row of the user and col 0
-        GTS="USA" # Comment this line and uncomment the bewlo two so we get the "green" background in. Revert when in Primetime!!
-        #fmt = cellFormat(backgroundColor=color(0, 1,0),textFormat=textFormat(foregroundColor=color(0, 0, 0)))
-        #format_cell_range(wks, "A"+str(row),  fmt)
+        if pre_time == "Yes":
+            fmt = cellFormat(backgroundColor=color(0, 1,0),textFormat=textFormat(foregroundColor=color(0, 0, 0)))
+            format_cell_range(wks, "A"+str(row),  fmt)
     else:
         col = 16
         if "iaas" in lab:  # Enter the IAAS labs
@@ -120,7 +119,7 @@ df_sme.drop(df_sme[df_sme['Name'] == ""].index, inplace=True)
 
 # ****************************************************************************************************************
 # Grab the data from the GTS 2021 Docker VM IP Gsheet
-wks_sme = gc.open("GTS 21 IP addresses").sheet1
+wks_sme = gc.open("GTS IP addresses").sheet1
 data = wks_sme.get_all_values()
 headers = data.pop(0)
 # Drop all data in a dataframe for the attendees
@@ -179,6 +178,17 @@ def update_df():
     
     return render_template('web_update.html', title='vGTS2021 - Cluster lookup')
 
+@app.route("/pre-time", methods=['GET'])
+def set_pretime():
+    global pre_time
+    try:
+        request.args['No']
+        pre_time="No"
+    except:
+        pre_time="Yes"
+
+    return render_template('web_pretime.html', pretime=pre_time, title='Pretime changer')
+
 @app.route("/", methods=['GET', 'POST'])
 def show_form_data():
     if 'email ' not in session:
@@ -197,7 +207,6 @@ def show_form_data():
         # Change the email to a list so we can lowercase and search Case insensitive in the DataFrame
         df_user_info = df[df['Email'].str.lower().isin(search_email)]
         # Change the df into a dict so we can grab the data
-        
         if str(df_user_info):
             user_info = df_user_info.to_dict('records')
             try:
@@ -234,7 +243,7 @@ def show_form_data():
                              'val_cloud_k8s': user_info[0]['cloud-k8s'],
                              'val_cloud_fiesta': user_info[0]['cloud-fiesta'],
                              'val_cloud_day2': user_info[0]['cloud-day2'],
-                             'pretime':'no'
+                             'pretime':pre_time
                              }
                 form.email.data=""
             except IndexError:
