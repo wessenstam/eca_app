@@ -21,6 +21,8 @@ import pika
 # ****************************************************************************************************************
 # Get the needed password for the vlidator pages from the OS envionment
 validator_password=os.environ['validator_password']
+local_port=os.environ['local_port']
+local_url=os.environ['local_url']
 # ****************************************************************************************************************
 # Geting the Forms ready to be used
 class LoginForm(FlaskForm):
@@ -58,10 +60,10 @@ def get_templ_send_msq(usernr, lab,progress):
         web_templ = "web_cloud.html"
 
     # Send the to be updated info to the MSQ for further processing
-    data="{'usernr':'"+str(usernr)+"','lab':'"+lab+"','progress':'"+progress+"'}"
+    data='{"usernr":"'+str(usernr)+'","lab":"'+lab+'","progress":"'+progress+'"}'
     json_data=json.dumps(data)
 
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=local_url,port=local_port))
     channel = connection.channel()
     channel.queue_declare(queue='request')
     channel.basic_publish(exchange='', routing_key='request', body=data)
@@ -69,6 +71,20 @@ def get_templ_send_msq(usernr, lab,progress):
     print("Transporter Send message: "+data)
 
     return web_templ
+
+# Function for sending the update message to the MSQ so we can update the GSheet
+def send_msg_update(usernr,lab,progress):
+    data=data='{"usernr":"'+str(usernr)+'","lab":"'+lab+'","progress":"'+progress+'"}'
+    json_data=json.dumps(data)
+
+    connection = pika.BlockingConnection(
+    pika.ConnectionParameters(host=local_url,port=local_port))
+    channel = connection.channel()
+    channel.queue_declare(queue='request')
+    channel.basic_publish(exchange='', routing_key='request', body=json_data)
+    print(" [x] Sent "+json_data)
+    connection.close()
+
 
 # ****************************************************************************************************************
 # Some Flask settings
@@ -165,6 +181,7 @@ def update_df():
 
 @app.route("/update_api", methods=['POST'])
 def update_api_df():
+    print(request.get_data().decode())
     send_post_dict=eval(json.loads(request.get_data().decode()))
     usernr=send_post_dict['usernr']
     lab=send_post_dict['lab']
@@ -235,14 +252,16 @@ def show_form_validator():
                         }
 
             if reply_post['action'] == "Validate":
-                # Have the data updated as we have a valid validation request
-                update_gsheet_df(int(reply_post['usernr']),reply_post['labname'],"Validated")
+                # Have the data updated as we have a valid validation request via MSQ Horserace
+                send_msg_update(reply_post['usernr'],reply_post['labname'],"Validated")
+                
                 row_sme = df_sme.loc[df_sme['Name'] == session['validator']].index[0] + 2
 
 
             else:
-                # Have the data updated as we have a rejected validation request
-                update_gsheet_df(int(reply_post['usernr']),reply_post['labname'],"Rejected;"+reply_post['validator'])
+                # Have the data updated as we have a rejected validation request MSQ Update
+                send_msg_update(reply_post['usernr'],reply_post['labname'],"Rejected;"+reply_post['validator'])
+                
 
             return render_template('web_validation_received.html',info=webdata, title='vGTS2021 - Validator area')
         else:

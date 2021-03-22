@@ -1,0 +1,107 @@
+version: "3"
+
+services:
+
+# Start the Rabbit MA server
+  rabbit-mq:
+    image: wessenstam/rabbit-mq:v1.0
+    container_name: rabbit-mq
+    restart: always
+    hostname: rabbit-mq
+    ports:
+       - "8081:15672"
+       - "5672:5672"
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:15672"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
+
+# Start the Validator tool
+  validator:
+    image: wessenstam/lookup:v3.0
+    container_name: validator
+    environment:
+      - script=validator_app.py
+      - validator_password=Nutanix/4u!
+      - local_port=5672
+      - local_url=192.168.1.168
+    restart: always
+    volumes:
+      - ${PWD}:/code
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+       - "2031:5000"
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:5000"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
+    depends_on:
+      rabbit-mq:
+        condition: service_healthy
+    links:
+      - rabbit-mq
+
+# Start the transporter app
+  transporter:
+    image: wessenstam/msq_apps:latest
+    container_name: msq_transporter
+    environment:
+      - script=transporter.py
+      - aws_port=6666
+      - aws_url=192.168.1.168
+      - local_port=5672
+      - local_url=192.168.1.168
+    restart: always
+    volumes:
+      - ${PWD}:/code
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      validator:
+        condition: service_healthy
+    links:
+      - validator
+
+
+# Start the updater app
+  updater:
+    image: wessenstam/msq_apps:latest
+    container_name: msq_updater
+    environment:
+      - script=updater.py
+      - local_port=5672
+      - local_url=192.168.1.168
+      - lookup_url=192.168.1.168:2021
+      - validator_url=192.168.1.168:2031
+    restart: always
+    volumes:
+      - ${PWD}:/code
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      validator:
+        condition: service_healthy
+    links:
+      - validator
+
+# Start the gsheet app
+  gsheet_update:
+    image: wessenstam/msq_apps:latest
+    container_name: msq_gsheet
+    environment:
+      - script=gsheet.py
+      - local_port=5672
+      - local_url=192.168.1.168
+    restart: always
+    volumes:
+      - ${PWD}:/code
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      validator:
+        condition: service_healthy
+    links:
+      - validator

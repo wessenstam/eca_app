@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+
+# Start the Rabbit MA server
+  rabbit-mq-aws:
+    image: wessenstam/rabbit-mq:v1.0
+    container_name: rabbitMQ-AWS
+    restart: always
+    hostname: rabbit-1
+    ports:
+      - "8080:15672"
+      - "6666:5672"
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:15672"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
+
+# Start the Lookup tool
+  lookup:
+    image: wessenstam/lookup:test
+    container_name: lookup_tool
+    environment:
+      - script=lookup_app.py
+      - aws_port=6666
+      - aws_url=192.168.1.168
+    restart: always
+    volumes:
+      - ${PWD}:/code
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+       - "2021:5000"
+    depends_on:
+      rabbit-mq-aws:
+        condition: service_healthy
+    links:
+      - rabbit-mq-aws

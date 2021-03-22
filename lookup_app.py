@@ -21,6 +21,8 @@ import pika
 # ****************************************************************************************************************
 # Get the needed password for the vlidator pages from the OS envionment
 pre_time="No"
+aws_port=os.environ['aws_port']
+aws_url=os.environ['aws_url']
 # ****************************************************************************************************************
 # Geting the Forms ready to be used
 class LoginForm(FlaskForm):
@@ -31,7 +33,7 @@ def send_msq_msg(usernr,lab,progress):
     data="{'usernr':'"+usernr+"','lab':'"+lab+"','progress':'"+progress+"'}"
     json_data=json.dumps(data)
     connection = pika.BlockingConnection(
-    pika.ConnectionParameters(host='localhost',port='6666'))
+    pika.ConnectionParameters(host=aws_url,port=aws_port))
     channel = connection.channel()
     channel.queue_declare(queue='request')
     channel.basic_publish(exchange='', routing_key='request', body=json_data)
@@ -102,7 +104,7 @@ def update_api_df():
     lab=send_post_dict['lab']
     progress=send_post_dict['progress']
     # Update the DF so the user sees the data
-    df.at[int(usernr)-1 , lab] = "Pending"
+    df.at[int(usernr)-1 , lab] = progress
 
     return "Received"
 

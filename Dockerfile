@@ -1,11 +1,9 @@
-FROM alpine
+FROM python:3.9-slim
 
 LABEL maintainer="wessenstam.at@gmail.com"
 
 # Get the to be needed stuff in
-RUN apk add --no-cache python3 python3-dev py3-pip libstdc++ g++ git && \
-    ln -s /usr/include/locale.h /usr/include/xlocale.h  && \
-# Install the python dependencies
+RUN apt update && apt install -y curl && \
     pip3 install --upgrade pip && \
     pip3 install gspread && \
     pip3 install --upgrade oauth2client && \
@@ -28,4 +26,4 @@ VOLUME /json
 
 EXPOSE 5000
 
-CMD ["sh", "start.sh $script $port"]
+CMD ["sh", "start.sh"]

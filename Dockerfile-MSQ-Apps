@@ -1,0 +1,22 @@
+FROM python:3.9-slim
+
+LABEL maintainer="wessenstam.at@gmail.com"
+
+# Get the to be needed stuff in
+RUN pip3 install --upgrade pip && \
+    pip3 install gspread && \
+    pip3 install --upgrade oauth2client && \
+    pip3 install pika && \
+    pip3 install requests && \
+    mkdir /json && \
+    chmod 777 /json
+
+WORKDIR /
+
+ADD start_msq_app.sh .
+
+VOLUME /json
+
+EXPOSE 5000
+
+CMD ["sh", "start_msq_app.sh"]

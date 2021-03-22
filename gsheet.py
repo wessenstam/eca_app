@@ -3,6 +3,9 @@ import json
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
+local_port=os.environ['local_port']
+local_url=os.environ['local_url']
+
 # ****************************************************************************************************************
 # Area for definition of variables
 lab_type_lst=["snow","leap","cmdb","xplay","aav","dam","mssql","ultimate","prov","calm","flow","cont","use","era","k8s","fiesta","day2"]
@@ -23,16 +26,17 @@ wks = gc.open("GTS Clusters-Assignments").sheet1
 
 def send_msq_msg(msg):
     connection = pika.BlockingConnection(
-    pika.ConnectionParameters(host='localhost'))
+    pika.ConnectionParameters(host=local_url, port=local_port))
     channel = connection.channel()
     channel.queue_declare(queue='update')
     channel.basic_publish(exchange='', routing_key='update', body=msg)
+    print("Send data to MSQ...")
     connection.close()
 
 
 def update_gsheet(msg):
-    json_var=str(msg.decode().replace("'","\""))
-    json_dict=eval(json_var)
+    json_var=json.loads(str(msg.decode()))
+    json_dict=eval(str(json_var))
     usernr=json_dict['usernr']
     lab=json_dict['lab']
     progress=json_dict['progress']
@@ -66,13 +70,14 @@ def update_gsheet(msg):
         col = col + item_nr  # Column AC
 
     # Update Attendee Gsheet
-    wks.update_cell(row, col, progress) 
+    wks.update_cell(row, col, progress)
+    print("Updated Gsheet...")
     json_dict['progress']=progress
     send_msq_msg(json.dumps(json_dict))
 
 
 def main():
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=local_url, port=local_port))
     channel = connection.channel()
     channel.queue_declare(queue='request')
     def callback(ch, method, properties, body):
