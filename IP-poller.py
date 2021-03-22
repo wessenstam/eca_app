@@ -27,10 +27,16 @@ def CheckURL(URL,username,passwd,payload,method):
     if method=="GET":
         # Get the anwser from the URL
         headers = {"Content-Type": "application/json"}
-        anwser=requests.get(URL,verify=False,auth=(username,passwd),timeout=15,headers=headers)
+        try:
+            anwser=requests.get(URL,verify=False,auth=(username,passwd),timeout=15,headers=headers)
+        except:
+            return '"[Error]"'
     else:
         headers={"Content-Type": "application/json"}
-        anwser = requests.post(URL, verify=False, auth=(username, passwd), timeout=15,data=payload,headers=headers)
+        try:
+            anwser = requests.post(URL, verify=False, auth=(username, passwd), timeout=15,data=payload,headers=headers)
+        except:
+            return '"[Error]"'
 
     try:
         json_data = json.loads(anwser.text)[0]
@@ -64,10 +70,11 @@ for cluster in df['Cluster IP']:
             payload='{"kind": "vm","filter": "vm_name==User0'+str(nr)+'-docker_VM"}'
             method="POST"
             json_data=CheckURL(url,'admin','ntnxGTS2021!',payload,method)
-            if json_data['metadata']['total_matches'] < 1:
-                continue
-            else:
+            if 'Error' not in json_data:
                 docker_vmip=json_data['entities'][0]['spec']['resources']['nic_list'][0]['ip_endpoint_list'][0]['ip']
+            else:
+                docker_vmip="NO CON"
                 update_gsheet_df(cluster,nr,docker_vmip)
-	
+                break
+            update_gsheet_df(cluster,nr,docker_vmip)
 	
