@@ -30,14 +30,13 @@ def CheckURL(URL,username,passwd,payload,method):
         try:
             anwser=requests.get(URL,verify=False,auth=(username,passwd),timeout=15,headers=headers)
         except:
-            return '"[Error]"'
+            return "{'state':'ERROR'}"
     else:
         headers={"Content-Type": "application/json"}
         try:
             anwser = requests.post(URL, verify=False, auth=(username, passwd), timeout=15,data=payload,headers=headers)
         except:
-            return '"[Error]"'
-
+            return "{'state':'ERROR'}"
     try:
         json_data = json.loads(anwser.text)[0]
         return json_data
@@ -45,8 +44,8 @@ def CheckURL(URL,username,passwd,payload,method):
         json_data=json.loads(anwser.text)
         return json_data
     except:
-        return_val='["Error"]'
-        return return_val
+    
+        return "{'state':'ERROR'}"
 
 # ****************************************************************************************************************
 # Set the needed GSheet credentials
@@ -64,14 +63,19 @@ df = pd.DataFrame(data, columns=headers)
 user=8
 for cluster in df['Cluster IP']:
     if cluster !="":
-
+        print(cluster)
         for nr in range(1,user):
             url='https://'+cluster+':9440/api/nutanix/v3/vms/list'
             payload='{"kind": "vm","filter": "vm_name==User0'+str(nr)+'-docker_VM"}'
             method="POST"
             json_data=CheckURL(url,'admin','ntnxGTS2021!',payload,method)
-            if 'Error' not in json_data:
-                docker_vmip=json_data['entities'][0]['spec']['resources']['nic_list'][0]['ip_endpoint_list'][0]['ip']
+            if 'ERROR' not in str(json_data):
+                if len(json_data['entities']) >0:
+                    docker_vmip=json_data['entities'][0]['spec']['resources']['nic_list'][0]['ip_endpoint_list'][0]['ip']
+                else:
+                    docker_vmip="Not Found"
+                    update_gsheet_df(cluster,nr,docker_vmip)
+                    continue
             else:
                 docker_vmip="NO CON"
                 update_gsheet_df(cluster,nr,docker_vmip)
