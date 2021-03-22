@@ -39,50 +39,13 @@ def send_msq_msg(usernr,lab,progress):
     connection.close()
 
 # Function for updating the underlaying GSheet so we can always grab back to the updated version
-def update_gsheet_df(usernr, lab,progress):
+def update_gsheet_df(usernr):
     # Based on the information we got we need to set some variables to the correct values.
     row = int(usernr) + 1
-    # If the progress is empty, this means people are just getting the data from their lookup page
-    if lab == "":
-        # We seem to have received no progress so we are to color col 0 (NR) green so we know they tried to get some data
-        # Update the GSheet row of the user and col 0
-        if pre_time == "Yes":
-            fmt = cellFormat(backgroundColor=color(0, 1,0),textFormat=textFormat(foregroundColor=color(0, 0, 0)))
-            format_cell_range(wks, "A"+str(row),  fmt)
-    else:
-        col = 16
-        if "iaas" in lab:  # Enter the IAAS labs
-            type_lab = lab[8:]
-            item_nr = lab_type_lst.index(type_lab)
-            col = col + item_nr
-            web_templ="web_hybrid_cloud.html"
-        elif "db" in lab:  # Enter the DB labs
-            type_lab = lab[6:]
-            item_nr = lab_type_lst.index(type_lab)
-            col = col + item_nr
-            web_templ = "web_database.html"
-        elif "euc" in lab:  # Enter the EUC labs
-            type_lab = lab[7:]
-            item_nr = lab_type_lst.index(type_lab)
-            col = col + item_nr
-            web_templ = "web_euc.html"
-        elif "cicd" in lab:  # Enter the CICD labs
-            type_lab = lab[5:]
-            item_nr = lab_type_lst.index(type_lab)
-            col = col + item_nr
-            web_templ = "web_cicd.html"
-        else:
-            type_lab = lab[6:]
-            item_nr = lab_type_lst.index(type_lab)
-            col = col + item_nr  # Column AC
-            web_templ = "web_cloud.html"
-
-        # Update Attendee Gsheet
-        wks.update_cell(row, col, progress)
-        # Update the DF
-        df.at[int(usernr)-1 , lab] = progress
-
-        return web_templ
+    fmt = cellFormat(backgroundColor=color(0, 1,0),textFormat=textFormat(foregroundColor=color(0, 0, 0)))
+    format_cell_range(wks, "A"+str(row),  fmt)
+    # Update Attendee Gsheet
+    wks.update_cell(row, col, progress)
 
 # ****************************************************************************************************************
 # Some Flask settings
@@ -141,7 +104,6 @@ def update_api_df():
     # Update the DF so the user sees the data
     df.at[int(usernr)-1 , lab] = "Pending"
 
-
     return "Received"
 
 @app.route("/update")
@@ -193,8 +155,10 @@ def show_form_data():
         if str(df_user_info):
             user_info = df_user_info.to_dict('records')
             try:
+                if pre_time == "Yes":
+                    # Green Background on pre-time
+                    update_gsheet_df(user_info[0]['Nr'],"","")
                 # Assigning the user data to variables that we need to show
-                update_gsheet_df(user_info[0]['Nr'],"","")
                 user_data = {'uniq_nr':user_info[0]['Nr'],
                              'attendee_name': user_info[0]['First Name'] + ' ' + user_info[0]['Last Name'],
                              'password': user_info[0]['Password'],

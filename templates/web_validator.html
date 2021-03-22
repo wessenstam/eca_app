@@ -2,7 +2,7 @@
 <HTML>
 <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <meta http-equiv="refresh" content="60; URL=/validator">
+  <meta http-equiv="refresh" content="60; URL=/">
   <title>Validation dashboard</title>
 </head>
 <BODY>
@@ -19,10 +19,10 @@
       {% for value in iaaslist %}
         <TR>
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
-          <TD><A HREF="/validator?lab=hc-iaas-snow&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}&snow_instance={{ value.split(',')[8] }}">{{ value.split(',')[4] }} </A></TD>
-          <TD><A HREF="/validator?lab=hc-iaas-leap&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[5] }} </A></TD>
-          <TD><A HREF="/validator?lab=hc-iaas-cmdb&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[6] }} </A></TD>
-          <TD><A HREF="/validator?lab=hc-iaas-xplay&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[7] }} </A></TD>
+          <TD><A HREF="/?lab=hc-iaas-snow&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}&snow_instance={{ value.split(',')[8] }}">{{ value.split(',')[4] }} </A></TD>
+          <TD><A HREF="/?lab=hc-iaas-leap&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[5] }} </A></TD>
+          <TD><A HREF="/?lab=hc-iaas-cmdb&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[6] }} </A></TD>
+          <TD><A HREF="/?lab=hc-iaas-xplay&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[7] }} </A></TD>
         </TR>
       {% endfor %}
   </table>
@@ -37,10 +37,10 @@
       {% for value in dblist %}
       <TR>
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
-          <TD><A HREF="/validator?lab=hc-db-aav&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[4] }} </A></TD>
-          <TD><A HREF="/validator?lab=hc-db-dam&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[5] }} </A></TD>
-          <TD><A HREF="/validator?lab=hc-db-mssql&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[6] }} </A></TD>
-          <TD><A HREF="/validator?lab=hc-db-ultimate&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[7] }} </A></TD>
+          <TD><A HREF="/?lab=hc-db-aav&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[4] }} </A></TD>
+          <TD><A HREF="/?lab=hc-db-dam&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[5] }} </A></TD>
+          <TD><A HREF="/?lab=hc-db-mssql&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[6] }} </A></TD>
+          <TD><A HREF="/?lab=hc-db-ultimate&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}">{{ value.split(',')[7] }} </A></TD>
       </TR>
       {% endfor %}
 
@@ -56,9 +56,9 @@
       {% for value in euclist %}
         <TR>
             <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
-            <TD><A HREF="/validator?lab=hc-euc-prov&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[4] }} </A></TD>
-            <TD><A HREF="/validator?lab=hc-euc-calm&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[5] }} </A></TD>
-            <TD><A HREF="/validator?lab=hc-euc-flow&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[6] }} </A></TD>
+            <TD><A HREF="/?lab=hc-euc-prov&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[4] }} </A></TD>
+            <TD><A HREF="/?lab=hc-euc-calm&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[5] }} </A></TD>
+            <TD><A HREF="/?lab=hc-euc-flow&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[6] }} </A></TD>
         </TR>
       {% endfor %}
   </table>
@@ -74,8 +74,8 @@
         <TR>
           {% if  value.split(',')[2] != "" %}
             <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
-            <TD><A HREF="/validator?lab=cicd-use&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[5] }} </A></TD>
-            <TD><A HREF="/validator?lab=cicd-era&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[6] }} </A></TD>
+            <TD><A HREF="/?lab=cicd-use&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[5] }} </A></TD>
+            <TD><A HREF="/?lab=cicd-era&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[6] }} </A></TD>
           {% endif %}
         </TR>
       {% endfor %}
@@ -92,9 +92,9 @@
       <TR>
         {% if  value.split(',')[2] != "" %}
           <TD>{{ value.split(',')[2] }}</TD><TD>{{ value.split(',')[3] }}</TD>
-          <TD><A HREF="/validator?lab=cloud-k8s&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[4] }} </A></TD>
-          <TD><A HREF="/validator?lab=cloud-fiesta&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[5] }} </A></TD>
-          <TD><A HREF="/validator?lab=cloud-day2&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[6] }} </A></TD>
+          <TD><A HREF="/?lab=cloud-k8s&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[4] }} </A></TD>
+          <TD><A HREF="/?lab=cloud-fiesta&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[5] }} </A></TD>
+          <TD><A HREF="/?lab=cloud-day2&userx={{ value.split(',')[1] }}&usernr={{ value.split(',')[0] }}" target="_blank">{{ value.split(',')[6] }} </A></TD>
         {% endif %}
       </TR>
       {% endfor %}

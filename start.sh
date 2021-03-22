@@ -5,6 +5,10 @@
 ln -s /json /code/json
 cd /code
 # Start the application
-export FLASK_APP=app.py
+export FLASK_APP=$1
 export FLASK_DEBUG=True
-flask run --host=0.0.0.0
+if [ $2 ]; then
+    flask run --host=0.0.0.0 -p $2
+else
+    flask run --host=0.0.0.0
+fi

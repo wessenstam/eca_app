@@ -28,11 +28,11 @@ def send_msq_msg(msg):
     channel.queue_declare(queue='update')
     channel.basic_publish(exchange='', routing_key='update', body=msg)
     connection.close()
-    print("Gsheet Send message: "+msg)
+
 
 def update_gsheet(msg):
-    json_var=msg.decode()
-    json_dict=eval(json.loads(json_var))
+    json_var=str(msg.decode().replace("'","\""))
+    json_dict=eval(json_var)
     usernr=json_dict['usernr']
     lab=json_dict['lab']
     progress=json_dict['progress']
