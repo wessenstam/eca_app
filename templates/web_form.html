@@ -287,7 +287,7 @@
                     <tr>
                         <td >Self Service with ServiceNOW</td>
                         {% if user.val_hc_snow.split(';')[0] == "Rejected" %}
-                            <td >{{ user.val_hc_snow.split(';')[0] }}. The validation request has been denied by the validator as it did not meet the validation criteria. <BR>You can direct questions regarding this rejection to <B>{{ user.val_hc_snow.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01P09AB7EC">#_gtsamer-snow</a>.</td>
+                            <td >{{ user.val_hc_snow.split(';')[0] }}. The validation request has been denied by the validator as it did not meet the validation criteria. <BR>You can direct questions regarding this rejection to <B>{{ user.val_hc_snow.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01P09AB7EC">#gtsapac-snow</a>.</td>
                         {% else %}
                             <td >{{ user.val_hc_snow }}</td>
                         {% endif %}
@@ -295,7 +295,7 @@
                     <tr>
                         <td>Cross-Cluster DR and Migration with Leap</td>
                         {% if user.val_hc_leap.split(';')[0] == "Rejected" %}
-                            <td>{{ user.val_hc_leap.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. <BR>You can direct questions regarding this rejection to <B>{{ user.val_hc_leap.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01P09AB7EC">#_gtsamer-snow</a>.</td>
+                            <td>{{ user.val_hc_leap.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. <BR>You can direct questions regarding this rejection to <B>{{ user.val_hc_leap.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01P09AB7EC">#gtsapac-snow</a>.</td>
                         {% else %}
                             <td>{{ user.val_hc_leap }}</td>
                         {% endif %}
@@ -303,7 +303,7 @@
                     <tr>
                         <td>ServiceNOW Alert & CMDB Integration</td>
                         {% if user.val_hc_cmdb.split(';')[0] == "Rejected" %}
-                            <td>{{ user.val_hc_cmdb.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_hc_cmdb.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01P09AB7EC">#_gtsamer-snow</a>.</td>
+                            <td>{{ user.val_hc_cmdb.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_hc_cmdb.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01P09AB7EC">#gtsapac-snow</a>.</td>
                         {% else %}
                             <td>{{ user.val_hc_cmdb }}</td>
                         {% endif %}
@@ -311,7 +311,7 @@
                     <tr>
                         <td>Automated remediation with ServiceNOW and X-Play</td>
                         {% if user.val_hc_xplay.split(';')[0] == "Rejected" %}
-                            <td>{{ user.val_hc_xplay.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_hc_xplay.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01P09AB7EC">#_gtsamer-snow</a>.</td>
+                            <td>{{ user.val_hc_xplay.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_hc_xplay.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01P09AB7EC">#gtsapac-snow</a>.</td>
                         {% else %}
                             <td>{{ user.val_hc_xplay }}</td>
                         {% endif %}
@@ -322,7 +322,7 @@
                     <tr>
                         <td >Multi-Cloud Application Avalability</td>
                         {% if user.val_hc_db_aav.split(';')[0] == "Rejected" %}
-                            <td>{{ user.val_hc_db_aav.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_hc_db_aav.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01NP3E77C1">#_gtsamer-db</a>.</td>
+                            <td>{{ user.val_hc_db_aav.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_hc_db_aav.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01NP3E77C1">#gtsapac-db</a>.</td>
                         {% else %}
                             <td>{{ user.val_hc_db_aav }}</td>
                         {% endif %}
@@ -330,7 +330,7 @@
                     <tr>
                         <td >Multi-Cloud Data Access Management</td>
                         {% if user.val_hc_db_dam.split(';')[0] == "Rejected" %}
-                            <td>{{ user.val_hc_db_dam.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_hc_db_dam.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01NP3E77C1">#_gtsamer-db</a>.</td>
+                            <td>{{ user.val_hc_db_dam.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_hc_db_dam.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01NP3E77C1">#gtsapac-db</a>.</td>
                         {% else %}
                             <td>{{ user.val_hc_db_dam }}</td>
                         {% endif %}
@@ -338,7 +338,7 @@
                     <tr>
                         <td >Patching SQL Server with Era</td>
                         {% if user.val_hc_db_mssql.split(';')[0] == "Rejected" %}
-                            <td>{{ user.val_hc_db_mssql.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_hc_db_mssql.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01NP3E77C1">#_gtsamer-db</a>.</td>
+                            <td>{{ user.val_hc_db_mssql.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_hc_db_mssql.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01NP3E77C1">#gtsapac-db</a>.</td>
                         {% else %}
                             <td>{{ user.val_hc_db_mssql }}</td>
                         {% endif %}
@@ -346,7 +346,7 @@
                     <tr>
                         <td >Application Monitoring with Prism Ultimate</td>
                         {% if user.val_hc_db_ultimate.split(';')[0] == "Rejected" %}
-                            <td>{{ user.val_hc_db_ultimate.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_hc_db_ultimate.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01NP3E77C1">#_gtsamer-db</a>.</td>
+                            <td>{{ user.val_hc_db_ultimate.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_hc_db_ultimate.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01NP3E77C1">#gtsapac-db</a>.</td>
                         {% else %}
                             <td>{{ user.val_hc_db_ultimate }}</td>
                         {% endif %}
@@ -357,7 +357,7 @@
                     <tr>
                         <td >Multi-Cloud Desktops with Citrix on AHV</td>
                         {% if user.val_hc_euc_prov.split(';')[0] == "Rejected" %}
-                            <td>{{ user.val_hc_euc_prov.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_hc_euc_prov.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01MVLYCKJT">#_gtsamer-euc</a>.</td>
+                            <td>{{ user.val_hc_euc_prov.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_hc_euc_prov.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01MVLYCKJT">#gtsapac-euc</a>.</td>
                         {% else %}
                             <td>{{ user.val_hc_euc_prov }}</td>
                         {% endif %}
@@ -365,7 +365,7 @@
                     <tr>
                         <td >Dynamic Expansion with Calm Runbooks</td>
                          {% if user.val_hc_euc_calm.split(';')[0] == "Rejected" %}
-                            <td>{{ user.val_hc_euc_calm.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_hc_euc_calm.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01MVLYCKJT">#_gtsamer-euc</a>.</td>
+                            <td>{{ user.val_hc_euc_calm.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_hc_euc_calm.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01MVLYCKJT">#gtsapac-euc</a>.</td>
                         {% else %}
                             <td>{{ user.val_hc_euc_calm }}</td>
                         {% endif %}
@@ -373,7 +373,7 @@
                     <tr>
                         <td >Securing Desktops with Flow</td>
                          {% if user.val_hc_euc_flow.split(';')[0] == "Rejected" %}
-                            <td>{{ user.val_hc_euc_flow.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_hc_euc_flow.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01MVLYCKJT">#_gtsamer-euc</a>.</td>
+                            <td>{{ user.val_hc_euc_flow.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_hc_euc_flow.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01MVLYCKJT">#gtsapac-euc</a>.</td>
                         {% else %}
                             <td>{{ user.val_hc_euc_flow }}</td>
                         {% endif %}
@@ -384,7 +384,7 @@
                     <tr>
                         <td >Building The Pipeline</td>
                          {% if user.val_cicd_use.split(';')[0] == "Rejected" %}
-                            <td>{{ user.val_cicd_use.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_cicd_use.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01N3M44PFY">#_gtsamer-cicd</a>.</td>
+                            <td>{{ user.val_cicd_use.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_cicd_use.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01N3M44PFY">#gtsapac-cicd</a>.</td>
                         {% else %}
                             <td>{{ user.val_cicd_use }}</td>
                         {% endif %}
@@ -392,7 +392,7 @@
                     <tr>
                         <td >Creating Development Databases with Era</td>
                          {% if user.val_cicd_era.split(';')[0] == "Rejected" %}
-                            <td>{{ user.val_cicd_era.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_cicd_era.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01N3M44PFY">#_gtsamer-cicd</a>.</td>
+                            <td>{{ user.val_cicd_era.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_cicd_era.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01N3M44PFY">#gtsapac-cicd</a>.</td>
                         {% else %}
                             <td>{{ user.val_cicd_era }}</td>
                         {% endif %}
@@ -403,7 +403,7 @@
                     <tr>
                         <td >Adding Network Services & Dashboards</td>
                          {% if user.val_cloud_k8s.split(';')[0] == "Rejected" %}
-                            <td>{{ user.val_cloud_k8s.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_cloud_k8s.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01N3M1462J">#_gtsamer-karbon</a>.</td>
+                            <td>{{ user.val_cloud_k8s.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_cloud_k8s.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01N3M1462J">#gtsapac-karbon</a>.</td>
                         {% else %}
                             <td>{{ user.val_cloud_k8s }}</td>
                         {% endif %}
@@ -411,7 +411,7 @@
                     <tr>
                         <td >Deploying Fiesta Web Service</td>
                          {% if user.val_cloud_fiesta.split(';')[0] == "Rejected" %}
-                            <td>{{ user.val_cloud_fiesta.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_cloud_fiesta.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01N3M1462J">#_gtsamer-karbon</a>.</td>
+                            <td>{{ user.val_cloud_fiesta.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_cloud_fiesta.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01N3M1462J">#gtsapac-karbon</a>.</td>
                         {% else %}
                             <td>{{ user.val_cloud_fiesta }}</td>
                         {% endif %}
@@ -419,7 +419,7 @@
                     <tr>
                         <td >Day 2 Operations</td>
                          {% if user.val_cloud_day2.split(';')[0] == "Rejected" %}
-                            <td>{{ user.val_cloud_day2.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_cloud_day2.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01N3M1462J">#_gtsamer-karbon</a>.</td>
+                            <td>{{ user.val_cloud_day2.split(';')[0] }}. The validation request has been rejected by the validator as it did not meet the validation criteria. You can direct questions regarding this rejection to <B>{{ user.val_cloud_day2.split(';')[1] }}</b> in <a href="slack://channel?team=T0252CLM8&id=C01N3M1462J">#gtsapac-karbon</a>.</td>
                         {% else %}
                             <td>{{ user.val_cloud_day2 }}</td>
                         {% endif %}
