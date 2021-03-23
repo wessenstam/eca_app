@@ -163,6 +163,7 @@ def update_df():
     data = wks.get_all_values()
     headers = data.pop(0)
     # Drop all data in a dataframe for the attendees
+    global df
     df = pd.DataFrame(data, columns=headers)
     # Clean up the lines with no email address
     #df.drop(df[df['Email'] == ""].index, inplace=True)
@@ -172,7 +173,9 @@ def update_df():
     data_sme = wks_sme.get_all_values()
     headers = data_sme.pop(0)
     # Drop all data in a dataframe for the attendees
+    global df_sme
     df_sme= pd.DataFrame(data_sme, columns=headers)
+    print(df_sme)
     # Cleaning up the lines that have no name
     #df_sme.drop(df_sme[df_sme['Name'] == ""].index, inplace=True)
     
