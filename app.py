@@ -163,20 +163,18 @@ def update_df():
     data = wks.get_all_values()
     headers = data.pop(0)
     # Drop all data in a dataframe for the attendees
-    df.drop(df.index, inplace=True)
-    df = pd.DataFrame(data, columns=headers)
+    df.update(pd.DataFrame(data, columns=headers))
     # Clean up the lines with no email address
-    df.drop(df[df['Email'] == ""].index, inplace=True)
+    #df.drop(df[df['Email'] == ""].index, inplace=True)
     # ****************************************************************************************************************
     # Grab the data from the SME Gsheet
     wks_sme = gc.open("GTS SME Validations").sheet1
     data = wks_sme.get_all_values()
     headers = data.pop(0)
     # Drop all data in a dataframe for the attendees
-    df_sme.drop(df_sme.index, inplace=True)
-    df_sme = pd.DataFrame(data, columns=headers)
+    df_sme.update(pd.DataFrame(data, columns=headers))
     # Cleaning up the lines that have no name
-    df_sme.drop(df_sme[df_sme['Name'] == ""].index, inplace=True)
+    #df_sme.drop(df_sme[df_sme['Name'] == ""].index, inplace=True)
     
     return render_template('web_update.html', title='vGTS2021 - Cluster lookup')
 
