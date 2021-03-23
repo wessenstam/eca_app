@@ -175,7 +175,6 @@ def update_df():
     # Drop all data in a dataframe for the attendees
     global df_sme
     df_sme= pd.DataFrame(data_sme, columns=headers)
-    print(df_sme)
     # Cleaning up the lines that have no name
     df_sme.drop(df_sme[df_sme['Name'] == ""].index, inplace=True)
     
