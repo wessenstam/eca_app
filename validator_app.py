@@ -73,15 +73,15 @@ def get_templ_send_msq(usernr, lab,progress):
     return web_templ
 
 # Function for sending the update message to the MSQ so we can update the GSheet
-def send_msg_update(usernr,lab,progress):
+def send_msg_update(usernr,lab,progress,queue):
     data=data='{"usernr":"'+str(usernr)+'","lab":"'+lab+'","progress":"'+progress+'"}'
     json_data=json.dumps(data)
 
     connection = pika.BlockingConnection(
     pika.ConnectionParameters(host=local_url,port=local_port))
     channel = connection.channel()
-    channel.queue_declare(queue='request')
-    channel.basic_publish(exchange='', routing_key='request', body=json_data)
+    channel.queue_declare(queue=queue)
+    channel.basic_publish(exchange='', routing_key=queue, body=json_data)
     print(" [x] Sent "+json_data)
     connection.close()
 
@@ -252,11 +252,10 @@ def show_form_validator():
                         }
 
             if reply_post['action'] == "Validate":
-                # Have the data updated as we have a valid validation request via MSQ Horserace
-                send_msg_update(reply_post['usernr'],reply_post['labname'],"Validated")
-                
-                row_sme = df_sme.loc[df_sme['Name'] == session['validator']].index[0] + 2
-
+                # Have the data updated as we have a valid validation request for the updater to client and validator
+                send_msg_update(reply_post['usernr'],reply_post['labname'],"Validated","update")
+                # Have the data updated as we have a valid validation request for horserace
+                send_msg_update(reply_post['usernr'],reply_post['labname'],"Validated","horserace")
 
             else:
                 # Have the data updated as we have a rejected validation request MSQ Update
