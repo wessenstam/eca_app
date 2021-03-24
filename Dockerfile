@@ -15,6 +15,7 @@ RUN apt update && apt install -y curl && \
     pip3 install gspread_formatting && \
     pip3 install pika && \
     pip3 install requests && \
+    pip3 install natsort && \
     mkdir /json && \
     chmod 777 /json
 
