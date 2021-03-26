@@ -20,7 +20,7 @@ services:
 # Start the Validator tool
   validator:
     image: wessenstam/lookup:v3.0
-    container_name: validator
+    container_name: validator_tool
     environment:
       - script=validator_app.py
       - validator_password=Nutanix/4u!
