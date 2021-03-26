@@ -105,3 +105,22 @@ services:
         condition: service_healthy
     links:
       - validator
+
+      # Start the gsheet app
+  horserace_gsheet_update:
+    image: wessenstam/msq_apps:latest
+    container_name: msq_horserace_gsheet
+    environment:
+      - script=horserace.py
+      - local_port=5672
+      - local_url=192.168.1.168
+    restart: always
+    volumes:
+      - ${PWD}:/code
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      validator:
+        condition: service_healthy
+    links:
+      - validator

@@ -276,7 +276,7 @@ def show_form_validator():
                 # Have the data updated as we have a valid validation request for the updater to client and validator
                 send_msg_update(reply_post['usernr'],reply_post['labname'],"Validated","update")
                 # Have the data updated as we have a valid validation request for horserace
-                send_msg_update(reply_post['usernr'],reply_post['labname'],"Validated","horserace")
+                send_msg_update(reply_post['usernr'],reply_post['labname'],session['validator'],"horserace")
 
             else:
                 # Have the data updated as we have a rejected validation request MSQ Update
