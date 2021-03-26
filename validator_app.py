@@ -17,6 +17,8 @@ import os
 from datetime import timedelta
 from oauth2client.service_account import ServiceAccountCredentials
 import pika
+import numpy as np
+from natsort import index_natsorted
 
 # ****************************************************************************************************************
 # Get the needed password for the vlidator pages from the OS envionment
@@ -153,6 +155,25 @@ def logout():
         return render_template('web_loged_out.html',org="attendee")
     else:  
         return render_template('web_loged_out.html',org="validator")
+
+@app.route('/horse_race')
+def graph():
+    df_sme.sort_values(by=['Total','Name'], key=lambda x: np.argsort(index_natsorted(df_sme['Total'])), ascending=[False,True], inplace=True)
+    labels = df_sme['Name'].head(10).to_list()
+    values = df_sme['Total'].head(10).to_list()
+    max_val=int(values[0])*1.5
+    if max_val < 10:
+        max_val=10
+
+    colors = [
+        "#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA",
+        "#ABCDEF", "#DDDDDD", "#ABCABC", "#4169E1",
+        "#C71585", "#FF4500"]
+
+    bar_labels=labels
+    bar_values=values
+    return render_template('bar_chart.html', title='Validators Horse Race', max=max_val, labels=bar_labels, values=bar_values)
+
 
 @app.route("/update")
 def update_df():

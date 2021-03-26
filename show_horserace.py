@@ -31,15 +31,17 @@ def bar():
     labels = df_sme['Name'].head(10).to_list()
     values = df_sme['Total'].head(10).to_list()
     max_val=int(values[0])*1.5
+    if max_val < 10:
+        max_val=10
 
     colors = [
         "#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA",
         "#ABCDEF", "#DDDDDD", "#ABCABC", "#4169E1",
-        "#C71585", "#FF4500", "#FEDCBA", "#46BFBD"]
+        "#C71585", "#FF4500"]
 
     bar_labels=labels
     bar_values=values
     return render_template('bar_chart.html', title='Validators Horse Race', max=max_val, labels=bar_labels, values=bar_values)
 
 if __name__ == '__main__':
-    app.run(debug=True,host='0.0.0.0', port=)
+    app.run(debug=True,host='0.0.0.0', port=5000)
