@@ -20,7 +20,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 # ****************************************************************************************************************
 # Get the needed password for the vlidator pages from the OS envionment
 validator_password=os.environ['validator_password']
-pre_time="No"
+pre_time="Yes"
 # ****************************************************************************************************************
 # Geting the Forms ready to be used
 class LoginForm(FlaskForm):
@@ -35,9 +35,9 @@ def update_gsheet_df(usernr, lab,progress):
     if lab == "":
         # We seem to have received no progress so we are to color col 0 (NR) green so we know they tried to get some data
         # Update the GSheet row of the user and col 0
-        #if pre_time == "Yes":
-        fmt = cellFormat(backgroundColor=color(0, 1,0),textFormat=textFormat(foregroundColor=color(0, 0, 0)))
-        format_cell_range(wks, "A"+str(row),  fmt)
+        if pre_time == "Yes":
+            fmt = cellFormat(backgroundColor=color(0, 1,0),textFormat=textFormat(foregroundColor=color(0, 0, 0)))
+            format_cell_range(wks, "A"+str(row),  fmt)
     else:
         col = 16
         if "iaas" in lab:  # Enter the IAAS labs
