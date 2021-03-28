@@ -11,6 +11,24 @@ import time
 from oauth2client.service_account import ServiceAccountCredentials
 from df2gspread import df2gspread as d2g
 
+
+# ****************************************************************************************************************
+# Set the needed GSheet credentials
+scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+credentials = ServiceAccountCredentials.from_json_keyfile_name('json/gts-gsheet-pandas-flask.json',scope)  # Change location as soon as it comes into prod
+gc = gspread.authorize(credentials)
+
+# ****************************************************************************************************************
+# Grabbing the initial data from gsheet for the attendees
+wks = gc.open("GTS IP addresses").sheet1
+data = wks.get_all_values()
+headers = data.pop(0)
+# Drop all data in a dataframe for the attendees
+df = pd.DataFrame(data, columns=headers)
+clusters=df['Cluster IP'].to_list()
+
+df_ip=df.copy()
+
 # No warnings should be displayed on SSL certificates
 requests.packages.urllib3.disable_warnings()
 
@@ -19,6 +37,7 @@ def cluster_info(cluster):
     print(cluster)
     #Sleep a random number of Secs before moving on, due to Google API Rate Limit
     for nr in range(1,user):
+        global df_ip
         url='https://'+cluster+':9440/api/nutanix/v3/vms/list'
         payload='{"kind": "vm","filter": "vm_name==User0'+str(nr)+'-docker_VM"}'
         method="POST"
@@ -28,23 +47,15 @@ def cluster_info(cluster):
                 docker_vmip=json_data['entities'][0]['spec']['resources']['nic_list'][0]['ip_endpoint_list'][0]['ip']
             else:
                 docker_vmip="Not Found"
-                update_gsheet_df(cluster,nr,docker_vmip)
-                continue
         else:
             docker_vmip="NO CON"
-            update_gsheet_df(cluster,nr,docker_vmip)
+            row_cluster = int(df_ip[df_ip['Cluster IP'] == cluster].index[0])
+            df_ip.iat[row_cluster, nr] = docker_vmip
             break
-        update_gsheet_df(cluster,nr,docker_vmip)
-
-# Function for updating the underlaying GSheet so we can always grab back to the updated version
-def update_gsheet_df(cluster,nr,docker_vmip):
-    # Based on the information we got we need to set some variables to the correct values.
-    row_cluster = int(df[df['Cluster IP'] == cluster].index[0])
-    df.iat[row_cluster, nr] = docker_vmip
-    #row = int(row_cluster)+2
-    # Update Attendee Gsheet
-    #wks.update_cell(row, nr+1, docker_vmip)
-
+        row_cluster = int(df_ip[df_ip['Cluster IP'] == cluster].index[0])
+        df_ip.iat[row_cluster, nr] = docker_vmip
+    if cluster=="10.55.9.37":
+        return df_ip
 
 # Function for checking URLs
 def CheckURL(URL,username,passwd,payload,method):
@@ -71,28 +82,15 @@ def CheckURL(URL,username,passwd,payload,method):
     
         return "{'state':'ERROR'}"
 
-# ****************************************************************************************************************
-# Set the needed GSheet credentials
-scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-credentials = ServiceAccountCredentials.from_json_keyfile_name('json/gts-gsheet-pandas-flask.json',scope)  # Change location as soon as it comes into prod
-gc = gspread.authorize(credentials)
-
-# ****************************************************************************************************************
-# Grabbing the initial data from gsheet for the attendees
-wks = gc.open("GTS IP addresses").sheet1
-data = wks.get_all_values()
-headers = data.pop(0)
-# Drop all data in a dataframe for the attendees
-df = pd.DataFrame(data, columns=headers)
-clusters=df['Cluster IP'].to_list()
 
 
 if __name__ == '__main__':
     # Drop all found IPs in the DF
-    with concurrent.futures.ProcessPoolExecutor(max_workers=1) as executor:
+    with concurrent.futures.ProcessPoolExecutor() as executor:
         executor.map(cluster_info, clusters)
-
+    
+    print(df_ip.to_dict())
     # Dump DF to Gsheet
-    spreadsheet_key='1HIwvPkKvrLx1IwYtwTsvpKQS6RdkuTAOQBL9-5Diw-8'
-    wks_name='Master_mp'
-    d2g.upload(df, spreadsheet_key, wks_name, credentials=credentials, row_names=True)
+    #spreadsheet_key='1HIwvPkKvrLx1IwYtwTsvpKQS6RdkuTAOQBL9-5Diw-8'
+    #wks_name='Master_mp'
+    #d2g.upload(df_ip, spreadsheet_key, wks_name, credentials=credentials, row_names=True)
