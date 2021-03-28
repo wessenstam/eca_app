@@ -8,6 +8,8 @@ import gspread
 import pandas as pd
 import time
 from oauth2client.service_account import ServiceAccountCredentials
+from random import randrange
+from df2gspread import df2gspread as d2g
 
 # No warnings should be displayed on SSL certificates
 requests.packages.urllib3.disable_warnings()
@@ -16,10 +18,10 @@ requests.packages.urllib3.disable_warnings()
 def update_gsheet_df(cluster,nr,docker_vmip):
     # Based on the information we got we need to set some variables to the correct values.
     row_cluster = int(df[df['Cluster IP'] == cluster].index[0])
-    #df.iat[row_cluster, nr] = docker_vmip
-    row = int(row_cluster)+2
+    df.iat[row_cluster, nr] = docker_vmip
+    #row = int(row_cluster)+2
     # Update Attendee Gsheet
-    wks.update_cell(row, nr+1, docker_vmip)
+    #wks.update_cell(row, nr+1, docker_vmip)
 
 
 # Function for checking URLs
@@ -82,3 +84,7 @@ for cluster in df['Cluster IP']:
                 break
             update_gsheet_df(cluster,nr,docker_vmip)
 	
+# Dump DF to Gsheet
+spreadsheet_key='1HIwvPkKvrLx1IwYtwTsvpKQS6RdkuTAOQBL9-5Diw-8'
+wks_name='Master'
+d2g.upload(df, spreadsheet_key, wks_name, credentials=credentials, row_names=True)

@@ -9,7 +9,6 @@ import gspread
 import pandas as pd
 import time
 from oauth2client.service_account import ServiceAccountCredentials
-from random import randrange
 from df2gspread import df2gspread as d2g
 
 # No warnings should be displayed on SSL certificates
@@ -87,11 +86,13 @@ headers = data.pop(0)
 df = pd.DataFrame(data, columns=headers)
 clusters=df['Cluster IP'].to_list()
 
-# Drop all found IPs in the DF
-with concurrent.futures.ProcessPoolExecutor(max_workers=4) as executor:
-    executor.map(cluster_info, clusters)
 
-# Dump DF to Gsheet
-spreadsheet_key='1HIwvPkKvrLx1IwYtwTsvpKQS6RdkuTAOQBL9-5Diw-8'
-wks_name='Master'
-d2g.upload(df, spreadsheet_key, wks_name, credentials=credentials, row_names=True)
+if __name__ == '__main__':
+    # Drop all found IPs in the DF
+    with concurrent.futures.ProcessPoolExecutor(max_workers=1) as executor:
+        executor.map(cluster_info, clusters)
+
+    # Dump DF to Gsheet
+    spreadsheet_key='1HIwvPkKvrLx1IwYtwTsvpKQS6RdkuTAOQBL9-5Diw-8'
+    wks_name='Master_mp'
+    d2g.upload(df, spreadsheet_key, wks_name, credentials=credentials, row_names=True)
