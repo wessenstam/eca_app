@@ -177,6 +177,16 @@ def update_df():
     df_sme= pd.DataFrame(data_sme, columns=headers)
     # Cleaning up the lines that have no name
     df_sme.drop(df_sme[df_sme['Name'] == ""].index, inplace=True)
+    # ****************************************************************************************************************
+    # Grab the data from the GTS 2021 Docker VM IP Gsheet
+    wks_sme = gc.open("GTS IP addresses").sheet1
+    data = wks_sme.get_all_values()
+    headers = data.pop(0)
+    # Drop all data in a dataframe for the attendees
+    global df_docker_ip
+    df_docker_ip = pd.DataFrame(data, columns=headers)
+    # Cleaning up the lines that have no name
+    df_docker_ip.drop(df_docker_ip[df_docker_ip['Cluster IP'] == ""].index, inplace=True)
     
     return render_template('web_update.html', title='vGTS2021 - Cluster lookup')
 

@@ -37,7 +37,6 @@ def cluster_info(cluster):
     print(cluster)
     #Sleep a random number of Secs before moving on, due to Google API Rate Limit
     for nr in range(1,user):
-        global df_ip
         url='https://'+cluster+':9440/api/nutanix/v3/vms/list'
         payload='{"kind": "vm","filter": "vm_name==User0'+str(nr)+'-docker_VM"}'
         method="POST"
@@ -54,8 +53,7 @@ def cluster_info(cluster):
             break
         row_cluster = int(df_ip[df_ip['Cluster IP'] == cluster].index[0])
         df_ip.iat[row_cluster, nr] = docker_vmip
-    if cluster=="10.55.9.37":
-        return df_ip
+    return df_ip
 
 # Function for checking URLs
 def CheckURL(URL,username,passwd,payload,method):
@@ -86,11 +84,18 @@ def CheckURL(URL,username,passwd,payload,method):
 
 if __name__ == '__main__':
     # Drop all found IPs in the DF
+    workers=[]
     with concurrent.futures.ProcessPoolExecutor() as executor:
-        executor.map(cluster_info, clusters)
-    
-    print(df_ip.to_dict())
+        for cluster in clusters:
+            workers.append(executor.submit(cluster_info,cluster))
+        print(workers)
+
+        for f in concurrent.futures.as_completed(workers):
+            df_return=f.result()
+            df = df.append([df_return], sort=False)
+    df_ip=pd.DataFrame(list(df))
+    print(df_ip.shape())
     # Dump DF to Gsheet
-    #spreadsheet_key='1HIwvPkKvrLx1IwYtwTsvpKQS6RdkuTAOQBL9-5Diw-8'
-    #wks_name='Master_mp'
-    #d2g.upload(df_ip, spreadsheet_key, wks_name, credentials=credentials, row_names=True)
+    spreadsheet_key='1HIwvPkKvrLx1IwYtwTsvpKQS6RdkuTAOQBL9-5Diw-8'
+    wks_name='Master_mp'
+    d2g.upload(df_ip, spreadsheet_key, wks_name, credentials=credentials, row_names=True)
