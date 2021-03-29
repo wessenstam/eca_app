@@ -35,6 +35,8 @@ requests.packages.urllib3.disable_warnings()
 def cluster_info(cluster):
     user=8
     print(cluster)
+    cluster_info=[]
+    cluster_info.append(cluster)
     #Sleep a random number of Secs before moving on, due to Google API Rate Limit
     for nr in range(1,user):
         url='https://'+cluster+':9440/api/nutanix/v3/vms/list'
@@ -48,12 +50,10 @@ def cluster_info(cluster):
                 docker_vmip="Not Found"
         else:
             docker_vmip="NO CON"
-            row_cluster = int(df_ip[df_ip['Cluster IP'] == cluster].index[0])
-            df_ip.iat[row_cluster, nr] = docker_vmip
+            cluster_info.append(cluster)
             break
-        row_cluster = int(df_ip[df_ip['Cluster IP'] == cluster].index[0])
-        df_ip.iat[row_cluster, nr] = docker_vmip
-    return df_ip
+        cluster_info.append(docker_vmip)
+    return cluster_info
 
 # Function for checking URLs
 def CheckURL(URL,username,passwd,payload,method):
@@ -85,17 +85,21 @@ def CheckURL(URL,username,passwd,payload,method):
 if __name__ == '__main__':
     # Drop all found IPs in the DF
     workers=[]
+    list_arr=[['Cluster IP','User01','User02','User03','User04','User05','User06','User07']]
     with concurrent.futures.ProcessPoolExecutor() as executor:
         for cluster in clusters:
             workers.append(executor.submit(cluster_info,cluster))
-        print(workers)
 
+        # Let's get all the results and push them into a list of lists
         for f in concurrent.futures.as_completed(workers):
-            df_return=f.result()
-            df = df.append([df_return], sort=False)
-    df_ip=pd.DataFrame(list(df))
-    print(df_ip.shape())
+            list_arr.append(f.result())
+
+    # Transform the list of lists into a DF
+    column_names=list_arr.pop(0)
+    df=pd.DataFrame(list_arr, columns=column_names)
+    df.set_index('Cluster IP')
+
     # Dump DF to Gsheet
     spreadsheet_key='1HIwvPkKvrLx1IwYtwTsvpKQS6RdkuTAOQBL9-5Diw-8'
-    wks_name='Master_mp'
-    d2g.upload(df_ip, spreadsheet_key, wks_name, credentials=credentials, row_names=True)
+    wks_name='Master_MP'
+    d2g.upload(df, spreadsheet_key, wks_name, credentials=credentials, row_names=True)
