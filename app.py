@@ -119,8 +119,8 @@ df_sme.drop(df_sme[df_sme['Name'] == ""].index, inplace=True)
 
 # ****************************************************************************************************************
 # Grab the data from the GTS 2021 Docker VM IP Gsheet
-wks_sme = gc.open("GTS IP addresses").sheet1
-data = wks_sme.get_all_values()
+wks_ip = gc.open("GTS IP addresses").sheet1
+data = wks_ip.get_all_values()
 headers = data.pop(0)
 # Drop all data in a dataframe for the attendees
 df_docker_ip = pd.DataFrame(data, columns=headers)
@@ -179,8 +179,8 @@ def update_df():
     df_sme.drop(df_sme[df_sme['Name'] == ""].index, inplace=True)
     # ****************************************************************************************************************
     # Grab the data from the GTS 2021 Docker VM IP Gsheet
-    wks_sme = gc.open("GTS IP addresses").sheet1
-    data = wks_sme.get_all_values()
+    wks_ip = gc.open("GTS IP addresses").sheet1
+    data = wks_ip.get_all_values()
     headers = data.pop(0)
     # Drop all data in a dataframe for the attendees
     global df_docker_ip
