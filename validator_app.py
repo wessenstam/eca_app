@@ -158,6 +158,15 @@ def logout():
 
 @app.route('/horse_race')
 def graph():
+    # Grab the data from the SME Gsheet
+    wks_sme = gc.open("GTS SME Validations").sheet1
+    data = wks_sme.get_all_values()
+    headers = data.pop(0)
+    # Drop all data in a dataframe for the SMEs
+    df_sme.update(pd.DataFrame(data, columns=headers))
+    # Cleaning up the lines that have no name
+    df_sme.drop(df_sme[df_sme['Name'] == ""].index, inplace=True)
+    
     df_sme.sort_values(by=['Total','Name'], key=lambda x: np.argsort(index_natsorted(df_sme['Total'])), ascending=[False,True], inplace=True)
     labels = df_sme['Name'].head(10).to_list()
     values = df_sme['Total'].head(10).to_list()
