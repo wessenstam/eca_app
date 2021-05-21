@@ -97,7 +97,7 @@ gc = gspread.authorize(credentials)
 
 # ****************************************************************************************************************
 # Grabbing the initial data from gsheet for the attendees
-wks = gc.open("GTS Clusters-Assignments").sheet1
+wks = gc.open("Clusters-Assignments").sheet1
 data = wks.get_all_values()
 headers = data.pop(0)
 # Drop all data in a dataframe for the attendees
