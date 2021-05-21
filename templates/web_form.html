@@ -98,11 +98,12 @@
                         <td>On-premises (HPOC) Prism Element Cluster/Virtual IP</td>
                         <td><a href="https://{{ user.pe_vip }}:9440" target="_blank">https://{{ user.pe_vip }}:9440</a></td>
                     </tr>
+                    {% if user.aws_ip %}
                     <tr>
                         <td>AWS-Cluster Prism Element Cluster/Virtual IP</td>
                         <td><a href="https://{{ user.aws_ip }}:9440" target="_blank">https://{{ user.aws_ip }}:9440</a></td>
                     </tr>
-
+                    {% endif %}
                     <TR>
                         <td>Prism Element/Prism Central Username</td>
                         <td>admin</td>
@@ -166,6 +167,7 @@
                         <td>Operator Password</td>
                         <td>nutanix/4u</td>
                     </tr>
+                    {% if user.aws_ip %}
                     <tr>
                         <td colspan="2" bgcolor="#ff4455"><center><B>Era Information</B></center></td>
                     </tr>
@@ -181,6 +183,8 @@
                         <td>Era Password</td>
                         <td>ntnxGTS2021! (Same as PC creds)</td>
                     </tr>
+                    {% endif %}
+                    {% if user.snow_instance %}
                     <tr>
                         <td colspan="2" bgcolor="#ff4455"><center><B>ServiceNow Information</B></center></td>
                     </tr>
@@ -200,7 +204,8 @@
                         <td>ServiceNow password</td>
                         <td>ntnxGTS2021! (Same as PC creds)</td>
                     </tr>
-
+                    {% endif %}
+                    {% if user.karbon_start %}
                     <tr>
                         <td colspan="2" bgcolor="#ff4455"><center><B>Karbon Information</B></center></td>
                     </tr>
@@ -208,6 +213,7 @@
                         <td>Karbon Network for MetalLB</td>
                         <td>{{ user.karbon_start }}-{{ user.karbon_stop }}</td>
                     </tr>
+                    {% endif %}
                 {% endif %}
             </table>
             <hr>
