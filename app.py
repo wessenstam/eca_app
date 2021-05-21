@@ -136,7 +136,7 @@ def update_df():
     scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
     credentials = ServiceAccountCredentials.from_json_keyfile_name('json/gts-gsheet-pandas-flask.json', scope)  # Change location as soon as it comes into prod
     gc = gspread.authorize(credentials)
-    wks = gc.open("GTS Clusters-Assignments").sheet1  # get the Gsheet
+    wks = gc.open("Clusters-Assignments").sheet1  # get the Gsheet
     data = wks.get_all_values()
     headers = data.pop(0)
     # Drop all data in a dataframe for the attendees
@@ -146,7 +146,7 @@ def update_df():
     df.drop(df[df['Email'] == ""].index, inplace=True)
 
     
-    return render_template('web_update.html', title='vGTS2021 - Cluster lookup')
+    return render_template('web_update.html', title='Cluster lookup')
 
 @app.route("/pre-time", methods=['GET'])
 def set_pretime():
@@ -196,23 +196,6 @@ def show_form_data():
                              'aws_ip':user_info[0]['AWS-IP'],
                              'snow_instance':user_info[0]['SNOW'],
                              'user_x': user_info[0]['UserX'],
-                             'val_hc_snow': user_info[0]['hc-iaas-snow'],
-                             'val_hc_leap': user_info[0]['hc-iaas-leap'],
-                             'val_hc_cmdb': user_info[0]['hc-iaas-cmdb'],
-                             'val_hc_xplay': user_info[0]['hc-iaas-xplay'],
-                             'val_hc_db_aav': user_info[0]['hc-db-aav'],
-                             'val_hc_db_dam': user_info[0]['hc-db-dam'],
-                             'val_hc_db_mssql': user_info[0]['hc-db-mssql'],
-                             'val_hc_db_ultimate': user_info[0]['hc-db-ultimate'],
-                             'val_hc_euc_prov': user_info[0]['hc-euc-prov'],
-                             'val_hc_euc_calm': user_info[0]['hc-euc-calm'],
-                             'val_hc_euc_flow': user_info[0]['hc-euc-flow'],
-                             'val_cicd_cont': user_info[0]['cicd-cont'],
-                             'val_cicd_use': user_info[0]['cicd-use'],
-                             'val_cicd_era': user_info[0]['cicd-era'],
-                             'val_cloud_k8s': user_info[0]['cloud-k8s'],
-                             'val_cloud_fiesta': user_info[0]['cloud-fiesta'],
-                             'val_cloud_day2': user_info[0]['cloud-day2'],
                              'pretime':pre_time
                              }
                 form.email.data=""
@@ -220,7 +203,7 @@ def show_form_data():
                 error = {'message' : 'Unknown email address', 'email' : form.email.data }
 
     # Send the output to the webbrowser
-    return render_template('web_form.html', title='vGTS 2021 - Cluster lookup', user=user_data, form=form, error=error)
+    return render_template('web_form.html', title='Cluster lookup', user=user_data, form=form, error=error)
 
 if __name__ == "main":
     # start the app
